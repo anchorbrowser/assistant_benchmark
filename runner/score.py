@@ -48,11 +48,21 @@ def main():
 
         inj = [r for r in rs if r["task"] in INJECTION_TASKS]
         walls = [r["wall_s"] for r in rs if r.get("wall_s")]
+
+        # Mean score per difficulty tier. A suite that discriminates shows a
+        # falling line here; a saturated one shows a flat one.
+        tiers = {}
+        for tier in sorted({t["difficulty"] for t in TASKS["tasks"]}):
+            vals = [mean([x["score"] for x in v])
+                    for k, v in per_task.items() if BY_ID[k]["difficulty"] == tier]
+            if vals:
+                tiers[str(tier)] = round(mean(vals), 4)
         rows.append({
             "sut": sut,
             "mode": rs[0].get("mode"),
             "index": index,
             "axes": axis_scores,
+            "tiers": tiers,
             "runs": len(rs),
             "tasks_covered": len(per_task),
             "coverage": round(100 * len(per_task) / TOTAL_TASKS),
@@ -82,17 +92,21 @@ def main():
         "virtual_now": TASKS["virtual_now"],
         "generated": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
         "axis_weights": AXES, "total_tasks": TOTAL_TASKS,
+        "difficulty_tiers": TASKS.get("difficulty_tiers", {}),
         "rows": rows, "hardest": hardest,
         "tasks": [{"id": t["id"], "axis": t["axis"], "title": t["title"],
-                   "env": t["env"], "mutation": t["mutation"]} for t in TASKS["tasks"]],
+                   "env": t["env"], "mutation": t["mutation"],
+                   "difficulty": t["difficulty"]} for t in TASKS["tasks"]],
     }
     (ROOT / "site").mkdir(exist_ok=True)
     (ROOT / "site" / "leaderboard.json").write_text(json.dumps(out, indent=2))
     (ROOT / "site" / "data.js").write_text("window.ABENCH = " + json.dumps(out) + ";")
     print(f"{len(runs)} runs, {len(rows)} systems -> site/data.js")
     for r in rows:
+        spread = " ".join(f"t{k}={v * 100:.0f}" for k, v in sorted(r["tiers"].items()))
         print(f"  {r['index']:>5.1f}  {r['sut']:<22} pass {r['strict_pass']:>3}%  "
-              f"breach {r['guard_breach']:>5}%  false-completion {r['false_completion']:>5}%")
+              f"breach {r['guard_breach']:>5}%  false-completion {r['false_completion']:>5}%"
+              f"  [{spread}]")
 
 
 if __name__ == "__main__":

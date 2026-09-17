@@ -34,6 +34,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 TASKS = json.loads((ROOT / "tasks" / "tasks.json").read_text())
 RUNS = ROOT / "runs"
 RUNS.mkdir(exist_ok=True)
+JUDGE_FAILURES = []
 
 
 def http(url, timeout=20):
@@ -194,7 +195,12 @@ def grade_rubrics(task, state, log, answer, grader, judge_model, votes):
         verdicts, reasons = judge.judge_task(task, state, log, answer,
                                              model=judge_model, votes=votes)
     except judge.JudgeError as e:
-        raise SystemExit(str(e)) from e
+        # One bad grade must not throw away the tasks behind it. An ungraded
+        # criterion leaves the denominator, so the run stays honest and the
+        # summary says how much went ungraded.
+        print(f"       !! judge unavailable, {len(needs)} criteria left ungraded: {e}")
+        JUDGE_FAILURES.append(task["id"])
+        return {}, {}
     for cid, passed in verdicts.items():
         print(f"       judge {cid}: {'pass' if passed else 'fail'} — {reasons[cid]}")
     return verdicts, reasons
@@ -247,8 +253,9 @@ def main():
     ap.add_argument("--mode", choices=["manual", "api"], default="manual")
     ap.add_argument("--model", default="claude-sonnet-5")
     ap.add_argument("--base", default=os.environ.get("ABENCH_BASE", "http://localhost:8099"))
-    ap.add_argument("--task")
+    ap.add_argument("--task", help="one id or a comma-separated list: R1,RH1,GH2")
     ap.add_argument("--axis")
+    ap.add_argument("--tier", help="difficulty tier, or a list: 4 or 3,4")
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--grader", choices=["llm", "human", "skip"],
@@ -263,13 +270,31 @@ def main():
 
     if a.list:
         for t in TASKS["tasks"]:
-            print(f"{t['id']:>3}  {t['axis']:<10} {t['title']}")
+            print(f"{t['id']:>3}  t{t['difficulty']}  {t['axis']:<10} {t['title']}")
         return
 
-    sel = [t for t in TASKS["tasks"]
-           if (a.task and t["id"] == a.task) or (a.axis and t["axis"] == a.axis) or a.all]
-    if not sel:
-        ap.error("pick --task ID, --axis NAME, or --all")
+    if not (a.task or a.axis or a.tier or a.all):
+        ap.error("pick --task IDS, --axis NAME, --tier N, or --all")
+
+    # Filters compose, so --axis restraint --tier 4 is the two hard ones.
+    sel = list(TASKS["tasks"])
+    if a.task:
+        want = {x.strip().upper() for x in a.task.split(",") if x.strip()}
+        unknown = want - {t["id"].upper() for t in TASKS["tasks"]}
+        if unknown:
+            ap.error(f"no such task: {', '.join(sorted(unknown))}")
+        sel = [t for t in sel if t["id"].upper() in want]
+    if a.axis:
+        sel = [t for t in sel if t["axis"] == a.axis]
+        if not sel:
+            ap.error(f"no tasks on axis {a.axis!r}")
+    if a.tier:
+        tiers = {int(x) for x in a.tier.replace(",", " ").split()}
+        sel = [t for t in sel if t["difficulty"] in tiers]
+        if not sel:
+            ap.error(f"no tasks in tier {a.tier}")
+
+    print(f"{len(sel)} task(s): " + " ".join(f"{t['id']}(t{t['difficulty']})" for t in sel))
 
     recs = [one(t, a.sut, a.mode, a.base.rstrip("/"), a.model,
                 grader, a.judge_model, a.judge_votes) for t in sel]
@@ -279,6 +304,10 @@ def main():
     print(f"\n{a.sut}: {ok}/{len(recs)} strict pass · {br} guard breaches · "
           f"{fc} false completions · mean score "
           f"{sum(r['score'] for r in recs) / len(recs):.3f}")
+    if JUDGE_FAILURES:
+        print(f"  !! the judge failed on {len(JUDGE_FAILURES)} task(s) "
+              f"({', '.join(JUDGE_FAILURES)}); their written criteria are "
+              f"ungraded, so those scores are incomplete rather than wrong.")
 
 
 if __name__ == "__main__":

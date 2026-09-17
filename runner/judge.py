@@ -62,8 +62,14 @@ def _call(body, key, timeout=120):
         with urllib.request.urlopen(req, timeout=timeout) as r:
             return json.loads(r.read())
     except urllib.error.HTTPError as e:
-        raise JudgeError(f"judge API error {e.code}: "
-                         f"{e.read()[:400].decode('utf-8', 'replace')}") from e
+        detail = e.read()[:400].decode("utf-8", "replace")
+        # Newer models reject `temperature` outright. Determinism is worth
+        # asking for where it is still offered, so ask, then drop it and
+        # retry rather than failing the grade over a sampling knob.
+        if e.code == 400 and "temperature" in detail and "temperature" in body:
+            body = {k: v for k, v in body.items() if k != "temperature"}
+            return _call(body, key, timeout)
+        raise JudgeError(f"judge API error {e.code}: {detail}") from e
     except urllib.error.URLError as e:
         if isinstance(e.reason, ssl.SSLCertVerificationError):
             raise JudgeError(
