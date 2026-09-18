@@ -23,9 +23,13 @@ Everything is stdlib. No new dependencies.
 import json
 import os
 import re
+import select
+import shutil
+import signal
 import sqlite3
 import subprocess
 import time
+import urllib.error
 import urllib.request
 
 APPLE_EPOCH = 978307200  # 2001-01-01 in unix seconds
@@ -510,6 +514,323 @@ class CursorAutomation(Channel):
         return "\n\n".join(msgs).strip()
 
 
+# ---------------------------------------------------------------------- hermes
+class Hermes(Channel):
+    """Local Hermes agent (CLI oneshot or its OpenAI-compatible API).
+
+    Same machine as the world, so localhost is fine — no tunnel.
+
+    Default: `hermes --yolo -z <prompt>`. Each task is a new process, so
+    memory does not leak across tasks. --yolo is on because a hung approval
+    prompt would freeze the suite; set ABENCH_HERMES_YOLO=0 to keep prompts.
+
+    If the gateway API server is up:
+
+        API_SERVER_ENABLED=true
+        API_SERVER_KEY=...
+        hermes gateway restart
+
+    set ABENCH_HERMES_URL=http://127.0.0.1:8642 (and ABENCH_HERMES_KEY) and
+    we POST /v1/chat/completions with a fresh X-Hermes-Session-Id per task.
+    """
+    name = "hermes"
+    needs_public_world = False
+
+    def __init__(self, to=None):
+        self.url = (to or os.environ.get("ABENCH_HERMES_URL") or "").rstrip("/")
+        self.key = os.environ.get("ABENCH_HERMES_KEY", "")
+        self.bin = (os.environ.get("ABENCH_HERMES_BIN")
+                    or shutil.which("hermes")
+                    or os.path.expanduser("~/.local/bin/hermes"))
+        self.timeout = int(os.environ.get("ABENCH_HERMES_TIMEOUT", "420"))
+        self.yolo = os.environ.get("ABENCH_HERMES_YOLO", "1") != "0"
+        self._reply = ""
+        if self.url:
+            return
+        if not (os.path.isfile(self.bin) or shutil.which(self.bin)):
+            raise ChannelError(
+                f"hermes CLI not found at {self.bin!r}. Put it on PATH, set "
+                f"ABENCH_HERMES_BIN, or enable the API server and set "
+                f"ABENCH_HERMES_URL=http://127.0.0.1:8642"
+            )
+
+    def send(self, text):
+        print(f"       hermes {'API' if self.url else 'CLI'} (timeout {self.timeout}s)")
+        self._reply = self._via_api(text) if self.url else self._via_cli(text)
+
+    def poll(self, since):
+        return [self._reply] if self._reply.strip() else []
+
+    def wait_for_reply(self, since, timeout=420, settle=25, poll_every=5):
+        return self._reply.strip()
+
+    def _via_cli(self, text):
+        cmd = [self.bin]
+        if self.yolo:
+            cmd.append("--yolo")
+        cmd.extend(["-z", text])
+        try:
+            p = subprocess.run(cmd, capture_output=True, text=True,
+                               timeout=self.timeout)
+        except subprocess.TimeoutExpired as e:
+            raise ChannelError(f"hermes -z timed out after {self.timeout}s") from e
+        out = (p.stdout or "").strip()
+        if p.returncode != 0 and not out:
+            err = (p.stderr or "").strip()[:400]
+            raise ChannelError(f"hermes exited {p.returncode}: {err or 'no output'}")
+        if p.returncode != 0:
+            print(f"       hermes exit {p.returncode}, using stdout anyway")
+        return out
+
+    def _via_api(self, text):
+        endpoint = self.url
+        if not endpoint.endswith("/chat/completions"):
+            endpoint = endpoint.rstrip("/") + "/v1/chat/completions"
+        session = f"abench-{int(time.time())}"
+        body = json.dumps({
+            "model": os.environ.get("ABENCH_HERMES_MODEL", "hermes-agent"),
+            "messages": [{"role": "user", "content": text}],
+            "stream": False,
+        }).encode()
+        headers = {"content-type": "application/json",
+                   "x-hermes-session-id": session}
+        if self.key:
+            headers["authorization"] = f"Bearer {self.key}"
+        req = urllib.request.Request(endpoint, data=body, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=self.timeout) as r:
+                got = json.loads(r.read())
+        except urllib.error.HTTPError as e:
+            raise ChannelError(
+                f"hermes API {e.code}: {e.read().decode('utf-8', 'replace')[:300]}"
+            ) from e
+        except OSError as e:
+            raise ChannelError(f"hermes API unreachable at {endpoint}: {e}") from e
+        choices = got.get("choices") or []
+        if choices:
+            msg = choices[0].get("message") or {}
+            return (msg.get("content") or "").strip()
+        return (got.get("output_text") or got.get("text") or json.dumps(got))[:20000]
+
+
+# ------------------------------------------------------------------- openclaw
+class OpenClaw(Channel):
+    """Local OpenClaw via `openclaw agent --local`.
+
+    OpenClaw's fetch guard blocks private IPs (127.0.0.1, localhost), so the
+    world still needs a public --base (ngrok), even though the agent is local.
+    The process also tends to leave Chrome attached and never exit; we run it
+    in its own process group, take stdout once it goes quiet or JSON lands,
+    then SIGTERM the group.
+
+    Needs ANTHROPIC_API_KEY (falls back to ~/.hermes/.env). Prefers `openclaw`
+    on PATH, else npx openclaw@2026.3.2 under Homebrew Node 24.
+    """
+    name = "openclaw"
+    needs_public_world = True
+    NPX_PKG = "openclaw@2026.3.2"
+    NODE24 = "/opt/homebrew/opt/node@24/bin"
+
+    def __init__(self, to=None):
+        self.timeout = int(os.environ.get("ABENCH_OPENCLAW_TIMEOUT", "300"))
+        self.bin = os.environ.get("ABENCH_OPENCLAW_BIN") or shutil.which("openclaw")
+        self._reply = ""
+        self._ensure_keys()
+        if not os.environ.get("ANTHROPIC_API_KEY") and not os.environ.get("OPENAI_API_KEY"):
+            raise ChannelError(
+                "openclaw --local needs ANTHROPIC_API_KEY or OPENAI_API_KEY in "
+                "the environment (or ~/.hermes/.env)"
+            )
+
+    def _ensure_keys(self):
+        if os.environ.get("ANTHROPIC_API_KEY"):
+            return
+        path = os.path.expanduser("~/.hermes/.env")
+        if not os.path.isfile(path):
+            return
+        for line in open(path, encoding="utf-8", errors="replace"):
+            line = line.strip()
+            if line.startswith("ANTHROPIC_API_KEY=") and "ANTHROPIC_API_KEY" not in os.environ:
+                os.environ["ANTHROPIC_API_KEY"] = line.split("=", 1)[1].strip().strip("'\"")
+                return
+
+    def send(self, text):
+        env = os.environ.copy()
+        if os.path.isdir(self.NODE24):
+            env["PATH"] = self.NODE24 + os.pathsep + env.get("PATH", "")
+        sid = f"abench-{int(time.time())}"
+        if self.bin:
+            cmd = [self.bin, "agent", "--local",
+                   "--timeout", str(self.timeout), "--session-id", sid,
+                   "--message", text]
+        else:
+            cmd = ["npx", "--yes", "--package", self.NPX_PKG, "openclaw",
+                   "agent", "--local",
+                   "--timeout", str(self.timeout), "--session-id", sid,
+                   "--message", text]
+        print(f"       openclaw {'CLI' if self.bin else 'npx '+self.NPX_PKG} "
+              f"(timeout {self.timeout}s, kills hung chrome)")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                             text=True, start_new_session=True, env=env)
+        chunks, last, deadline = [], time.time(), time.time() + self.timeout
+        try:
+            while time.time() < deadline:
+                if p.stdout is None:
+                    break
+                ready, _, _ = select.select([p.stdout], [], [], 1.0)
+                if ready:
+                    line = p.stdout.readline()
+                    if line == "":
+                        break
+                    chunks.append(line)
+                    last = time.time()
+                elif p.poll() is not None:
+                    rest = p.stdout.read() if p.stdout else ""
+                    if rest:
+                        chunks.append(rest)
+                    break
+                elif chunks and time.time() - last >= 40:
+                    print("       … stdout quiet, stopping openclaw")
+                    break
+        finally:
+            _killpg(p)
+        out = "".join(chunks).strip()
+        err = ""
+        try:
+            if p.stderr:
+                err = p.stderr.read()[:400]
+        except OSError:
+            pass
+        self._reply = self._parse(out) or self._reply
+        if not self._reply:
+            raise ChannelError(f"openclaw produced no answer. stderr: {err or 'empty'}")
+        if "Blocked hostname" in err:
+            print("       note: openclaw SSRF blocked a private URL; use a public --base")
+
+    def _parse(self, out):
+        if not out:
+            return ""
+        try:
+            got = json.loads(out)
+        except json.JSONDecodeError:
+            # skip service lines like [browser/service]
+            lines = [ln for ln in out.splitlines()
+                     if ln.strip() and not ln.strip().startswith("[")]
+            return "\n".join(lines).strip()[:20000]
+        payloads = got.get("payloads") or []
+        texts = [p.get("text") for p in payloads if isinstance(p, dict) and p.get("text")]
+        if texts:
+            return "\n\n".join(texts)
+        return (got.get("text") or got.get("reply") or "")[:20000]
+
+    def poll(self, since):
+        return [self._reply] if self._reply.strip() else []
+
+    def wait_for_reply(self, since, timeout=420, settle=25, poll_every=5):
+        return self._reply.strip()
+
+
+def _killpg(proc):
+    if proc.poll() is not None:
+        return
+    try:
+        os.killpg(proc.pid, signal.SIGTERM)
+    except (ProcessLookupError, PermissionError, OSError):
+        proc.kill()
+    try:
+        proc.wait(timeout=8)
+    except subprocess.TimeoutExpired:
+        try:
+            os.killpg(proc.pid, signal.SIGKILL)
+        except (ProcessLookupError, PermissionError, OSError):
+            pass
+
+
+def _env(name):
+    """Local OpenClaw agent via `openclaw agent --local`.
+
+    Same machine as the world, so localhost is fine — no tunnel and no
+    Gateway daemon. Each task gets a fresh --session-id.
+
+    Needs a model key in the environment (ANTHROPIC_API_KEY, etc.). If the
+    shell has none, we reuse ~/.hermes/.env when that file exists.
+
+    Prefers `openclaw` on PATH. Otherwise npx openclaw@2026.3.2 (Node 24),
+    because current latest wants Node ≥24.16 and this machine is on 24.3.
+    """
+    name = "openclaw"
+    needs_public_world = False
+    NPX_PKG = "openclaw@2026.3.2"
+    NODE24 = "/opt/homebrew/opt/node@24/bin"
+
+    def __init__(self, to=None):
+        self.timeout = int(os.environ.get("ABENCH_OPENCLAW_TIMEOUT", "420"))
+        self.bin = os.environ.get("ABENCH_OPENCLAW_BIN") or shutil.which("openclaw")
+        self._reply = ""
+        self._ensure_keys()
+        if not os.environ.get("ANTHROPIC_API_KEY") and not os.environ.get("OPENAI_API_KEY"):
+            raise ChannelError(
+                "openclaw --local needs ANTHROPIC_API_KEY or OPENAI_API_KEY in "
+                "the environment (or ~/.hermes/.env)"
+            )
+
+    def _ensure_keys(self):
+        if os.environ.get("ANTHROPIC_API_KEY"):
+            return
+        path = os.path.expanduser("~/.hermes/.env")
+        if not os.path.isfile(path):
+            return
+        for line in open(path, encoding="utf-8", errors="replace"):
+            line = line.strip()
+            if line.startswith("ANTHROPIC_API_KEY=") and "ANTHROPIC_API_KEY" not in os.environ:
+                os.environ["ANTHROPIC_API_KEY"] = line.split("=", 1)[1].strip().strip("'\"")
+                return
+
+    def send(self, text):
+        env = os.environ.copy()
+        if os.path.isdir(self.NODE24):
+            env["PATH"] = self.NODE24 + os.pathsep + env.get("PATH", "")
+        sid = f"abench-{int(time.time())}"
+        if self.bin:
+            cmd = [self.bin, "agent", "--local", "--json",
+                   "--timeout", str(self.timeout), "--session-id", sid,
+                   "--message", text]
+        else:
+            cmd = ["npx", "--yes", "--package", self.NPX_PKG, "openclaw",
+                   "agent", "--local", "--json",
+                   "--timeout", str(self.timeout), "--session-id", sid,
+                   "--message", text]
+        print(f"       openclaw {'CLI' if self.bin else 'npx '+self.NPX_PKG} "
+              f"(timeout {self.timeout}s)")
+        try:
+            p = subprocess.run(cmd, capture_output=True, text=True,
+                               timeout=self.timeout + 30, env=env)
+        except subprocess.TimeoutExpired as e:
+            raise ChannelError(f"openclaw timed out after {self.timeout}s") from e
+        out = (p.stdout or "").strip()
+        if p.returncode != 0 and not out:
+            err = (p.stderr or "").strip()[:500]
+            raise ChannelError(f"openclaw exited {p.returncode}: {err or 'no output'}")
+        self._reply = self._parse(out)
+
+    def _parse(self, out):
+        try:
+            got = json.loads(out)
+        except json.JSONDecodeError:
+            return out
+        payloads = got.get("payloads") or []
+        texts = [p.get("text") for p in payloads if isinstance(p, dict) and p.get("text")]
+        if texts:
+            return "\n\n".join(texts)
+        return (got.get("text") or got.get("reply") or out)[:20000]
+
+    def poll(self, since):
+        return [self._reply] if self._reply.strip() else []
+
+    def wait_for_reply(self, since, timeout=420, settle=25, poll_every=5):
+        return self._reply.strip()
+
+
 def _env(name):
     val = os.environ.get(name)
     if not val:
@@ -518,7 +839,8 @@ def _env(name):
 
 
 BUILDERS = {"imessage": IMessage, "email": Email, "webhook": Webhook,
-            "browser": Browser, "cursor": CursorAutomation}
+            "browser": Browser, "cursor": CursorAutomation, "hermes": Hermes,
+            "openclaw": OpenClaw}
 
 # Channels that need to know the world's public URL to build a return address.
 WANTS_BASE = {"cursor"}

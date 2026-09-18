@@ -85,10 +85,38 @@ open site/index.html
 ```
 
 The world in `ABENCH_BASE` must be the **public** URL: the agent cannot see
-`localhost`.
+`localhost`. Exception: `--channel hermes`, which runs on this machine.
+
+### Local Hermes
+
+No tunnel. The adapter calls `hermes --yolo -z` (or the optional API server
+on `:8642` if you set `ABENCH_HERMES_URL`).
+
+```bash
+python3 app/benchapp.py --port 8099
+python3 runner/run.py --sut hermes --mode channel --channel hermes --task R1 --grader skip
+python3 runner/run.py --sut hermes --mode channel --channel hermes --all --resume --grader skip
+```
+
+### Local OpenClaw
+
+No tunnel, no Gateway daemon. `--local` runs the embedded agent. OpenClaw
+**blocks fetches to localhost**, so `--base` must still be the public tunnel
+URL. The adapter kills the process group when stdout goes quiet, because
+OpenClaw otherwise leaves Chrome attached and never exits.
+
+```bash
+python3 app/benchapp.py --port 8099
+ngrok http 8099
+python3 runner/run.py --sut openclaw --mode channel --channel openclaw \
+    --base https://your-tunnel.ngrok-free.dev --task R1 --grader skip
+python3 runner/run.py --sut openclaw --mode channel --channel openclaw \
+    --base https://your-tunnel.ngrok-free.dev --all --resume --grader skip
+```
 
 Lessons from wiring Grok Bot (mailbox shapes, IPv6 tunnels, framing, what
 not to do) are in [docs/integrating-a-bot.md](docs/integrating-a-bot.md).
+Hermes is §10 there.
 
 ---
 
@@ -124,7 +152,7 @@ python3 runner/run.py --sut poke --mode channel --channel imessage \
 | `cursor` | Fires a trigger-only webhook (a Cursor automation); the answer comes back through the world's mailbox | `ABENCH_CURSOR_TOKEN`, `--to <webhook url>` |
 | `imessage` | AppleScript sends, local `chat.db` is polled for replies | macOS, Messages signed in, **Full Disk Access** for the app running python |
 | `email` | `smtplib` sends, `imaplib` polls; a token in the Subject correlates the reply | `ABENCH_EMAIL_USER`, `ABENCH_EMAIL_PASS`, `ABENCH_SMTP_HOST`, `ABENCH_IMAP_HOST` |
-| `webhook` | POSTs `{"text": prompt}` to a bot you run | `--to <url>`; optional `ABENCH_WEBHOOK_POLL` if replies are async |
+| `openclaw` | Local `openclaw agent --local` (no gateway) | Anthropic/OpenAI key in the env; Node 24 on PATH for npx |
 
 Pick by where the assistant lives. **Grok Bot, grok.com, ChatGPT and friends
 ship no API at all, so `browser` is the only option** — there is nothing to

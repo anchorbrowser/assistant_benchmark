@@ -17,6 +17,7 @@ Assistants fall into three buckets. Mixing them up wastes days.
 | Product | What you get | `--mode` | `--channel` |
 |---|---|---|---|
 | Model API with tools (Anthropic, xAI Grok API) | The runner fetches pages *for* the model | `api` | — |
+| Local OpenClaw (`--local` CLI) | Embedded agent, same machine | `channel` | `openclaw` |
 | A bot you run / a webhook that **returns** the reply | POST prompt, get answer | `channel` | `webhook` |
 | Cursor automation / any **fire-and-forget** trigger | POST starts an agent; it answers in *its* chat | `channel` | `cursor` |
 | Consumer product with no API (grok.com, ChatGPT) | Drive the UI | `channel` | `browser` |
@@ -24,7 +25,8 @@ Assistants fall into three buckets. Mixing them up wastes days.
 | Nothing scriptable | Human paste loop | `manual` | — |
 
 Grok Bot on Cursor automations is **not** the xAI API. The xAI API does not
-need a tunnel. The automation does, because *it* browses the world.
+need a tunnel. The automation does, because *it* browses the world. Local
+Hermes does not: it can see `http://localhost:8099`.
 
 ---
 
@@ -204,6 +206,57 @@ llm` once a key is set.
 ---
 
 ## 9. Command cheat sheet
+
+```bash
+cp .env.template .env   # ABENCH_BASE, ABENCH_CURSOR_WEBHOOK, ABENCH_CURSOR_TOKEN
+
+python3 app/benchapp.py --port 8099
+ngrok http 8099
+
+# smoke
+python3 runner/run.py --sut grok-bot-automation --mode channel --channel cursor \
+    --task R1 --grader skip
+
+# rest of the suite (skips tasks this --sut already has)
+python3 runner/run.py --sut grok-bot-automation --mode channel --channel cursor \
+    --all --resume --grader skip
+
+python3 runner/score.py
+open site/index.html
+```
+
+---
+
+## 10. Local Hermes
+
+Hermes already has tools and a browser. It runs on this machine, so
+`http://localhost:8099` is enough — **do not** point it at ngrok.
+
+The API server is **off** by default (`API_SERVER_ENABLED`). Do not require
+the user to turn it on. The channel calls:
+
+```bash
+hermes --yolo -z "<task + POLICY>"
+```
+
+`--yolo` is required for an unattended suite: an approval prompt would freeze
+the run. Each `-z` is a new process, so you get a fresh session per task.
+
+```bash
+python3 app/benchapp.py --port 8099   # no tunnel
+python3 runner/run.py --sut hermes --mode channel --channel hermes \
+    --task R1 --grader skip
+python3 runner/run.py --sut hermes --mode channel --channel hermes \
+    --all --resume --grader skip
+```
+
+Optional: enable `API_SERVER_ENABLED` + `API_SERVER_KEY`, `hermes gateway
+restart`, then `ABENCH_HERMES_URL=http://127.0.0.1:8642` and
+`ABENCH_HERMES_KEY`. A new `X-Hermes-Session-Id` is sent per task.
+
+Hermes's configured model (today: Anthropic `claude-sonnet-4-6`) is what you
+are scoring, plus the Hermes tool loop. That is a different SUT from
+`--mode api --provider anthropic` even on the same weights.
 
 ```bash
 cp .env.template .env   # ABENCH_BASE, ABENCH_CURSOR_WEBHOOK, ABENCH_CURSOR_TOKEN
