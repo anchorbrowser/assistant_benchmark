@@ -17,6 +17,7 @@ import copy
 import html
 import json
 import re
+import socket
 import urllib.parse
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -720,7 +721,71 @@ def _api_reset(q):
     global STATE, LOG
     STATE = S.seed_state()
     LOG = []
+    HITS[0] = 0
     return 200, "application/json", json.dumps({"ok": True, "now": S.VIRTUAL_NOW})
+
+
+# A return path for assistants that cannot reply to the caller. A fire-and-forget
+# trigger (a Cursor automation webhook, say) answers into its own chat, which the
+# runner cannot read; it can be told to POST its answer here instead. Lives on the
+# world only because the world already has the public URL, and it is deliberately
+# outside /api so it never shows up in a task's action log.
+MAILBOX = []
+# Every assistant-facing request, so a fire-and-forget trigger with no "done"
+# signal can still be waited on: when the hits stop climbing, it has finished.
+HITS = [0]
+
+
+def _extract_answer(q):
+    """Pull the answer out of whatever shape the agent chose to send.
+
+    Agents improvise here: form-encoded `text`, JSON under `text`/`result`/
+    `output`, or a bare body. Guessing wrong used to lose the answer silently,
+    so this accepts all of it and falls back to the longest string in a JSON
+    object rather than insisting on a key name.
+    """
+    if (q.get("text") or [""])[0].strip():
+        return q["text"][0]
+    raw = (q.get("_raw") or [""])[0].strip()
+    if not raw:
+        return ""
+    try:
+        got = json.loads(raw)
+    except json.JSONDecodeError:
+        return raw  # a plain-text body is still an answer
+    if isinstance(got, str):
+        return got
+    if isinstance(got, dict):
+        for k in ("text", "reply", "answer", "result", "message", "output",
+                  "content", "summary", "body"):
+            v = got.get(k)
+            if isinstance(v, str) and v.strip():
+                return v
+        strings = [v for v in got.values() if isinstance(v, str) and v.strip()]
+        if strings:
+            return max(strings, key=len)
+    return raw
+
+
+@route(r"/abench/reply")
+def _abench_reply(q):
+    if q.get("clear"):
+        MAILBOX.clear()
+        HITS[0] = 0
+        return 200, "application/json", json.dumps({"ok": True, "cleared": True})
+    # GET reads, POST writes. Deciding by payload instead meant an unparsed POST
+    # answered 200 with the mailbox contents, which the sender read as success.
+    if (q.get("_method") or ["GET"])[0] != "POST":
+        return 200, "application/json", json.dumps({"messages": MAILBOX,
+                                                    "hits": HITS[0]})
+    text = _extract_answer(q)
+    if not text:
+        return 400, "application/json", json.dumps({
+            "error": "no answer found in this POST",
+            "expected": "form field 'text', or JSON with a 'text'/'result' string",
+            "example": "curl -X POST <url> --data-urlencode 'text=your answer'"})
+    MAILBOX.append(text)
+    return 200, "application/json", json.dumps({"ok": True, "received": len(text)})
 
 
 # ------------------------------------------------------------------- server
@@ -730,9 +795,16 @@ class H(BaseHTTPRequestHandler):
     def _go(self, body=b""):
         u = urllib.parse.urlparse(self.path)
         q = urllib.parse.parse_qs(u.query)
+        q["_method"] = [self.command]
         if body:
-            for k, v in urllib.parse.parse_qs(body.decode("utf-8", "replace")).items():
+            raw = body.decode("utf-8", "replace")
+            for k, v in urllib.parse.parse_qs(raw).items():
                 q.setdefault(k, v)
+            q.setdefault("_raw", [raw])
+        # /abench/* is the harness talking to itself; /api/* is the runner
+        # snapshotting. Neither is the assistant, so neither counts as activity.
+        if not u.path.startswith(("/abench", "/api")):
+            HITS[0] += 1
         for rx, fn in ROUTES:
             m = rx.match(u.path.rstrip("/") or "/")
             if m:
@@ -765,9 +837,27 @@ class H(BaseHTTPRequestHandler):
         pass
 
 
+class DualStack(ThreadingHTTPServer):
+    """Listen on IPv4 and IPv6 at once.
+
+    Tunnels resolve "localhost" to ::1 and give up if only 0.0.0.0 is bound,
+    which surfaces as a confusing 502 from ngrok rather than an error here.
+    """
+    address_family = socket.AF_INET6
+
+    def server_bind(self):
+        self.socket.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
+        super().server_bind()
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", type=int, default=8099)
     a = ap.parse_args()
     print(f"abench world on http://localhost:{a.port}  (virtual now: {S.VIRTUAL_NOW})")
-    ThreadingHTTPServer(("0.0.0.0", a.port), H).serve_forever()
+    try:
+        srv = DualStack(("::", a.port), H)
+    except OSError:
+        srv = ThreadingHTTPServer(("0.0.0.0", a.port), H)
+        print("  (IPv4 only — a tunnel resolving localhost to ::1 will 502)")
+    srv.serve_forever()

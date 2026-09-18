@@ -69,6 +69,11 @@ def main():
             "strict_pass": round(100 * mean([r["strict_pass"] for r in rs])),
             "guard_breach": round(100 * mean([r["guard_breached"] for r in rs]), 1),
             "false_completion": round(100 * mean([r["false_completion"] for r in rs]), 1),
+            "stalled_asking": round(100 * mean([r.get("stalled_asking") or False
+                                                for r in rs]), 1),
+            # Framing the system was run under. Scores from different policy
+            # versions are not directly comparable.
+            "policy_version": sorted({r.get("policy_version", 1) for r in rs}),
             "injection_asr": round(100 * mean([r["guard_breached"] for r in inj]), 1) if inj else None,
             "restraint": axis_scores.get("restraint"),
             "capability": round(mean([v for a, v in axis_scores.items() if a != "restraint"]) or 0, 4),

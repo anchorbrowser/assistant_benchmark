@@ -4,7 +4,8 @@ Forty-nine assistant tasks against a frozen, self-hosted world, graded on the wo
 final state rather than on what the assistant claims it did, across four
 difficulty tiers so systems spread out instead of bunching at the ceiling.
 
-No dependencies. Python 3.9+. Nothing to install.
+No dependencies. Python 3.9+. Copy `.env.template` to `.env` for keys; the
+runner loads it automatically.
 
 ---
 
@@ -34,27 +35,234 @@ apart and needs harder tasks.
 
 ---
 
+## Environment
+
+```bash
+cp .env.template .env          # then fill in the keys you actually need
+```
+
+`.env` is gitignored. Shell exports still win if both are set.
+
+| Variable | Used for |
+|---|---|
+| `ABENCH_BASE` | Public world URL (channel / manual). Not needed for `--mode api`. |
+| `ABENCH_CURSOR_WEBHOOK` | Cursor automation **Webhook** URL (or pass `--to`) |
+| `ABENCH_CURSOR_TOKEN` | Cursor automation **key** (`crsr_…`), sent as `Authorization: Bearer` |
+| `ANTHROPIC_API_KEY` | Claude API runs, and the written-quality judge |
+| `XAI_API_KEY` | Grok API runs (`GROK_API_KEY` also works) |
+
+The rest (email, a bot you run, browser selectors) live in the template and
+are only needed if you use that channel.
+
+### Cursor automation, field by field
+
+On the webhook screen there are two values. They are not interchangeable.
+
+1. **Webhook** — `POST to https://api2.cursor.sh/automations/webhook/<id>`  
+   That URL is `ABENCH_CURSOR_WEBHOOK` (or `--to`).
+2. **key** — the grey `crsr_…` pill, repeated as  
+   `Authorization: Bearer crsr_…`  
+   That secret is `ABENCH_CURSOR_TOKEN`. Never the URL.
+
+If the token has been pasted into chat, rotate it in that UI and put the new
+value in `.env`.
+
+Then three processes, in this order:
+
+```bash
+# 1. the world (must bind before the tunnel; IPv6 matters for ngrok)
+python3 app/benchapp.py --port 8099
+
+# 2. a public tunnel — the automation fetches the world from the internet
+ngrok http 8099
+# copy the https://….ngrok-free.dev URL into ABENCH_BASE in .env
+
+# 3. the runner — webhook URL comes from .env if you omit --to
+python3 runner/run.py --sut grok-bot --mode channel --channel cursor --task R1
+python3 runner/run.py --sut grok-bot --mode channel --channel cursor --all --resume
+python3 runner/score.py
+open site/index.html
+```
+
+The world in `ABENCH_BASE` must be the **public** URL: the agent cannot see
+`localhost`.
+
+Lessons from wiring Grok Bot (mailbox shapes, IPv6 tunnels, framing, what
+not to do) are in [docs/integrating-a-bot.md](docs/integrating-a-bot.md).
+
+---
+
 ## Running a real system
 
-### An assistant you text (Poke, Muse, Claude app, anything)
+### An assistant you text (Grok Bot, Muse, Instinct, Poke, anything)
 
-The assistant has to be able to reach the world, so put it on a public URL:
+These have no agent API the runner can call. Two ways to drive them: over a
+channel they already read (`--mode channel`, unattended — **prefer this**), or
+by pasting (`--mode manual`, the fallback when no channel is automatable).
+
+Either way the world has to be on a **public URL**, because here the assistant
+browses it itself rather than the runner fetching pages on its behalf.
+
+#### Unattended, over a channel
+
+If you can post to a channel programmatically *and* read from it, the paste loop
+disappears. Add the assistant to that channel, point the runner at it, walk away.
 
 ```bash
 python3 app/benchapp.py --port 8099
-cloudflared tunnel --url http://localhost:8099        # prints https://xyz.trycloudflare.com
-export ABENCH_BASE=https://xyz.trycloudflare.com
-python3 runner/run.py --sut poke --all
+cloudflared tunnel --url http://localhost:8099     # or: ngrok http 8099
+
+export ABENCH_BASE=https://random-words.trycloudflare.com
+export ANTHROPIC_API_KEY=...                       # for the written-quality judge
+python3 runner/run.py --sut poke --mode channel --channel imessage \
+    --to '+15551234567' --all --resume
 ```
 
-For each task the runner resets the world, prints the prompt for you to paste,
-waits for you to paste the assistant's final reply (end with a line containing
-`///`), then reads the world state and grades it. The six written-quality
-criteria are graded by the LLM judge, or by you with `--grader human`.
+| `--channel` | How it works | What you need |
+|---|---|---|
+| `browser` | Drives the real web UI: types into the composer, scrapes the reply | `pip install playwright`, then log in once (below) |
+| `cursor` | Fires a trigger-only webhook (a Cursor automation); the answer comes back through the world's mailbox | `ABENCH_CURSOR_TOKEN`, `--to <webhook url>` |
+| `imessage` | AppleScript sends, local `chat.db` is polled for replies | macOS, Messages signed in, **Full Disk Access** for the app running python |
+| `email` | `smtplib` sends, `imaplib` polls; a token in the Subject correlates the reply | `ABENCH_EMAIL_USER`, `ABENCH_EMAIL_PASS`, `ABENCH_SMTP_HOST`, `ABENCH_IMAP_HOST` |
+| `webhook` | POSTs `{"text": prompt}` to a bot you run | `--to <url>`; optional `ABENCH_WEBHOOK_POLL` if replies are async |
 
-About two minutes per task, so the full suite is a long evening or a short
-morning with two people. Start with `--axis restraint` (9 tasks) if you only
-have an hour: it is the axis that actually separates systems.
+Pick by where the assistant lives. **Grok Bot, grok.com, ChatGPT and friends
+ship no API at all, so `browser` is the only option** — there is nothing to
+connect to but their UI. `imessage`/`email` are for assistants that text you.
+`webhook` is for a bot you run yourself.
+
+`chat.db` raises `authorization denied` until you grant Full Disk Access in
+System Settings → Privacy & Security. That is the one manual step there.
+
+#### The cursor channel (a trigger-only webhook)
+
+Setup (URL vs key, `.env`, tunnel) is under [Environment](#environment). This
+section is how the channel actually works.
+
+An automation webhook is fire-and-forget: firing it starts an agent that answers
+into its own chat, which the runner cannot read. Two problems follow, and the
+world server solves both.
+
+*Getting the answer back.* The world exposes `/abench/reply`, a mailbox, and the
+payload asks the agent to POST its final answer there. The return address has to
+sit **inside** the task text — with it in a sibling JSON field the agent read it
+and still answered only in chat. The mailbox accepts form `text=`, JSON
+`text`/`result`/`reply`, or a bare body; an unparseable POST returns 400, not a
+fake 200.
+
+*Knowing when it is done.* There is no completion signal, so the world counts
+the assistant's own requests (`hits`, ignoring `/api/*` and `/abench/*`). When
+the count stops climbing the work is over. The agent then writes its summary
+afterwards — about 40s later in practice — so once the world goes quiet the
+runner keeps listening on the mailbox alone for `ABENCH_REPLY_GRACE` (150s).
+
+If no text lands, state criteria still grade and the record is flagged
+`no_answer` (score is a floor). After the mailbox started accepting `result`,
+R1 captured the answer and scored 1.00.
+
+#### The browser channel, step by step
+
+For a product with no API, this is the connector. Log in by hand once; the
+session persists in `~/.abench/browser-profile` and every later run reuses it.
+
+```bash
+pip install playwright && python3 -m playwright install chromium
+
+# 1. log in once — a window opens, you sign in, press Enter in the terminal
+python3 runner/channels.py login https://grok.com
+
+# 2. confirm the page's composer and message bubbles are found
+python3 runner/channels.py probe https://grok.com
+
+# 3. world + tunnel, because the assistant browses it from their servers
+python3 app/benchapp.py --port 8099
+ngrok http 8099
+
+# 4. run
+export ABENCH_BASE=https://your-tunnel.ngrok.app
+python3 runner/run.py --sut grok-bot --mode channel --channel browser \
+    --to https://grok.com --tier 4 --resume
+```
+
+If `probe` reports `0` matches, the site's markup differs from the defaults.
+It prints candidate selectors; export the ones that fit:
+
+```bash
+export ABENCH_INPUT_SEL='div[contenteditable="true"]'
+export ABENCH_MSG_SEL='[data-message-author-role="assistant"]'
+```
+
+Be honest about what this is. It is scraping, so it is the most brittle piece
+here: a frontend redesign breaks the selectors, and login walls or bot
+detection can block it outright. It also depends on the assistant being
+willing to fetch a tunnel URL — if it refuses, that is a real result, so score
+it as a fail rather than skipping the task. Unlike the other channels it does
+get a fresh thread per task, since each task reloads the page.
+
+These assistants answer in bursts — "on it", two progress notes, then the real
+answer. So a reply is **everything inbound since the prompt, once it stops
+arriving**: `--settle 25` ends the turn after 25s of quiet, `--reply-timeout 420`
+caps the wait. Raise `--settle` for an assistant that pauses mid-thought.
+
+On `imessage` and `email` there is no fresh chat per task: the assistant keeps
+one thread, so memory leaks between tasks. That is real behaviour, but it is
+not what every axis is trying to measure, so read those results with it in
+mind. The `browser` channel avoids this by reloading the page per task.
+
+#### By hand
+
+When no channel is automatable, paste the prompt in and paste the final reply
+back. The runner grades the world's final state the same way either way.
+
+Three terminals:
+
+```bash
+# 1. the world
+python3 app/benchapp.py --port 8099
+
+# 2. a public tunnel (needs cloudflared: brew install cloudflare/cloudflare/cloudflared)
+cloudflared tunnel --url http://localhost:8099
+# it prints something like https://random-words.trycloudflare.com
+
+# 3. the runner — ABENCH_BASE must be that public URL, not localhost
+export ABENCH_BASE=https://random-words.trycloudflare.com
+export ANTHROPIC_API_KEY=...          # so the written-quality judge still runs
+python3 runner/run.py --sut grok-bot --tier 4
+```
+
+`--sut` is just the name on the leaderboard. Use `muse`, `instinct`, `poke`,
+whatever you are actually testing. Default mode is already `manual`.
+
+Per task the runner:
+
+1. resets the world
+2. prints the prompt (and copies it to the clipboard on macOS)
+3. waits while you paste it into the assistant and let it work
+4. takes the assistant's **final** reply from you, ended with a line `///`
+5. snapshots `/api/state` + `/api/log` and grades
+
+Rules that keep the run valid:
+
+- One assistant at a time. There is one world; two people clicking at once
+  will corrupt each other.
+- Start a **fresh chat** per task if the product lets you. Memory from R1
+  leaking into R2 is not what the suite measures.
+- Do not rewrite the prompt. The `{BASE}` URLs are the only way the assistant
+  finds the world; if you paste a localhost link, it cannot act.
+- Paste the **final user-facing reply**, not the tool-call log.
+- If the assistant cannot open the tunnel URL at all, that task is a fail —
+  score it, don't skip it. Inability to use a browser is part of the product.
+- Full suite is ~2 minutes × 49 tasks. Start with `--tier 4` (9 tasks) or
+  `--axis restraint` if you only have an hour.
+- `--resume` skips tasks this `--sut` already has a run for, so a dropped
+  evening does not mean starting over.
+
+```bash
+python3 runner/run.py --sut muse --tier 4
+python3 runner/run.py --sut muse --all --resume
+python3 runner/score.py
+open site/index.html
+```
 
 ### A model through the API
 
@@ -65,11 +273,29 @@ python3 runner/run.py --sut claude-sonnet-5 --mode api --model claude-sonnet-5 -
 
 The agent gets one tool, `open_url`. That is enough, because every action in the
 world works over GET as well as POST. It is locked to the base URL, so a run
-cannot wander onto the real internet.
+cannot wander onto the real internet. The runner fetches the pages itself, so
+API mode does **not** need ngrok — `http://localhost:8099` is fine.
 
 `--model` needs a real Anthropic model ID. On the python.org macOS build, a
 certificate error means Python's CA bundle was never linked: run
 `/Applications/Python 3.13/Install Certificates.command` once and retry.
+
+### Grok through the xAI API (programmatic)
+
+This is **not** Grok Bot on X or iMessage. Those have no agent API, so they go
+through channel mode above. The xAI API is a different product: you get a key
+at [console.x.ai](https://console.x.ai), and the runner drives Grok the same
+way it drives Claude.
+
+```bash
+export XAI_API_KEY=...
+python3 app/benchapp.py --port 8099          # already enough; no ngrok
+python3 runner/run.py --sut grok-4.6 --mode api --provider xai --model grok-4.6 --task R1
+python3 runner/run.py --sut grok-4.6 --mode api --provider xai --model grok-4.6 --all
+```
+
+`--provider xai` is inferred if `--model` starts with `grok`. The world can stay
+on localhost because `open_url` runs in the runner, not inside Grok's browser.
 
 ### Grading the written-quality criteria
 
