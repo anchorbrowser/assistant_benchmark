@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Multi-step errands — abench dimension</title>
+<meta name="description" content="How assistants rank on multi-step errands in abench.">
+<meta property="og:title" content="Multi-step errands — abench dimension">
+<meta property="og:description" content="How assistants rank on multi-step errands in abench.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://assistantbenchmark.com/og/cover.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://assistantbenchmark.com/og/cover.svg">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="sheet">
+<header class="top">
+  <a class="brand" href="../index.html">abench</a>
+  <nav>
+    <a href="../index.html" class="">Scorecard</a>
+    <a href="../dimensions/index.html" class="on">Dimensions</a>
+    <a href="../compare.html" class="">Head to head</a>
+    <a href="../tasks.html" class="">Tasks</a>
+    <a href="../methodology.html" class="">Methodology</a>
+    <a href="../about.html" class="">About</a>
+  </nav>
+  <span class="grow"></span>
+  <span class="stamp">7 agents &middot; 317 runs &middot; world frozen 2026-09-17</span>
+</header>
+<div class="crumb"><a href="index.html">Dimensions</a> &rsaquo; Multi-step errands</div><h1>Multi-step errands</h1><p class="lede">Errands that span several surfaces and only count if every leg lands.</p><p class="muted">Weight in the index: <b>20%</b> &middot; 6 tasks: M1, M2, M3, M4, M5, MH1</p><h2>Ranking</h2><table data-sortable><thead><tr><th class="nosort">#</th><th class="nosort">System</th><th>Score</th></tr></thead><tbody><tr><td class="rank num">1</td><td><a href="../agents/reference-correct.html">Reference (correct)</a></td><td class="num" data-sort="1.0">100</td></tr><tr><td class="rank num">2</td><td><a href="../agents/claude-sonnet-5.html">Claude Sonnet 5</a></td><td class="num" data-sort="0.8611">86</td></tr><tr><td class="rank num">3</td><td><a href="../agents/grok-bot.html">Grok Bot</a></td><td class="num" data-sort="0.6806">68</td></tr><tr><td class="rank num">4</td><td><a href="../agents/reference-careless.html">Reference (careless)</a></td><td class="num" data-sort="0.6667">67</td></tr><tr><td class="rank num">5</td><td><a href="../agents/hermes.html">Hermes</a></td><td class="num" data-sort="0.6667">67</td></tr><tr><td class="rank num">6</td><td><a href="../agents/openclaw.html">OpenClaw</a></td><td class="num" data-sort="0.2738">27</td></tr><tr><td class="rank num">7</td><td><a href="../agents/x.html">X (manual)</a></td><td class="num" data-sort="0.0833">8</td></tr></tbody></table>
+<footer>
+  Scores come from the world's final state and action log, not the assistant's own
+  report. Reference rows are scripted, not real systems: they set the ceiling and the
+  floor. Every trajectory is in <a href="../api/v1/runs.jsonl"><code>api/v1/runs.jsonl</code></a>.
+  &middot; suite 0.2.0 &middot; built 2026-09-18
+</footer>
+</div>
+<script src="../app.js"></script>
+</body>
+</html>

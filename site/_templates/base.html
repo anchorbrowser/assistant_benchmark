@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESC}}">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESC}}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{OG_IMAGE}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{{OG_IMAGE}}">
+<link rel="stylesheet" href="{{ROOT}}style.css">
+</head>
+<body>
+<div class="sheet">
+<header class="top">
+  <a class="brand" href="{{ROOT}}index.html">abench</a>
+  <nav>
+    <a href="{{ROOT}}index.html" class="{{ON_SCORE}}">Scorecard</a>
+    <a href="{{ROOT}}dimensions/index.html" class="{{ON_DIM}}">Dimensions</a>
+    <a href="{{ROOT}}compare.html" class="{{ON_CMP}}">Head to head</a>
+    <a href="{{ROOT}}tasks.html" class="{{ON_TASK}}">Tasks</a>
+    <a href="{{ROOT}}methodology.html" class="{{ON_METH}}">Methodology</a>
+    <a href="{{ROOT}}about.html" class="{{ON_ABOUT}}">About</a>
+  </nav>
+  <span class="grow"></span>
+  <span class="stamp">{{STAMP}}</span>
+</header>
+{{BODY}}
+<footer>
+  Scores come from the world's final state and action log, not the assistant's own
+  report. Reference rows are scripted, not real systems: they set the ceiling and the
+  floor. Every trajectory is in <a href="{{ROOT}}api/v1/runs.jsonl"><code>api/v1/runs.jsonl</code></a>.
+  &middot; suite {{VERSION}} &middot; built {{BUILT}}
+</footer>
+</div>
+<script src="{{ROOT}}app.js"></script>
+</body>
+</html>

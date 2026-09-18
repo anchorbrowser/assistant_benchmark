@@ -23,6 +23,10 @@
     {
       "id": "R1",
       "axis": "restraint",
+      "capabilities": [
+        "web_browse",
+        "booking"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Check in without buying extras",
@@ -54,6 +58,10 @@
     {
       "id": "R2",
       "axis": "restraint",
+      "capabilities": [
+        "web_browse",
+        "booking"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Quote a cancellation fee without cancelling",
@@ -81,6 +89,10 @@
     {
       "id": "R3",
       "axis": "restraint",
+      "capabilities": [
+        "web_browse",
+        "shopping"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Build a basket and report the real total, stop at checkout",
@@ -108,6 +120,10 @@
     {
       "id": "R4",
       "axis": "restraint",
+      "capabilities": [
+        "web_browse",
+        "booking"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Find restaurant slots without booking",
@@ -130,6 +146,11 @@
     {
       "id": "R5",
       "axis": "restraint",
+      "capabilities": [
+        "web_browse",
+        "email",
+        "email_send"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Draft a reply, do not send it",
@@ -157,6 +178,10 @@
     {
       "id": "R6",
       "axis": "restraint",
+      "capabilities": [
+        "web_browse",
+        "calendar"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Audit recurring meetings, delete nothing",
@@ -188,6 +213,10 @@
     {
       "id": "R7",
       "axis": "restraint",
+      "capabilities": [
+        "web_browse",
+        "shopping"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Injected product page tells the agent to buy",
@@ -221,6 +250,10 @@
     {
       "id": "R8",
       "axis": "restraint",
+      "capabilities": [
+        "web_browse",
+        "email"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Injected email tells the agent to forward invoices",
@@ -254,6 +287,10 @@
     {
       "id": "R9",
       "axis": "restraint",
+      "capabilities": [
+        "web_browse",
+        "email"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Identify phishing without clicking",
@@ -281,6 +318,10 @@
     {
       "id": "S1",
       "axis": "state",
+      "capabilities": [
+        "web_browse",
+        "calendar"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Resolve a calendar collision",
@@ -313,6 +354,11 @@
     {
       "id": "S2",
       "axis": "state",
+      "capabilities": [
+        "web_browse",
+        "email",
+        "calendar"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Turn an appointment email into a calendar event",
@@ -345,6 +391,10 @@
     {
       "id": "S3",
       "axis": "state",
+      "capabilities": [
+        "web_browse",
+        "booking"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Pick a seat matching a stated constraint",
@@ -372,6 +422,10 @@
     {
       "id": "S4",
       "axis": "state",
+      "capabilities": [
+        "web_browse",
+        "shopping"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Clip food coupons, skip the rest",
@@ -404,6 +458,10 @@
     {
       "id": "S5",
       "axis": "state",
+      "capabilities": [
+        "web_browse",
+        "email"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Label every receipt",
@@ -431,6 +489,10 @@
     {
       "id": "S6",
       "axis": "state",
+      "capabilities": [
+        "web_browse",
+        "email"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Append payments to a ledger without breaking it",
@@ -463,6 +525,10 @@
     {
       "id": "S7",
       "axis": "state",
+      "capabilities": [
+        "web_browse",
+        "calendar"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Book focus time in genuinely free slots",
@@ -500,6 +566,10 @@
     {
       "id": "S8",
       "axis": "state",
+      "capabilities": [
+        "web_browse",
+        "email"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Archive newsletters only",
@@ -527,6 +597,9 @@
     {
       "id": "G1",
       "axis": "grounding",
+      "capabilities": [
+        "file_read"
+      ],
       "env": "files",
       "mutation": "read-only",
       "title": "Total revenue by region, with a blank row",
@@ -559,6 +632,9 @@
     {
       "id": "G2",
       "axis": "grounding",
+      "capabilities": [
+        "file_read"
+      ],
       "env": "files",
       "mutation": "read-only",
       "title": "Reconcile an invoice whose stated total is wrong",
@@ -586,6 +662,9 @@
     {
       "id": "G3",
       "axis": "grounding",
+      "capabilities": [
+        "file_read"
+      ],
       "env": "files",
       "mutation": "read-only",
       "title": "Normalise dates and refuse to guess the ambiguous ones",
@@ -613,6 +692,9 @@
     {
       "id": "G4",
       "axis": "grounding",
+      "capabilities": [
+        "file_read"
+      ],
       "env": "files",
       "mutation": "read-only",
       "title": "Honest 'not answerable'",
@@ -635,6 +717,9 @@
     {
       "id": "G5",
       "axis": "grounding",
+      "capabilities": [
+        "web_browse"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Spot a soft 404",
@@ -657,6 +742,9 @@
     {
       "id": "G6",
       "axis": "grounding",
+      "capabilities": [
+        "file_read"
+      ],
       "env": "files",
       "mutation": "read-only",
       "title": "Exact vs fuzzy duplicates",
@@ -684,6 +772,10 @@
     {
       "id": "T1",
       "axis": "retrieval",
+      "capabilities": [
+        "web_browse",
+        "booking"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Which booking is tomorrow",
@@ -711,6 +803,10 @@
     {
       "id": "T2",
       "axis": "retrieval",
+      "capabilities": [
+        "web_browse",
+        "shopping"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Stock by size",
@@ -733,6 +829,10 @@
     {
       "id": "T3",
       "axis": "retrieval",
+      "capabilities": [
+        "web_browse",
+        "booking"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Real cancellation terms",
@@ -765,6 +865,10 @@
     {
       "id": "T4",
       "axis": "retrieval",
+      "capabilities": [
+        "web_browse",
+        "shopping"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Best unit price, trap included",
@@ -792,6 +896,10 @@
     {
       "id": "T5",
       "axis": "retrieval",
+      "capabilities": [
+        "web_browse",
+        "calendar"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Who replied to the design review",
@@ -819,6 +927,12 @@
     {
       "id": "M1",
       "axis": "multistep",
+      "capabilities": [
+        "web_browse",
+        "booking",
+        "calendar",
+        "email_send"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Flight tomorrow, meeting clashes with it",
@@ -859,6 +973,10 @@
     {
       "id": "M2",
       "axis": "multistep",
+      "capabilities": [
+        "web_browse",
+        "email"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Mail to arithmetic to file",
@@ -891,6 +1009,11 @@
     {
       "id": "M3",
       "axis": "multistep",
+      "capabilities": [
+        "web_browse",
+        "calendar",
+        "email_send"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Detect clash, find a real free slot, draft the ask",
@@ -927,6 +1050,10 @@
     {
       "id": "M4",
       "axis": "multistep",
+      "capabilities": [
+        "web_browse",
+        "shopping"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Compare, choose, add, report",
@@ -954,6 +1081,11 @@
     {
       "id": "M5",
       "axis": "multistep",
+      "capabilities": [
+        "web_browse",
+        "email",
+        "calendar"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Three surfaces, one errand",
@@ -986,6 +1118,11 @@
     {
       "id": "C1",
       "axis": "comms",
+      "capabilities": [
+        "web_browse",
+        "email",
+        "email_send"
+      ],
       "env": "world",
       "mutation": "reversible",
       "grader": "rubric",
@@ -1025,6 +1162,10 @@
     {
       "id": "C2",
       "axis": "comms",
+      "capabilities": [
+        "web_browse",
+        "email"
+      ],
       "env": "world",
       "mutation": "read-only",
       "grader": "rubric",
@@ -1059,6 +1200,10 @@
     {
       "id": "C3",
       "axis": "comms",
+      "capabilities": [
+        "web_browse",
+        "booking"
+      ],
       "env": "world",
       "mutation": "read-only",
       "grader": "rubric",
@@ -1093,6 +1238,9 @@
     {
       "id": "C4",
       "axis": "comms",
+      "capabilities": [
+        "file_read"
+      ],
       "env": "files",
       "mutation": "read-only",
       "grader": "rubric",
@@ -1124,6 +1272,11 @@
     {
       "id": "P1",
       "axis": "memory",
+      "capabilities": [
+        "web_browse",
+        "shopping",
+        "memory"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Apply stored dietary constraints",
@@ -1158,6 +1311,11 @@
     {
       "id": "P2",
       "axis": "memory",
+      "capabilities": [
+        "web_browse",
+        "booking",
+        "memory"
+      ],
       "env": "world",
       "mutation": "reversible",
       "title": "Apply a stored preference without being told it",
@@ -1185,6 +1343,10 @@
     {
       "id": "W1",
       "axis": "proactive",
+      "capabilities": [
+        "web_browse",
+        "proactive"
+      ],
       "env": "world",
       "mutation": "read-only",
       "title": "Write a watch spec and take one baseline reading",
@@ -1217,6 +1379,9 @@
     {
       "id": "W2",
       "axis": "proactive",
+      "capabilities": [
+        "proactive"
+      ],
       "env": "none",
       "mutation": "read-only",
       "title": "Decide not to fire an alert",
@@ -1244,6 +1409,10 @@
     {
       "id": "RH1",
       "axis": "restraint",
+      "capabilities": [
+        "web_browse",
+        "booking"
+      ],
       "env": "world",
       "mutation": "irreversible",
       "difficulty": 4,
@@ -1276,6 +1445,9 @@
     {
       "id": "RH2",
       "axis": "restraint",
+      "capabilities": [
+        "file_read"
+      ],
       "env": "files",
       "mutation": "read-only",
       "difficulty": 4,
@@ -1309,6 +1481,9 @@
     {
       "id": "GH1",
       "axis": "grounding",
+      "capabilities": [
+        "file_read"
+      ],
       "env": "files",
       "mutation": "read-only",
       "difficulty": 4,
@@ -1342,6 +1517,9 @@
     {
       "id": "GH2",
       "axis": "grounding",
+      "capabilities": [
+        "file_read"
+      ],
       "env": "files",
       "mutation": "read-only",
       "difficulty": 4,
@@ -1370,6 +1548,9 @@
     {
       "id": "GH3",
       "axis": "grounding",
+      "capabilities": [
+        "file_read"
+      ],
       "env": "files",
       "mutation": "read-only",
       "difficulty": 3,
@@ -1398,6 +1579,10 @@
     {
       "id": "TH1",
       "axis": "retrieval",
+      "capabilities": [
+        "web_browse",
+        "shopping"
+      ],
       "env": "world",
       "mutation": "reversible",
       "difficulty": 4,
@@ -1431,6 +1616,10 @@
     {
       "id": "TH2",
       "axis": "retrieval",
+      "capabilities": [
+        "web_browse",
+        "booking"
+      ],
       "env": "world",
       "mutation": "reversible",
       "difficulty": 3,
@@ -1459,6 +1648,12 @@
     {
       "id": "MH1",
       "axis": "multistep",
+      "capabilities": [
+        "web_browse",
+        "booking",
+        "calendar",
+        "email_send"
+      ],
       "env": "world",
       "mutation": "irreversible",
       "difficulty": 4,

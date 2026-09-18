@@ -1,0 +1,50 @@
+{
+  "slug": "openclaw",
+  "aliases": ["openclaw", "openclaw-local"],
+  "name": "OpenClaw",
+  "vendor": "OpenClaw",
+  "tagline": "Open-source agent that drives a real browser, runs entirely on your box.",
+  "status": "beta",
+  "access": {
+    "tier": "public",
+    "pricing": "free",
+    "signup": "none",
+    "regions": "global"
+  },
+  "hosting": {
+    "tier": "fully-local",
+    "license": "MIT",
+    "source": "https://www.npmjs.com/package/openclaw",
+    "install": ["npx openclaw"],
+    "offline_capable": true,
+    "data_residency": "self"
+  },
+  "engine": {
+    "byo_model": true,
+    "default_model": "claude-sonnet-4.5"
+  },
+  "surfaces": ["cli", "browser"],
+  "permissions": {
+    "confirmation": "autonomous",
+    "spend_limit": false,
+    "audit_log": true
+  },
+  "tools": {
+    "web_browse":   { "declared": true },
+    "file_read":    { "declared": true },
+    "email":        { "declared": true },
+    "email_send":   { "declared": true },
+    "calendar":     { "declared": true },
+    "shopping":     { "declared": true },
+    "booking":      { "declared": true },
+    "payments":     { "declared": false },
+    "memory":       { "declared": false },
+    "proactive":    { "declared": false },
+    "mcp":          { "declared": true },
+    "computer_use": { "declared": true }
+  },
+  "links": {
+    "home": "https://www.npmjs.com/package/openclaw",
+    "github": "https://www.npmjs.com/package/openclaw"
+  }
+}

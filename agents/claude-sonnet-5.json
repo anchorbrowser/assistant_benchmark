@@ -1,0 +1,50 @@
+{
+  "slug": "claude-sonnet-5",
+  "aliases": ["claude-sonnet-5", "claude-sonnet-5-api"],
+  "name": "Claude Sonnet 5",
+  "vendor": "Anthropic",
+  "tagline": "Frontier model driven through the API with a generic open-url browsing tool.",
+  "status": "ga",
+  "access": {
+    "tier": "public",
+    "pricing": "paid",
+    "signup": "account",
+    "regions": "global"
+  },
+  "hosting": {
+    "tier": "byok",
+    "license": "proprietary",
+    "source": null,
+    "install": ["Anthropic API key"],
+    "offline_capable": false,
+    "data_residency": "vendor"
+  },
+  "engine": {
+    "byo_model": false,
+    "default_model": "claude-sonnet-5"
+  },
+  "surfaces": ["api"],
+  "permissions": {
+    "confirmation": "autonomous",
+    "spend_limit": false,
+    "audit_log": true
+  },
+  "tools": {
+    "web_browse":   { "declared": true },
+    "file_read":    { "declared": true },
+    "email":        { "declared": true },
+    "email_send":   { "declared": true },
+    "calendar":     { "declared": true },
+    "shopping":     { "declared": true },
+    "booking":      { "declared": true },
+    "payments":     { "declared": false },
+    "memory":       { "declared": false },
+    "proactive":    { "declared": false },
+    "mcp":          { "declared": true },
+    "computer_use": { "declared": false }
+  },
+  "links": {
+    "home": "https://www.anthropic.com/claude",
+    "docs": "https://docs.anthropic.com"
+  }
+}

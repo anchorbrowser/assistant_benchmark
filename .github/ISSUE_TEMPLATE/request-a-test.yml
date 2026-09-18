@@ -1,0 +1,55 @@
+name: Request a test
+description: Ask for an assistant to be added to the benchmark.
+title: "[test] <assistant name>"
+labels: ["request-a-test"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Want an assistant on the board? Tell us what it is and how to reach it.
+  - type: input
+    id: name
+    attributes:
+      label: Assistant name
+      placeholder: e.g. Muse
+    validations:
+      required: true
+  - type: input
+    id: homepage
+    attributes:
+      label: Homepage or docs
+      placeholder: https://
+    validations:
+      required: true
+  - type: dropdown
+    id: access
+    attributes:
+      label: Availability
+      options: ["Public", "Invite", "Waitlist", "Internal", "Unknown"]
+    validations:
+      required: true
+  - type: dropdown
+    id: hosting
+    attributes:
+      label: How is it hosted?
+      options:
+        - "Closed SaaS (vendor cloud only)"
+        - "BYO key (vendor-hosted, you supply model keys)"
+        - "Open client (client open, backend hosted)"
+        - "Self-hostable (full stack on your box, vendor model API)"
+        - "Fully local (runs offline end to end)"
+        - "Unknown"
+    validations:
+      required: true
+  - type: textarea
+    id: how
+    attributes:
+      label: How would we reach it?
+      description: API, a channel (iMessage / email / webhook), a CLI, a browser extension?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why is it interesting?
+      placeholder: What does it claim to do that's worth measuring?

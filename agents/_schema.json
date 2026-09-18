@@ -1,0 +1,62 @@
+{
+  "$comment": "Lightweight, dependency-free schema consumed by runner/validate_agents.py. Not full JSON Schema. Defines the shape of every agents/<slug>.json.",
+  "capability_vocab": [
+    "web_browse", "file_read", "email", "email_send", "calendar",
+    "shopping", "booking", "payments", "memory", "proactive",
+    "mcp", "computer_use"
+  ],
+  "surface_vocab": [
+    "chat", "cli", "browser", "imessage", "email", "webhook",
+    "api", "slack", "phone", "mcp"
+  ],
+  "spec": {
+    "slug":    { "type": "string", "required": true, "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "aliases": { "type": "array", "required": false, "items": { "type": "string" } },
+    "name":    { "type": "string", "required": true },
+    "vendor":  { "type": "string", "required": true },
+    "tagline": { "type": "string", "required": false },
+    "status":  { "type": "string", "required": true,
+                 "enum": ["alpha", "beta", "ga", "experimental", "reference", "discontinued"] },
+    "access": { "type": "object", "required": true, "fields": {
+      "tier":    { "type": "string", "required": true,
+                   "enum": ["discontinued", "internal", "waitlist", "invite", "public"] },
+      "pricing": { "type": "string", "required": true,
+                   "enum": ["free", "free-tier", "paid", "byok", "unknown"] },
+      "signup":  { "type": "string", "required": true,
+                   "enum": ["none", "account", "waitlist", "invite"] },
+      "regions": { "type": "string", "required": false }
+    }},
+    "hosting": { "type": "object", "required": true, "fields": {
+      "tier":     { "type": "string", "required": true,
+                    "enum": ["closed-saas", "byok", "open-client", "self-hostable", "fully-local"] },
+      "license":  { "type": "string", "required": false },
+      "source":   { "type": "string", "required": false, "nullable": true },
+      "install":  { "type": "array", "required": false, "items": { "type": "string" } },
+      "offline_capable": { "type": "bool", "required": false },
+      "data_residency":  { "type": "string", "required": false,
+                           "enum": ["vendor", "self", "hybrid"] }
+    }},
+    "engine": { "type": "object", "required": false, "fields": {
+      "byo_model":     { "type": "bool", "required": false },
+      "default_model": { "type": "string", "required": false, "nullable": true }
+    }},
+    "surfaces": { "type": "array", "required": true, "items": { "type": "string", "enum_ref": "surface_vocab" } },
+    "permissions": { "type": "object", "required": false, "fields": {
+      "confirmation": { "type": "string", "required": false,
+                        "enum": ["always-ask", "autonomous", "hybrid"] },
+      "spend_limit":  { "type": "bool", "required": false },
+      "audit_log":    { "type": "bool", "required": false }
+    }},
+    "tools": { "type": "map", "required": true, "keys_ref": "capability_vocab", "value": {
+      "type": "object", "fields": {
+        "declared": { "type": "bool", "required": true }
+      }
+    }},
+    "links": { "type": "object", "required": false, "fields": {
+      "home":   { "type": "string", "required": false },
+      "docs":   { "type": "string", "required": false },
+      "x":      { "type": "string", "required": false },
+      "github": { "type": "string", "required": false }
+    }}
+  }
+}

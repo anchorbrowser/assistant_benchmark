@@ -9,13 +9,41 @@ runner loads it automatically.
 
 ---
 
+## See the leaderboard
+
+The site is prebuilt in `site/` (and tracked in git), so to just look at it you don't
+need to run anything — open the file:
+
+```bash
+open site/index.html                       # macOS  (Linux: xdg-open, Windows: start)
+```
+
+Every page has its data baked in, so it works straight off disk. Prefer real URLs
+(and how it deploys)? Serve the folder:
+
+```bash
+python3 -m http.server 8080 -d site        # then visit http://localhost:8080
+```
+
+From there: the **scorecard** is the home page (filter by availability, hosting,
+cost, surface; sort any column), click an assistant for its **scorecard page**, or
+use the **Head to head** picker to open any matchup. It's also live at
+[assistantbenchmark.com](https://assistantbenchmark.com/).
+
+To rebuild after new runs or registry edits, see [Sixty seconds](#sixty-seconds)
+below.
+
+---
+
 ## Sixty seconds
 
 ```bash
 python3 app/benchapp.py            # the world, on http://localhost:8099
 python3 runner/demo.py             # scripted reference agents -> runs/
-python3 runner/score.py            # -> site/data.js
-open site/index.html               # the leaderboard
+python3 runner/aggregate.py        # runs/ + agents/ -> site/api/v1/*.json
+python3 runner/cards.py            # OG share cards + README badges -> site/og, site/embed
+python3 runner/build_site.py       # the multi-page site -> site/
+open site/index.html               # scorecard, head-to-head, per-agent pages
 ```
 
 That gives you a calibrated floor and ceiling before a single real system runs:
@@ -32,6 +60,40 @@ Separating those two is the whole point.
 The last column is the thing to watch. A falling line means the tiers are doing
 their job; a flat line near 100 means the suite has stopped telling systems
 apart and needs harder tasks.
+
+---
+
+## The site and the data layer
+
+Each assistant has a registry file in `agents/<slug>.json` — availability, hosting
+and openness tier, surfaces, and the capabilities it *declares*. `agents/_schema.json`
+defines the shape; `runner/validate_agents.py` gates it (and runs in CI). A run's `sut`
+string is mapped onto a slug through that file's `aliases`, so nothing already recorded
+has to be renamed.
+
+`runner/aggregate.py` joins `runs/`, `agents/` and the capability-tagged tasks into a
+versioned JSON API under `site/api/v1/`:
+
+| file | what |
+|---|---|
+| `index.json` | standings, ranked by head-to-head matchups won |
+| `agents/<slug>.json` | full scorecard: parameters, per-task detail, declared-vs-measured |
+| `h2h.json` | pairwise matrix — shared-task intersection, per-dimension winner, ties |
+| `dimensions.json`, `tasks.json`, `meta.json` | rankings, inventory, suite metadata |
+| `runs.jsonl` | every trajectory, base-URL sanitized — the evidence trail |
+
+Each index carries a bootstrap 95% confidence interval; matchups whose intervals
+overlap are shown as *too close to call* rather than a false win. `runner/score.py`
+still emits the old flat `leaderboard.json` and is left untouched.
+
+`runner/build_site.py` renders the static, dependency-free, `file://`-openable site
+from that API: a filterable scorecard with Pareto frontiers, per-agent scorecards
+(claimed vs measured capabilities), prerendered head-to-head pages, per-dimension
+rankings, a methodology page, and a curated `community/events.json` "Latest" feed.
+`runner/cards.py` produces per-agent and per-matchup OG cards plus README badges.
+
+Contributions come in through `.github/ISSUE_TEMPLATE` (request a test, submit an
+agent, report a result) or a PR adding an `agents/<slug>.json`.
 
 ---
 

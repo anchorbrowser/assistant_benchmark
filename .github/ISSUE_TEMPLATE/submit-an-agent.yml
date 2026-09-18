@@ -1,0 +1,93 @@
+name: Submit an agent
+description: Propose registry metadata for an assistant (or open a PR adding agents/<slug>.json).
+title: "[agent] <slug>"
+labels: ["submit-an-agent"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This becomes `agents/<slug>.json`. The fastest path is a pull request adding that
+        file directly — it is validated in CI against `agents/_schema.json`. Prefer not to
+        touch git? Fill this in and a maintainer will create the file.
+  - type: input
+    id: slug
+    attributes:
+      label: Slug
+      description: lowercase, dashes only — the filename and URL id
+      placeholder: e.g. muse
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Display name
+      placeholder: e.g. Muse
+    validations:
+      required: true
+  - type: input
+    id: vendor
+    attributes:
+      label: Vendor
+    validations:
+      required: true
+  - type: dropdown
+    id: access
+    attributes:
+      label: Availability tier
+      options: ["public", "invite", "waitlist", "internal", "discontinued"]
+    validations:
+      required: true
+  - type: dropdown
+    id: pricing
+    attributes:
+      label: Cost
+      options: ["free", "free-tier", "paid", "byok", "unknown"]
+    validations:
+      required: true
+  - type: dropdown
+    id: hosting
+    attributes:
+      label: Hosting tier
+      options: ["closed-saas", "byok", "open-client", "self-hostable", "fully-local"]
+    validations:
+      required: true
+  - type: checkboxes
+    id: surfaces
+    attributes:
+      label: Surfaces
+      options:
+        - label: chat
+        - label: cli
+        - label: browser
+        - label: imessage
+        - label: email
+        - label: webhook
+        - label: api
+        - label: slack
+        - label: phone
+        - label: mcp
+  - type: checkboxes
+    id: tools
+    attributes:
+      label: Declared capabilities (what the product says it can do)
+      options:
+        - label: web_browse
+        - label: file_read
+        - label: email
+        - label: email_send
+        - label: calendar
+        - label: shopping
+        - label: booking
+        - label: payments
+        - label: memory
+        - label: proactive
+        - label: mcp
+        - label: computer_use
+  - type: textarea
+    id: links
+    attributes:
+      label: Links
+      placeholder: |
+        home: https://
+        docs: https://
+        github: https://

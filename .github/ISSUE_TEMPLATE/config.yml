@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read the methodology
+    url: https://assistantbenchmark.com/methodology
+    about: How scoring, guards, the index and head-to-head work before you file.

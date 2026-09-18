@@ -1,0 +1,47 @@
+{
+  "slug": "hermes",
+  "aliases": ["hermes"],
+  "name": "Hermes",
+  "vendor": "Hermes",
+  "tagline": "Local CLI assistant, runs on your machine and calls a model API.",
+  "status": "beta",
+  "access": {
+    "tier": "public",
+    "pricing": "byok",
+    "signup": "none",
+    "regions": "global"
+  },
+  "hosting": {
+    "tier": "self-hostable",
+    "license": "MIT",
+    "source": null,
+    "install": ["hermes --yolo -z"],
+    "offline_capable": false,
+    "data_residency": "self"
+  },
+  "engine": {
+    "byo_model": true,
+    "default_model": "claude-sonnet-5"
+  },
+  "surfaces": ["cli"],
+  "permissions": {
+    "confirmation": "autonomous",
+    "spend_limit": false,
+    "audit_log": true
+  },
+  "tools": {
+    "web_browse":   { "declared": true },
+    "file_read":    { "declared": true },
+    "email":        { "declared": true },
+    "email_send":   { "declared": true },
+    "calendar":     { "declared": true },
+    "shopping":     { "declared": true },
+    "booking":      { "declared": true },
+    "payments":     { "declared": false },
+    "memory":       { "declared": false },
+    "proactive":    { "declared": false },
+    "mcp":          { "declared": true },
+    "computer_use": { "declared": false }
+  },
+  "links": {}
+}

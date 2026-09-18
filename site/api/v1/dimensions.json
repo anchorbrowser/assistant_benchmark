@@ -1,0 +1,405 @@
+{
+  "meta": {
+    "suite": "abench",
+    "version": "0.2.0",
+    "virtual_now": "2026-09-17T09:00:00+03:00",
+    "generated": "2026-09-18T14:40:13Z",
+    "axis_weights": {
+      "restraint": 0.2,
+      "state": 0.15,
+      "grounding": 0.15,
+      "retrieval": 0.1,
+      "multistep": 0.2,
+      "comms": 0.1,
+      "memory": 0.05,
+      "proactive": 0.05
+    },
+    "axis_names": {
+      "restraint": "Restraint & safety",
+      "state": "Changing things correctly",
+      "grounding": "Grounding & honesty",
+      "retrieval": "Finding things",
+      "multistep": "Multi-step errands",
+      "comms": "Writing",
+      "memory": "Applying what it knows",
+      "proactive": "Watching & deciding"
+    },
+    "capability_vocab": [
+      "web_browse",
+      "file_read",
+      "email",
+      "email_send",
+      "calendar",
+      "shopping",
+      "booking",
+      "payments",
+      "memory",
+      "proactive",
+      "mcp",
+      "computer_use"
+    ],
+    "capability_names": {
+      "web_browse": "Web browsing",
+      "file_read": "Reading files",
+      "email": "Reading email",
+      "email_send": "Composing / sending mail",
+      "calendar": "Calendar",
+      "shopping": "Shopping",
+      "booking": "Reservations",
+      "payments": "Payments",
+      "memory": "Memory & preferences",
+      "proactive": "Proactive watching",
+      "mcp": "MCP tools",
+      "computer_use": "Computer use"
+    },
+    "total_tasks": 49,
+    "difficulty_tiers": {
+      "1": "floor \u2014 any working assistant should pass",
+      "2": "ordinary errand",
+      "3": "discriminating \u2014 separates careful from quick",
+      "4": "hard \u2014 multi-constraint, or the obvious move is wrong"
+    },
+    "h2h_epsilon": 0.05,
+    "bootstrap_n": 1000,
+    "counts": {
+      "agents": 7,
+      "runs": 317,
+      "registered": 7
+    }
+  },
+  "dimensions": [
+    {
+      "axis": "restraint",
+      "name": "Restraint & safety",
+      "weight": 0.2,
+      "tasks": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "RH1",
+        "RH2"
+      ],
+      "rows": [
+        {
+          "slug": "reference-correct",
+          "score": 1.0
+        },
+        {
+          "slug": "claude-sonnet-5",
+          "score": 1.0
+        },
+        {
+          "slug": "hermes",
+          "score": 1.0
+        },
+        {
+          "slug": "grok-bot",
+          "score": 0.9091
+        },
+        {
+          "slug": "openclaw",
+          "score": 0.9091
+        },
+        {
+          "slug": "reference-careless",
+          "score": 0.0909
+        },
+        {
+          "slug": "x",
+          "score": 0.0
+        }
+      ]
+    },
+    {
+      "axis": "state",
+      "name": "Changing things correctly",
+      "weight": 0.15,
+      "tasks": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "rows": [
+        {
+          "slug": "reference-correct",
+          "score": 1.0
+        },
+        {
+          "slug": "grok-bot",
+          "score": 1.0
+        },
+        {
+          "slug": "hermes",
+          "score": 0.9464
+        },
+        {
+          "slug": "claude-sonnet-5",
+          "score": 0.9048
+        },
+        {
+          "slug": "reference-careless",
+          "score": 0.875
+        },
+        {
+          "slug": "openclaw",
+          "score": 0.6348
+        },
+        {
+          "slug": "x",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "axis": "grounding",
+      "name": "Grounding & honesty",
+      "weight": 0.15,
+      "tasks": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "GH1",
+        "GH2",
+        "GH3"
+      ],
+      "rows": [
+        {
+          "slug": "reference-correct",
+          "score": 1.0
+        },
+        {
+          "slug": "claude-sonnet-5",
+          "score": 0.9907
+        },
+        {
+          "slug": "openclaw",
+          "score": 0.9722
+        },
+        {
+          "slug": "hermes",
+          "score": 0.9583
+        },
+        {
+          "slug": "grok-bot",
+          "score": 0.7731
+        },
+        {
+          "slug": "reference-careless",
+          "score": 0.4561
+        },
+        {
+          "slug": "x",
+          "score": 0.125
+        }
+      ]
+    },
+    {
+      "axis": "retrieval",
+      "name": "Finding things",
+      "weight": 0.1,
+      "tasks": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "TH1",
+        "TH2"
+      ],
+      "rows": [
+        {
+          "slug": "reference-correct",
+          "score": 1.0
+        },
+        {
+          "slug": "hermes",
+          "score": 1.0
+        },
+        {
+          "slug": "claude-sonnet-5",
+          "score": 0.9388
+        },
+        {
+          "slug": "reference-careless",
+          "score": 0.8571
+        },
+        {
+          "slug": "grok-bot",
+          "score": 0.7143
+        },
+        {
+          "slug": "openclaw",
+          "score": 0.7143
+        },
+        {
+          "slug": "x",
+          "score": 0.0
+        }
+      ]
+    },
+    {
+      "axis": "multistep",
+      "name": "Multi-step errands",
+      "weight": 0.2,
+      "tasks": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "MH1"
+      ],
+      "rows": [
+        {
+          "slug": "reference-correct",
+          "score": 1.0
+        },
+        {
+          "slug": "claude-sonnet-5",
+          "score": 0.8611
+        },
+        {
+          "slug": "grok-bot",
+          "score": 0.6806
+        },
+        {
+          "slug": "reference-careless",
+          "score": 0.6667
+        },
+        {
+          "slug": "hermes",
+          "score": 0.6667
+        },
+        {
+          "slug": "openclaw",
+          "score": 0.2738
+        },
+        {
+          "slug": "x",
+          "score": 0.0833
+        }
+      ]
+    },
+    {
+      "axis": "comms",
+      "name": "Writing",
+      "weight": 0.1,
+      "tasks": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "rows": [
+        {
+          "slug": "reference-correct",
+          "score": 1.0
+        },
+        {
+          "slug": "claude-sonnet-5",
+          "score": 1.0
+        },
+        {
+          "slug": "grok-bot",
+          "score": 0.5
+        },
+        {
+          "slug": "hermes",
+          "score": 0.5
+        },
+        {
+          "slug": "reference-careless",
+          "score": 0.375
+        },
+        {
+          "slug": "openclaw",
+          "score": 0.0
+        }
+      ]
+    },
+    {
+      "axis": "memory",
+      "name": "Applying what it knows",
+      "weight": 0.05,
+      "tasks": [
+        "P1",
+        "P2"
+      ],
+      "rows": [
+        {
+          "slug": "reference-correct",
+          "score": 1.0
+        },
+        {
+          "slug": "hermes",
+          "score": 1.0
+        },
+        {
+          "slug": "reference-careless",
+          "score": 0.75
+        },
+        {
+          "slug": "claude-sonnet-5",
+          "score": 0.7
+        },
+        {
+          "slug": "openclaw",
+          "score": 0.7
+        },
+        {
+          "slug": "grok-bot",
+          "score": 0.125
+        }
+      ]
+    },
+    {
+      "axis": "proactive",
+      "name": "Watching & deciding",
+      "weight": 0.05,
+      "tasks": [
+        "W1",
+        "W2"
+      ],
+      "rows": [
+        {
+          "slug": "reference-correct",
+          "score": 1.0
+        },
+        {
+          "slug": "reference-careless",
+          "score": 1.0
+        },
+        {
+          "slug": "claude-sonnet-5",
+          "score": 1.0
+        },
+        {
+          "slug": "hermes",
+          "score": 1.0
+        },
+        {
+          "slug": "openclaw",
+          "score": 1.0
+        },
+        {
+          "slug": "grok-bot",
+          "score": 0.4285
+        }
+      ]
+    }
+  ]
+}

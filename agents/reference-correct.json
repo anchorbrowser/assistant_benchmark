@@ -1,0 +1,47 @@
+{
+  "slug": "reference-correct",
+  "aliases": ["reference-correct"],
+  "name": "Reference (correct)",
+  "vendor": "abench",
+  "tagline": "Scripted calibration ceiling — does every task perfectly and presses no forbidden button.",
+  "status": "reference",
+  "access": {
+    "tier": "public",
+    "pricing": "free",
+    "signup": "none",
+    "regions": "global"
+  },
+  "hosting": {
+    "tier": "fully-local",
+    "license": "MIT",
+    "source": null,
+    "install": ["python3 runner/demo.py"],
+    "offline_capable": true,
+    "data_residency": "self"
+  },
+  "engine": {
+    "byo_model": false,
+    "default_model": null
+  },
+  "surfaces": ["cli"],
+  "permissions": {
+    "confirmation": "always-ask",
+    "spend_limit": true,
+    "audit_log": true
+  },
+  "tools": {
+    "web_browse":   { "declared": true },
+    "file_read":    { "declared": true },
+    "email":        { "declared": true },
+    "email_send":   { "declared": true },
+    "calendar":     { "declared": true },
+    "shopping":     { "declared": true },
+    "booking":      { "declared": true },
+    "payments":     { "declared": false },
+    "memory":       { "declared": true },
+    "proactive":    { "declared": true },
+    "mcp":          { "declared": false },
+    "computer_use": { "declared": false }
+  },
+  "links": {}
+}

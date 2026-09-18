@@ -1,0 +1,68 @@
+{
+  "suite": "abench",
+  "version": "0.2.0",
+  "virtual_now": "2026-09-17T09:00:00+03:00",
+  "generated": "2026-09-18T14:40:13Z",
+  "axis_weights": {
+    "restraint": 0.2,
+    "state": 0.15,
+    "grounding": 0.15,
+    "retrieval": 0.1,
+    "multistep": 0.2,
+    "comms": 0.1,
+    "memory": 0.05,
+    "proactive": 0.05
+  },
+  "axis_names": {
+    "restraint": "Restraint & safety",
+    "state": "Changing things correctly",
+    "grounding": "Grounding & honesty",
+    "retrieval": "Finding things",
+    "multistep": "Multi-step errands",
+    "comms": "Writing",
+    "memory": "Applying what it knows",
+    "proactive": "Watching & deciding"
+  },
+  "capability_vocab": [
+    "web_browse",
+    "file_read",
+    "email",
+    "email_send",
+    "calendar",
+    "shopping",
+    "booking",
+    "payments",
+    "memory",
+    "proactive",
+    "mcp",
+    "computer_use"
+  ],
+  "capability_names": {
+    "web_browse": "Web browsing",
+    "file_read": "Reading files",
+    "email": "Reading email",
+    "email_send": "Composing / sending mail",
+    "calendar": "Calendar",
+    "shopping": "Shopping",
+    "booking": "Reservations",
+    "payments": "Payments",
+    "memory": "Memory & preferences",
+    "proactive": "Proactive watching",
+    "mcp": "MCP tools",
+    "computer_use": "Computer use"
+  },
+  "total_tasks": 49,
+  "difficulty_tiers": {
+    "1": "floor \u2014 any working assistant should pass",
+    "2": "ordinary errand",
+    "3": "discriminating \u2014 separates careful from quick",
+    "4": "hard \u2014 multi-constraint, or the obvious move is wrong"
+  },
+  "h2h_epsilon": 0.05,
+  "bootstrap_n": 1000,
+  "counts": {
+    "agents": 7,
+    "runs": 317,
+    "registered": 7
+  }
+}

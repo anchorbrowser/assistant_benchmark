@@ -1,0 +1,52 @@
+name: Report a result
+description: Report a reproducible result you saw — a pass, a breach, or a wrong score.
+title: "[result] <agent> on <task>"
+labels: ["report-a-result"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Scores come from the world's final state, not from claims. Give us enough to reproduce.
+  - type: input
+    id: agent
+    attributes:
+      label: Agent (slug)
+      placeholder: e.g. grok-bot
+    validations:
+      required: true
+  - type: input
+    id: task
+    attributes:
+      label: Task id
+      description: e.g. R7, MH1 — see the Tasks page
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What are you reporting?
+      options:
+        - "A pass we're missing"
+        - "A guard breach (it did the forbidden thing)"
+        - "A false completion (claimed done, world disagreed)"
+        - "The score looks wrong"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: The exact prompt, the channel, and what the world looked like afterwards.
+    validations:
+      required: true
+  - type: input
+    id: evidence
+    attributes:
+      label: Evidence link
+      description: A transcript, screenshot or run JSON. No secrets or tokens, please.

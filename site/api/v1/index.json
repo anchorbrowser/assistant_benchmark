@@ -1,0 +1,496 @@
+{
+  "meta": {
+    "suite": "abench",
+    "version": "0.2.0",
+    "virtual_now": "2026-09-17T09:00:00+03:00",
+    "generated": "2026-09-18T14:40:13Z",
+    "axis_weights": {
+      "restraint": 0.2,
+      "state": 0.15,
+      "grounding": 0.15,
+      "retrieval": 0.1,
+      "multistep": 0.2,
+      "comms": 0.1,
+      "memory": 0.05,
+      "proactive": 0.05
+    },
+    "axis_names": {
+      "restraint": "Restraint & safety",
+      "state": "Changing things correctly",
+      "grounding": "Grounding & honesty",
+      "retrieval": "Finding things",
+      "multistep": "Multi-step errands",
+      "comms": "Writing",
+      "memory": "Applying what it knows",
+      "proactive": "Watching & deciding"
+    },
+    "capability_vocab": [
+      "web_browse",
+      "file_read",
+      "email",
+      "email_send",
+      "calendar",
+      "shopping",
+      "booking",
+      "payments",
+      "memory",
+      "proactive",
+      "mcp",
+      "computer_use"
+    ],
+    "capability_names": {
+      "web_browse": "Web browsing",
+      "file_read": "Reading files",
+      "email": "Reading email",
+      "email_send": "Composing / sending mail",
+      "calendar": "Calendar",
+      "shopping": "Shopping",
+      "booking": "Reservations",
+      "payments": "Payments",
+      "memory": "Memory & preferences",
+      "proactive": "Proactive watching",
+      "mcp": "MCP tools",
+      "computer_use": "Computer use"
+    },
+    "total_tasks": 49,
+    "difficulty_tiers": {
+      "1": "floor \u2014 any working assistant should pass",
+      "2": "ordinary errand",
+      "3": "discriminating \u2014 separates careful from quick",
+      "4": "hard \u2014 multi-constraint, or the obvious move is wrong"
+    },
+    "h2h_epsilon": 0.05,
+    "bootstrap_n": 1000,
+    "counts": {
+      "agents": 7,
+      "runs": 317,
+      "registered": 7
+    }
+  },
+  "rows": [
+    {
+      "slug": "reference-correct",
+      "mode": "scripted",
+      "index": 100.0,
+      "ci_low": 100.0,
+      "ci_high": 100.0,
+      "provisional": false,
+      "axes": {
+        "restraint": 1.0,
+        "state": 1.0,
+        "grounding": 1.0,
+        "retrieval": 1.0,
+        "multistep": 1.0,
+        "comms": 1.0,
+        "memory": 1.0,
+        "proactive": 1.0
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 1.0,
+        "2": 1.0,
+        "3": 1.0,
+        "4": 1.0
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "coverage": 100,
+      "strict_pass": 100,
+      "guard_breach": 0.0,
+      "false_completion": 0.0,
+      "stalled_asking": 0.0,
+      "policy_version": [
+        1
+      ],
+      "injection_asr": 0.0,
+      "restraint": 1.0,
+      "capability": 1.0,
+      "wall_p50": 15.6,
+      "steps_p50": 2,
+      "name": "Reference (correct)",
+      "vendor": "abench",
+      "status": "reference",
+      "registered": true,
+      "access_tier": "public",
+      "pricing": "free",
+      "hosting_tier": "fully-local",
+      "surfaces": [
+        "cli"
+      ],
+      "record": {
+        "won": 6,
+        "lost": 0,
+        "even": 0
+      },
+      "frontier": {
+        "cap_restraint": true,
+        "cap_latency": true
+      },
+      "rank": 1
+    },
+    {
+      "slug": "claude-sonnet-5",
+      "mode": "api",
+      "index": 93.5,
+      "ci_low": 87.5,
+      "ci_high": 98.5,
+      "provisional": false,
+      "axes": {
+        "restraint": 1.0,
+        "state": 0.9048,
+        "grounding": 0.9907,
+        "retrieval": 0.9388,
+        "multistep": 0.8611,
+        "comms": 1.0,
+        "memory": 0.7,
+        "proactive": 1.0
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 1.0,
+        "2": 0.9748,
+        "3": 0.9538,
+        "4": 0.8135
+      },
+      "runs": 63,
+      "tasks_covered": 49,
+      "coverage": 100,
+      "strict_pass": 86,
+      "guard_breach": 1.6,
+      "false_completion": 11.1,
+      "stalled_asking": 0.0,
+      "policy_version": [
+        1
+      ],
+      "injection_asr": 0.0,
+      "restraint": 1.0,
+      "capability": 0.9136,
+      "wall_p50": 9.1,
+      "steps_p50": 3,
+      "name": "Claude Sonnet 5",
+      "vendor": "Anthropic",
+      "status": "ga",
+      "registered": true,
+      "access_tier": "public",
+      "pricing": "paid",
+      "hosting_tier": "byok",
+      "surfaces": [
+        "api"
+      ],
+      "record": {
+        "won": 4,
+        "lost": 1,
+        "even": 1
+      },
+      "frontier": {
+        "cap_restraint": false,
+        "cap_latency": true
+      },
+      "rank": 2
+    },
+    {
+      "slug": "hermes",
+      "mode": "channel",
+      "index": 86.9,
+      "ci_low": 77.7,
+      "ci_high": 96.1,
+      "provisional": false,
+      "axes": {
+        "restraint": 1.0,
+        "state": 0.9464,
+        "grounding": 0.9583,
+        "retrieval": 1.0,
+        "multistep": 0.6667,
+        "comms": 0.5,
+        "memory": 1.0,
+        "proactive": 1.0
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 1.0,
+        "2": 0.9748,
+        "3": 0.8462,
+        "4": 0.7361
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "coverage": 100,
+      "strict_pass": 90,
+      "guard_breach": 6.1,
+      "false_completion": 10.2,
+      "stalled_asking": 4.1,
+      "policy_version": [
+        2
+      ],
+      "injection_asr": 0.0,
+      "restraint": 1.0,
+      "capability": 0.8673,
+      "wall_p50": 24.8,
+      "steps_p50": null,
+      "name": "Hermes",
+      "vendor": "Hermes",
+      "status": "beta",
+      "registered": true,
+      "access_tier": "public",
+      "pricing": "byok",
+      "hosting_tier": "self-hostable",
+      "surfaces": [
+        "cli"
+      ],
+      "record": {
+        "won": 4,
+        "lost": 1,
+        "even": 1
+      },
+      "frontier": {
+        "cap_restraint": false,
+        "cap_latency": false
+      },
+      "rank": 3
+    },
+    {
+      "slug": "grok-bot",
+      "mode": "channel",
+      "index": 73.3,
+      "ci_low": 63.0,
+      "ci_high": 83.2,
+      "provisional": false,
+      "axes": {
+        "restraint": 0.9091,
+        "state": 1.0,
+        "grounding": 0.7731,
+        "retrieval": 0.7143,
+        "multistep": 0.6806,
+        "comms": 0.5,
+        "memory": 0.125,
+        "proactive": 0.4285
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 0.9857,
+        "2": 0.799,
+        "3": 0.6154,
+        "4": 0.6343
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "coverage": 100,
+      "strict_pass": 71,
+      "guard_breach": 6.1,
+      "false_completion": 16.3,
+      "stalled_asking": 0.0,
+      "policy_version": [
+        1,
+        2
+      ],
+      "injection_asr": 0.0,
+      "restraint": 0.9091,
+      "capability": 0.6031,
+      "wall_p50": 112.3,
+      "steps_p50": null,
+      "name": "Grok Bot",
+      "vendor": "xAI",
+      "status": "beta",
+      "registered": true,
+      "access_tier": "public",
+      "pricing": "paid",
+      "hosting_tier": "closed-saas",
+      "surfaces": [
+        "chat",
+        "webhook"
+      ],
+      "record": {
+        "won": 2,
+        "lost": 3,
+        "even": 1
+      },
+      "frontier": {
+        "cap_restraint": false,
+        "cap_latency": false
+      },
+      "rank": 4
+    },
+    {
+      "slug": "reference-careless",
+      "mode": "scripted",
+      "index": 56.2,
+      "ci_low": 44.8,
+      "ci_high": 67.0,
+      "provisional": false,
+      "axes": {
+        "restraint": 0.0909,
+        "state": 0.875,
+        "grounding": 0.4561,
+        "retrieval": 0.8571,
+        "multistep": 0.6667,
+        "comms": 0.375,
+        "memory": 0.75,
+        "proactive": 1.0
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 0.7,
+        "2": 0.6814,
+        "3": 0.4863,
+        "4": 0.2444
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "coverage": 100,
+      "strict_pass": 49,
+      "guard_breach": 30.6,
+      "false_completion": 51.0,
+      "stalled_asking": 0.0,
+      "policy_version": [
+        1
+      ],
+      "injection_asr": 100.0,
+      "restraint": 0.0909,
+      "capability": 0.7114,
+      "wall_p50": 7.7,
+      "steps_p50": 3,
+      "name": "Reference (careless)",
+      "vendor": "abench",
+      "status": "reference",
+      "registered": true,
+      "access_tier": "public",
+      "pricing": "free",
+      "hosting_tier": "fully-local",
+      "surfaces": [
+        "cli"
+      ],
+      "record": {
+        "won": 2,
+        "lost": 4,
+        "even": 0
+      },
+      "frontier": {
+        "cap_restraint": false,
+        "cap_latency": true
+      },
+      "rank": 5
+    },
+    {
+      "slug": "openclaw",
+      "mode": "channel",
+      "index": 63.4,
+      "ci_low": 55.1,
+      "ci_high": 72.5,
+      "provisional": false,
+      "axes": {
+        "restraint": 0.9091,
+        "state": 0.6348,
+        "grounding": 0.9722,
+        "retrieval": 0.7143,
+        "multistep": 0.2738,
+        "comms": 0.0,
+        "memory": 0.7,
+        "proactive": 1.0
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 0.79,
+        "2": 0.7395,
+        "3": 0.6269,
+        "4": 0.5833
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "coverage": 100,
+      "strict_pass": 63,
+      "guard_breach": 0.0,
+      "false_completion": 36.7,
+      "stalled_asking": 10.2,
+      "policy_version": [
+        2
+      ],
+      "injection_asr": 0.0,
+      "restraint": 0.9091,
+      "capability": 0.6136,
+      "wall_p50": 35.4,
+      "steps_p50": null,
+      "name": "OpenClaw",
+      "vendor": "OpenClaw",
+      "status": "beta",
+      "registered": true,
+      "access_tier": "public",
+      "pricing": "free",
+      "hosting_tier": "fully-local",
+      "surfaces": [
+        "cli",
+        "browser"
+      ],
+      "record": {
+        "won": 1,
+        "lost": 4,
+        "even": 1
+      },
+      "frontier": {
+        "cap_restraint": false,
+        "cap_latency": false
+      },
+      "rank": 6
+    },
+    {
+      "slug": "x",
+      "mode": "manual",
+      "index": 13.8,
+      "ci_low": 9.4,
+      "ci_high": 18.2,
+      "provisional": true,
+      "axes": {
+        "restraint": 0.0,
+        "state": 0.5,
+        "grounding": 0.125,
+        "retrieval": 0.0,
+        "multistep": 0.0833
+      },
+      "axes_covered": 5,
+      "axes_total": 8,
+      "tiers": {
+        "4": 0.1111
+      },
+      "runs": 9,
+      "tasks_covered": 9,
+      "coverage": 18,
+      "strict_pass": 0,
+      "guard_breach": 0.0,
+      "false_completion": 100.0,
+      "stalled_asking": 0.0,
+      "policy_version": [
+        1
+      ],
+      "injection_asr": null,
+      "restraint": 0.0,
+      "capability": 0.1771,
+      "wall_p50": null,
+      "steps_p50": null,
+      "name": "X (manual)",
+      "vendor": "unknown",
+      "status": "experimental",
+      "registered": true,
+      "access_tier": "internal",
+      "pricing": "unknown",
+      "hosting_tier": "closed-saas",
+      "surfaces": [
+        "chat"
+      ],
+      "record": {
+        "won": 0,
+        "lost": 6,
+        "even": 0
+      },
+      "frontier": {
+        "cap_restraint": false,
+        "cap_latency": false
+      },
+      "rank": 7
+    }
+  ]
+}
