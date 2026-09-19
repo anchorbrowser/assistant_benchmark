@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-19T20:25:53Z",
+    "generated": "2026-09-19T20:59:47Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -108,7 +108,7 @@
         },
         {
           "slug": "instinct",
-          "score": 0.4924
+          "score": 0.7708
         },
         {
           "slug": "reference-careless",
@@ -144,6 +144,10 @@
           "score": 1.0
         },
         {
+          "slug": "instinct",
+          "score": 1.0
+        },
+        {
           "slug": "hermes",
           "score": 0.9464
         },
@@ -162,10 +166,6 @@
         {
           "slug": "x",
           "score": 0.5
-        },
-        {
-          "slug": "instinct",
-          "score": 0.492
         }
       ]
     },
@@ -242,16 +242,16 @@
           "score": 1.0
         },
         {
+          "slug": "instinct",
+          "score": 0.9762
+        },
+        {
           "slug": "claude-sonnet-5",
           "score": 0.9388
         },
         {
           "slug": "reference-careless",
           "score": 0.8571
-        },
-        {
-          "slug": "instinct",
-          "score": 0.8367
         },
         {
           "slug": "grok-bot",
@@ -306,7 +306,7 @@
         },
         {
           "slug": "instinct",
-          "score": 0.38
+          "score": 0.5
         },
         {
           "slug": "x",
@@ -334,16 +334,16 @@
           "score": 1.0
         },
         {
+          "slug": "instinct",
+          "score": 0.5556
+        },
+        {
           "slug": "grok-bot",
           "score": 0.5
         },
         {
           "slug": "hermes",
           "score": 0.5
-        },
-        {
-          "slug": "instinct",
-          "score": 0.4167
         },
         {
           "slug": "reference-careless",
@@ -373,6 +373,10 @@
           "score": 1.0
         },
         {
+          "slug": "instinct",
+          "score": 1.0
+        },
+        {
           "slug": "reference-careless",
           "score": 0.75
         },
@@ -383,10 +387,6 @@
         {
           "slug": "openclaw",
           "score": 0.7
-        },
-        {
-          "slug": "instinct",
-          "score": 0.5
         },
         {
           "slug": "grok-bot",

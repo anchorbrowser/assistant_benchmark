@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-19T20:25:53Z",
+    "generated": "2026-09-19T20:59:47Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -95,11 +95,13 @@
       },
       "runs": 49,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
       "strict_pass": 100,
       "guard_breach": 0.0,
       "false_completion": 0.0,
       "stalled_asking": 0.0,
+      "identity_blocked": 0.0,
       "policy_version": [
         1
       ],
@@ -156,11 +158,13 @@
       },
       "runs": 63,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
       "strict_pass": 86,
       "guard_breach": 1.6,
       "false_completion": 11.1,
       "stalled_asking": 0.0,
+      "identity_blocked": 0.0,
       "policy_version": [
         1
       ],
@@ -217,11 +221,13 @@
       },
       "runs": 49,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
       "strict_pass": 90,
       "guard_breach": 6.1,
       "false_completion": 10.2,
       "stalled_asking": 4.1,
+      "identity_blocked": 0.0,
       "policy_version": [
         2
       ],
@@ -252,6 +258,70 @@
       "rank": 3
     },
     {
+      "slug": "instinct",
+      "mode": "channel",
+      "index": 79.3,
+      "ci_low": 64.6,
+      "ci_high": 93.6,
+      "provisional": false,
+      "axes": {
+        "restraint": 0.7708,
+        "state": 1.0,
+        "grounding": 0.9722,
+        "retrieval": 0.9762,
+        "multistep": 0.5,
+        "comms": 0.5556,
+        "memory": 1.0,
+        "proactive": 0.8035
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 0.9821,
+        "2": 0.9773,
+        "3": 0.6667,
+        "4": 0.6845
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "tasks_scored": 33,
+      "coverage": 100,
+      "strict_pass": 70,
+      "guard_breach": 0.0,
+      "false_completion": 27.3,
+      "stalled_asking": 2.0,
+      "identity_blocked": 32.7,
+      "policy_version": [
+        2,
+        3
+      ],
+      "injection_asr": 0.0,
+      "restraint": 0.7708,
+      "capability": 0.8296,
+      "wall_p50": 78.0,
+      "steps_p50": null,
+      "name": "instinct",
+      "vendor": "unknown",
+      "status": "experimental",
+      "registered": false,
+      "access_tier": "internal",
+      "pricing": "unknown",
+      "hosting_tier": "closed-saas",
+      "surfaces": [
+        "chat"
+      ],
+      "record": {
+        "won": 4,
+        "lost": 3,
+        "even": 0
+      },
+      "frontier": {
+        "cap_restraint": false,
+        "cap_latency": false
+      },
+      "rank": 4
+    },
+    {
       "slug": "openclaw",
       "mode": "channel",
       "index": 77.4,
@@ -278,11 +348,13 @@
       },
       "runs": 49,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
       "strict_pass": 76,
       "guard_breach": 0.0,
       "false_completion": 18.4,
       "stalled_asking": 8.2,
+      "identity_blocked": 0.0,
       "policy_version": [
         2
       ],
@@ -303,74 +375,13 @@
         "browser"
       ],
       "record": {
-        "won": 3,
-        "lost": 4,
+        "won": 2,
+        "lost": 5,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
-      },
-      "rank": 4
-    },
-    {
-      "slug": "reference-careless",
-      "mode": "scripted",
-      "index": 56.2,
-      "ci_low": 44.8,
-      "ci_high": 67.0,
-      "provisional": false,
-      "axes": {
-        "restraint": 0.0909,
-        "state": 0.875,
-        "grounding": 0.4561,
-        "retrieval": 0.8571,
-        "multistep": 0.6667,
-        "comms": 0.375,
-        "memory": 0.75,
-        "proactive": 1.0
-      },
-      "axes_covered": 8,
-      "axes_total": 8,
-      "tiers": {
-        "1": 0.7,
-        "2": 0.6814,
-        "3": 0.4863,
-        "4": 0.2444
-      },
-      "runs": 49,
-      "tasks_covered": 49,
-      "coverage": 100,
-      "strict_pass": 49,
-      "guard_breach": 30.6,
-      "false_completion": 51.0,
-      "stalled_asking": 0.0,
-      "policy_version": [
-        1
-      ],
-      "injection_asr": 100.0,
-      "restraint": 0.0909,
-      "capability": 0.7114,
-      "wall_p50": 7.7,
-      "steps_p50": 3,
-      "name": "Reference (careless)",
-      "vendor": "abench",
-      "status": "reference",
-      "registered": true,
-      "access_tier": "public",
-      "pricing": "free",
-      "hosting_tier": "fully-local",
-      "surfaces": [
-        "cli"
-      ],
-      "record": {
-        "won": 3,
-        "lost": 4,
-        "even": 0
-      },
-      "frontier": {
-        "cap_restraint": false,
-        "cap_latency": true
       },
       "rank": 5
     },
@@ -401,11 +412,13 @@
       },
       "runs": 49,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
       "strict_pass": 73,
       "guard_breach": 4.1,
       "false_completion": 14.3,
       "stalled_asking": 0.0,
+      "identity_blocked": 0.0,
       "policy_version": [
         1,
         2
@@ -428,8 +441,8 @@
       ],
       "record": {
         "won": 2,
-        "lost": 4,
-        "even": 1
+        "lost": 5,
+        "even": 0
       },
       "frontier": {
         "cap_restraint": false,
@@ -438,63 +451,65 @@
       "rank": 6
     },
     {
-      "slug": "instinct",
-      "mode": "channel",
-      "index": 58.5,
-      "ci_low": 47.9,
-      "ci_high": 68.7,
+      "slug": "reference-careless",
+      "mode": "scripted",
+      "index": 56.2,
+      "ci_low": 44.8,
+      "ci_high": 67.0,
       "provisional": false,
       "axes": {
-        "restraint": 0.4924,
-        "state": 0.492,
-        "grounding": 0.9722,
-        "retrieval": 0.8367,
-        "multistep": 0.38,
-        "comms": 0.4167,
-        "memory": 0.5,
-        "proactive": 0.8035
+        "restraint": 0.0909,
+        "state": 0.875,
+        "grounding": 0.4561,
+        "retrieval": 0.8571,
+        "multistep": 0.6667,
+        "comms": 0.375,
+        "memory": 0.75,
+        "proactive": 1.0
       },
       "axes_covered": 8,
       "axes_total": 8,
       "tiers": {
-        "1": 0.7757,
-        "2": 0.715,
-        "3": 0.4515,
-        "4": 0.5258
+        "1": 0.7,
+        "2": 0.6814,
+        "3": 0.4863,
+        "4": 0.2444
       },
       "runs": 49,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
-      "strict_pass": 45,
-      "guard_breach": 0.0,
-      "false_completion": 34.7,
-      "stalled_asking": 6.1,
+      "strict_pass": 49,
+      "guard_breach": 30.6,
+      "false_completion": 51.0,
+      "stalled_asking": 0.0,
+      "identity_blocked": 0.0,
       "policy_version": [
-        2
+        1
       ],
-      "injection_asr": 0.0,
-      "restraint": 0.4924,
-      "capability": 0.6287,
-      "wall_p50": 124.0,
-      "steps_p50": null,
-      "name": "instinct",
-      "vendor": "unknown",
-      "status": "experimental",
-      "registered": false,
-      "access_tier": "internal",
-      "pricing": "unknown",
-      "hosting_tier": "closed-saas",
+      "injection_asr": 100.0,
+      "restraint": 0.0909,
+      "capability": 0.7114,
+      "wall_p50": 7.7,
+      "steps_p50": 3,
+      "name": "Reference (careless)",
+      "vendor": "abench",
+      "status": "reference",
+      "registered": true,
+      "access_tier": "public",
+      "pricing": "free",
+      "hosting_tier": "fully-local",
       "surfaces": [
-        "chat"
+        "cli"
       ],
       "record": {
-        "won": 1,
+        "won": 2,
         "lost": 5,
-        "even": 1
+        "even": 0
       },
       "frontier": {
         "cap_restraint": false,
-        "cap_latency": false
+        "cap_latency": true
       },
       "rank": 7
     },
@@ -519,11 +534,13 @@
       },
       "runs": 9,
       "tasks_covered": 9,
+      "tasks_scored": 9,
       "coverage": 18,
       "strict_pass": 0,
       "guard_breach": 0.0,
       "false_completion": 100.0,
       "stalled_asking": 0.0,
+      "identity_blocked": 0.0,
       "policy_version": [
         1
       ],

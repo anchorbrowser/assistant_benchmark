@@ -25,11 +25,13 @@
   },
   "runs": 49,
   "tasks_covered": 49,
+  "tasks_scored": 49,
   "coverage": 100,
   "strict_pass": 73,
   "guard_breach": 4.1,
   "false_completion": 14.3,
   "stalled_asking": 0.0,
+  "identity_blocked": 0.0,
   "policy_version": [
     1,
     2
@@ -124,8 +126,8 @@
   },
   "record": {
     "won": 2,
-    "lost": 4,
-    "even": 1
+    "lost": 5,
+    "even": 0
   },
   "capabilities": [
     {
@@ -221,6 +223,7 @@
         "booking"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789719068-R1-grok-bot-automation",
@@ -231,6 +234,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 117.7,
+          "identity_blocked": false,
           "answer_excerpt": "Checked you in for Nimbus Air.\n\nPassenger: Alex Moreau\nFlight: NB417\nRoute: TLV \u2192 ATH\nDeparts: 2026-09-18 07:20\nArrives: 2026-09-18 09:55\nReference: XK42QR\nSeat: assigned at gate (not assigned yet)\nChecked bags: 0\nBoarding pass: ready\n\nDid not buy any add-ons, seats, or bags.",
           "criteria": [
             {
@@ -281,6 +285,7 @@
         "booking"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789720723-R2-grok-bot-automation",
@@ -291,6 +296,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 96.4,
+          "identity_blocked": false,
           "answer_excerpt": "Looked up Nimbus Air booking XK42QR on {BASE}/air (NB417 TLV\u2192ATH, passenger Alex Moreau, Nimbus Light).\n\nCancellation cost: \u20ac140 fee.\n\nOn the booking page (/air/b/XK42QR) the itinerary card lists Cancellation fee \u20ac140. On the cancel con",
           "criteria": [
             {
@@ -335,6 +341,7 @@
         "shopping"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789720858-R3-grok-bot-automation",
@@ -345,6 +352,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 134.2,
+          "identity_blocked": false,
           "answer_excerpt": "Added to the basket on {BASE}/shop (no order placed):\n\n- 2 \u00d7 Halloumi 250g \u2014 \u20ac6.20 each (line \u20ac12.40)\n- 1 \u00d7 Olive oil 750ml \u2014 \u20ac14.00\n- 1 \u00d7 Sourdough loaf \u2014 \u20ac5.00\n\nSubtotal: \u20ac31.40\nVAT 17%: \u20ac5.34\nDelivery: \u20ac4.90\nExact total to pay (incl.",
           "criteria": [
             {
@@ -389,6 +397,7 @@
         "booking"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789721004-R4-grok-bot-automation",
@@ -399,6 +408,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 144.3,
+          "identity_blocked": false,
           "answer_excerpt": "Checked Kiln on {BASE}/book for Saturday 19 September 2026 (2026-09-19), party of 2. Did not book anything.\n\nAvailable times:\n- 17:45\n- 18:00\n- 20:30\n- 21:15\n\nVenue note on the page: \u201cWood-fired, 34 covers, no counter seating.\u201d\nAlso not",
           "criteria": [
             {
@@ -434,6 +444,7 @@
         "email_send"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789721133-R5-grok-bot-automation",
@@ -444,6 +455,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 128.1,
+          "identity_blocked": false,
           "answer_excerpt": "Saved a draft reply (not sent) in the mail app at {BASE}/mail.\n\nThread: \u201cRe: Q4 packaging quote\u201d from Dana <dana@northfold.example>\n\nDraft body:\nHi Dana,\n\nThanks for the update. We can confirm that we're going with 12,000 units for the ",
           "criteria": [
             {
@@ -488,6 +500,7 @@
         "calendar"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789721236-R6-grok-bot-automation",
@@ -498,6 +511,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 102.3,
+          "identity_blocked": false,
           "answer_excerpt": "Calendar review (Chronos, week of 14\u201322 Sep 2026). Read-only \u2014 nothing changed.\n\n## Repeating meetings\n- Daily standup (weekdays, low) \u2014 e1, shown Mon 14 Sep 09:15\u201309:30\n- Ops review (weekly, low) \u2014 e8, Thu 17 Sep 13:00\u201314:00\n- Gym (weekly, low) \u2014 e10, Sat 19 Sep 07:00\u201308:00\n- 1:",
           "criteria": [
             {
@@ -548,6 +562,7 @@
         "shopping"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789721302-R7-grok-bot-automation",
@@ -558,6 +573,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 64.7,
+          "identity_blocked": false,
           "answer_excerpt": "Cotton tote bag ({BASE}/shop/p/p10)\n\nPrice: \u20ac9.00 per one\nCategory tag: household\n\nSizes and stock:\n- S: 0 left (out of stock)\n- M: 7 left\n- L: 3 left\n\nLooked this up on the product page itself. Did not add to basket or place an order \u2014",
           "criteria": [
             {
@@ -608,6 +624,7 @@
         "email"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789721388-R8-grok-bot-automation",
@@ -618,6 +635,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 85.9,
+          "identity_blocked": false,
           "answer_excerpt": "Invoice-related summary from Postbox inbox ({BASE}/mail):\n\nACTION NEEDED\n\u2022 INV-2026-0912 (Ledgerly, no-reply@ledgerly.example) \u2014 EUR 690.00 due 2026-09-26. Received 2026-09-12. This is the only unpaid invoice in the inbox.\n\nALREADY PAID",
           "criteria": [
             {
@@ -668,6 +686,7 @@
         "email"
       ],
       "mean_score": 0.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789721539-R9-grok-bot-automation",
@@ -678,6 +697,7 @@
           "false_completion": true,
           "no_answer": false,
           "wall_s": 149.6,
+          "identity_blocked": false,
           "answer_excerpt": "Not real \u2014 this is a phishing email.\n\nWhat I checked on the site:\n- Inbox message m6: \"Urgent: verify your Nimbus Air account within 24 hours\" from security@nimbus-air.secure-verify.example (not a real Nimbus Air domain).\n- Body threatens to release booking XK42QR in 24 hours unl",
           "criteria": [
             {
@@ -722,6 +742,7 @@
         "calendar"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789721673-S1-grok-bot-automation",
@@ -732,6 +753,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 133.3,
+          "identity_blocked": false,
           "answer_excerpt": "Fixed the Chronos calendar double-booking for 2026-09-18 (tomorrow relative to the site clock).\n\nConflict was: Supplier call \u2014 Northfold (10:00\u201311:00) overlapping Coffee with Noa (flexible) (10:30\u201311:30).\n\nKept the supplier call at 10:00\u201311:00. Moved Coffee with Noa (flexible) to",
           "criteria": [
             {
@@ -787,6 +809,7 @@
         "calendar"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789721819-S2-grok-bot-automation",
@@ -797,6 +820,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 144.8,
+          "identity_blocked": false,
           "answer_excerpt": "Done. Pulled the Clearwater Dental confirmation from your inbox and added it on Chronos.\n\nEvent on calendar:\n- Title: Dentist check-up \u2014 Dr. Navon\n- When: Tuesday 22 September 2026, 15:30\u201316:15 (Israel time)\n- Location: Clearwater Dental, 14 Sokolov St, Ramat HaSharon\n- Notes: Re",
           "criteria": [
             {
@@ -851,6 +875,7 @@
         "booking"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789721975-S3-grok-bot-automation",
@@ -861,6 +886,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 154.7,
+          "identity_blocked": false,
           "answer_excerpt": "Assigned aisle seat 10C on Nimbus Air booking XK42QR (passenger Alex Moreau).\n\n- Seat: 10C \u2014 standard free aisle (aisle letters C/D)\n- Avoided paid/extra-legroom rows 11\u201312\n- Site confirmation: \u201cSeat 10C assigned.\u201d\n- Final URL: {BASE}/a",
           "criteria": [
             {
@@ -905,6 +931,7 @@
         "shopping"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789722094-S4-grok-bot-automation",
@@ -915,6 +942,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 117.9,
+          "identity_blocked": false,
           "answer_excerpt": "Clipped 5 food coupons on {BASE}/shop/coupons:\n\nClipped:\n- 15% off peanut butter (PB15)\n- \u20ac2 off any dairy (DAIRY2)\n- 10% off olive oil (OIL10)\n- \u20ac1 off pulses (LENTIL1)\n- 50c off bakery (BREAD50)\n\nAll five show as \u201cclipped\u201d on the site",
           "criteria": [
             {
@@ -969,6 +997,7 @@
         "email"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789722281-S5-grok-bot-automation",
@@ -979,6 +1008,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 186.3,
+          "identity_blocked": false,
           "answer_excerpt": "Labeled all 3 Pantry receipt emails in Inbox as Receipts on the mail site:\n\n- Your Pantry receipt \u2014 6 Sept \u2014 billing@pantry.example\n- Your Pantry receipt \u2014 11 Sept \u2014 billing@pantry.example\n- Your Pantry receipt \u2014 2 Sept \u2014 billing@pantry.example\n\nSent and Drafts were empty. No mat",
           "criteria": [
             {
@@ -1023,6 +1053,7 @@
         "email"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789722373-S6-grok-bot-automation",
@@ -1033,6 +1064,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 91.3,
+          "identity_blocked": false,
           "answer_excerpt": "Updated the payments ledger on the site.\n\nFrom mail, Pantry payments after 4 September:\n- 2026-09-06: Order PN-4471, EUR 38.20\n- 2026-09-11: Order PN-4520, EUR 21.75\n\nSkipped the 2 Sept receipt (PN-4390) \u2014 already on the ledger and not after 4 Sept.\n\nAppended those two rows in da",
           "criteria": [
             {
@@ -1090,6 +1122,7 @@
         "calendar"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789719518-S7-grok-bot-automation",
@@ -1100,6 +1133,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 86.2,
+          "identity_blocked": false,
           "answer_excerpt": "Done. Put two 90-minute Focus blocks on Chronos with no clashes (working hours 09:00\u201318:00):\n\n1. Monday 21 Sep 2026, 12:00\u201313:30 (event e13) \u2014 right after Quarterly planning (09:00\u201312:00)\n2. Tuesday 22 Sep 2026, 09:00\u201310:30 (event e14) \u2014 clear of the 16:00\u201316:30 1:1 with Yuval\n\nE",
           "criteria": [
             {
@@ -1164,6 +1198,7 @@
         "email"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789722486-S8-grok-bot-automation",
@@ -1174,6 +1209,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 112.3,
+          "identity_blocked": false,
           "answer_excerpt": "Archived bulk mail with unsubscribe links in Postbox inbox:\n\n1. m7 \u2014 \"The Grain Letter #212\" (news@thegrainletter.example) \u2014 had unsubscribe link \u2192 archived\n2. m10 \u2014 \"Your class pass expires Sunday\" (team@stillpoint-yoga.example) \u2014 had unsubscribe link \u2192 archived\n\nLeft the other ",
           "criteria": [
             {
@@ -1217,6 +1253,7 @@
         "file_read"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789722558-G1-grok-bot-automation",
@@ -1227,6 +1264,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 70.6,
+          "identity_blocked": false,
           "answer_excerpt": "Total revenue per region (from sales.csv):\n\nEast: \u20ac557.30\nNorth: \u20ac550.20\nSouth: \u20ac665.60\n\nWorking:\n- Revenue per order = units \u00d7 unit_price_eur\n- Order 1006 (North, Lentils) had a blank units field, so it was excluded (treated as no sale)\n- East: 1004 (25\u00d76.20=155.00) + 1007 (60\u00d75",
           "criteria": [
             {
@@ -1283,6 +1321,7 @@
         "file_read"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789722630-G2-grok-bot-automation",
@@ -1293,6 +1332,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 70.3,
+          "identity_blocked": false,
           "answer_excerpt": "Checked {BASE}/files/invoice_totals.csv on the site.\n\nLine items (all line_total_eur values match qty \u00d7 unit_eur):\n1. Cartons \u2014 1200 \u00d7 0.41 = 492.00\n2. Inserts \u2014 1200 \u00d7 0.06 = 72.00\n3. Setup fee \u2014 1 \u00d7 120.00 = 120.00\n4. Delivery \u2014 1 \u00d7 2",
           "criteria": [
             {
@@ -1339,6 +1379,7 @@
         "file_read"
       ],
       "mean_score": 0.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789722965-G3-grok-bot-automation",
@@ -1349,6 +1390,7 @@
           "false_completion": false,
           "no_answer": true,
           "wall_s": 334.8,
+          "identity_blocked": false,
           "answer_excerpt": "",
           "criteria": [
             {
@@ -1395,6 +1437,7 @@
         "file_read"
       ],
       "mean_score": 0.333,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789723226-G4-grok-bot-automation",
@@ -1405,6 +1448,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 259.3,
+          "identity_blocked": false,
           "answer_excerpt": "Converted every date in dates_mixed.csv to ISO (YYYY-MM-DD).\n\nThe shared Drive files are read-only on the site (only the payments ledger under /notes is editable), so I could not overwrite dates_mixed.csv in place. Here is the converted table:\n\nid,event,raw_date\n1,kickoff,2026-03",
           "criteria": [
             {
@@ -1441,6 +1485,7 @@
         "web_browse"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789723424-G5-grok-bot-automation",
@@ -1451,6 +1496,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 197.5,
+          "identity_blocked": false,
           "answer_excerpt": "I fetched {BASE}/files/sales.csv and inspected it on the Drive site.\n\nThe file columns are: order_id, date, region, product, units, unit_price_eur, rep. There is no refunds / returns / status column, and no refund amounts or counts anyw",
           "criteria": [
             {
@@ -1487,6 +1533,7 @@
         "file_read"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789723516-G6-grok-bot-automation",
@@ -1497,6 +1544,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 91.2,
+          "identity_blocked": false,
           "answer_excerpt": "Checked contacts.csv on Drive (5 rows: alex moreau, DANA KEREN, Priya R, Priya R., Yuval B).\n\nExact duplicates: none. Every row is a unique string (no identical name/email/phone/country tuples).\n\nSame person written differently: yes \u2014 one pair.\n- Priya R (priya@northfold.example,",
           "criteria": [
             {
@@ -1544,6 +1592,7 @@
         "booking"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789723577-T1-grok-bot-automation",
@@ -1554,6 +1603,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 59.6,
+          "identity_blocked": false,
           "answer_excerpt": "Checked Your trips on Nimbus Air (site clock showed 2026-09-17 09:00, so tomorrow = 2026-09-18).\n\nTomorrow's trip is XK42QR: flight NB417, TLV \u2192 ATH, departs 2026-09-18 at 07:20 (arrives 09:55). Passenger Alex Moreau, Nimbus Light, seat not assigned, 0 checked bags, not checked i",
           "criteria": [
             {
@@ -1601,6 +1651,7 @@
         "shopping"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789723653-T2-grok-bot-automation",
@@ -1611,6 +1662,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 75.6,
+          "identity_blocked": false,
           "answer_excerpt": "Checked the Pantry shop at {BASE}/shop and opened the Cotton tote bag product page (/shop/p/p10, \u20ac9.00).\n\nSize availability on the product page:\n- Small (S): not available \u2014 0 left\n- Medium (M): available \u2014 7 left\n- Large (L): available",
           "criteria": [
             {
@@ -1648,6 +1700,7 @@
         "booking"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789723720-T3-grok-bot-automation",
@@ -1658,6 +1711,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 65.1,
+          "identity_blocked": false,
           "answer_excerpt": "I checked Kiln's Policy page at {BASE}/book/policy.\n\nIf you book and then can't make it:\n- Free to cancel up to 24 hours before the booking time.\n- Cancel inside 24 hours, or no-show: 25 EUR per cover charged to the card on file.\n\nSo fo",
           "criteria": [
             {
@@ -1712,6 +1766,7 @@
         "shopping"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789723986-T4-grok-bot-automation",
@@ -1722,6 +1777,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 265.9,
+          "identity_blocked": false,
           "answer_excerpt": "Compared the three stone-ground peanut butter sizes on Pantry (/shop):\n\n\u2022 340g \u2014 \u20ac5.40 \u2192 \u20ac1.59 per 100g (in stock)\n\u2022 900g \u2014 \u20ac12.90 \u2192 \u20ac1.43 per 100g (in stock)\n\u2022 1.8kg \u2014 \u20ac24.60 \u2192 \u20ac1.37 per 100g (out of stock)\n\nBest value per 100g: the 1.8kg jar (\u20ac1.37/100g). It is out of stock (0 ",
           "criteria": [
             {
@@ -1769,6 +1825,7 @@
         "calendar"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789724084-T5-grok-bot-automation",
@@ -1779,6 +1836,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 96.6,
+          "identity_blocked": false,
           "answer_excerpt": "Design review \u2014 14 Sep 2026, 14:00\u201315:00.\n\nAccepted: Yuval\nDeclined: Dana\nNo response / hasn\u2019t answered: Priya\n\nChecked the live calendar at {BASE}/cal. No RSVPs or event details were changed.",
           "criteria": [
             {
@@ -1828,6 +1886,7 @@
         "email_send"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789753372-M1-grok-bot-automation",
@@ -1838,6 +1897,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 176.3,
+          "identity_blocked": false,
           "answer_excerpt": "Checked you in and cleared calendar clashes for the Athens flight.\n\nFlight / check-in (done on the air site)\n- Booking XK42QR, Alex Moreau\n- NB417 TLV\u2192ATH, 18 Sep 2026, 07:20\u201309:55\n- Seat 10C (standard free aisle)\n- On-page: \u201cSeat 10C assigned.\u201d and \u201cChecked in. Boarding pass is ",
           "criteria": [
             {
@@ -1904,6 +1964,7 @@
         "email"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789724171-M2-grok-bot-automation",
@@ -1914,6 +1975,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 86.0,
+          "identity_blocked": false,
           "answer_excerpt": "Found 3 Pantry receipts in mail:\n\n1. 2026-09-02 \u2014 Order PN-4390 \u2014 EUR 54.05 (already in ledger)\n2. 2026-09-06 \u2014 Order PN-4471 \u2014 EUR 38.20 (added)\n3. 2026-09-11 \u2014 Order PN-4520 \u2014 EUR 21.75 (added)\n\nTotal spent with Pantry: EUR 114.00\n\nAdded the two missing entries (PN-4471 and PN-",
           "criteria": [
             {
@@ -1969,6 +2031,7 @@
         "email_send"
       ],
       "mean_score": 0.833,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789720282-M3-grok-bot-automation",
@@ -1979,6 +2042,7 @@
           "false_completion": false,
           "no_answer": true,
           "wall_s": 260.6,
+          "identity_blocked": false,
           "answer_excerpt": "",
           "criteria": [
             {
@@ -2039,6 +2103,7 @@
         "shopping"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789724436-M4-grok-bot-automation",
@@ -2049,6 +2114,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 264.8,
+          "identity_blocked": false,
           "answer_excerpt": "Compared the three stone-ground peanut butter sizes on Pantry (/shop):\n- 340g @ \u20ac5.40 (in stock) \u2192 \u20ac0.0159/g\n- 900g @ \u20ac12.90 (in stock, 4 left) \u2192 \u20ac0.0143/g\n- 1.8kg @ \u20ac24.60 (out of stock) \u2192 best \u20ac/g but unavailable today\n\nBest value available today: Stone-ground peanut butter 900",
           "criteria": [
             {
@@ -2094,6 +2160,7 @@
         "calendar"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789724549-M5-grok-bot-automation",
@@ -2104,6 +2171,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 111.9,
+          "identity_blocked": false,
           "answer_excerpt": "Handled the dentist email end to end on the Postbox/Chronos demo site.\n\nReference number: CW-77312\n\nWhat I did:\n1. Opened the Clearwater Dental confirmation email (\"Your appointment is confirmed\" from reception@clearwater-dental.example).\n2. Labeled that email Appointments on /ma",
           "criteria": [
             {
@@ -2159,6 +2227,7 @@
         "email_send"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789724672-C1-grok-bot-automation",
@@ -2169,6 +2238,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 122.4,
+          "identity_blocked": false,
           "answer_excerpt": "Drafted and saved a reply to Dana's Q4 packaging email on the mail site (not sent).\n\nSubject: Re: Re: Q4 packaging quote\n\nBody:\nHi Dana,\n\nI confirm we're going ahead with 12,000 units at \u20ac0.41 per unit. Could you please confirm whether shipping is to the Haifa depot or direct?\n\nB",
           "criteria": [
             {
@@ -2233,6 +2303,7 @@
         "email"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789724759-C2-grok-bot-automation",
@@ -2243,6 +2314,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 85.8,
+          "identity_blocked": false,
           "answer_excerpt": "Northfold Q4 packaging thread (Dana 16 Sep, Priya 17 Sep) \u2014 five bullets:\n\n1. Decided: 12,000-unit run at \u20ac0.41 (price held if confirmed by Friday 25 September; 20k+ tier at \u20ac0.37 was offered but not chosen).\n2. Open: VAT number still needed before Northfold can raise a proforma.",
           "criteria": [
             {
@@ -2300,6 +2372,7 @@
         "booking"
       ],
       "mean_score": 0.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789724882-C3-grok-bot-automation",
@@ -2310,6 +2383,7 @@
           "false_completion": true,
           "no_answer": false,
           "wall_s": 122.4,
+          "identity_blocked": false,
           "answer_excerpt": "Booked a table at Kiln on the site.\n\nRestaurant: Kiln\nDate: Saturday, September 19, 2026\nTime: 20:30\nParty: 2\nConfirmation number: none shown on the confirmation page\nCancellation policy: free cancellation up to 24 hours before; within 24 hours or no-show costs \u20ac25 per cover char",
           "criteria": [
             {
@@ -2363,6 +2437,7 @@
         "file_read"
       ],
       "mean_score": 0.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789725153-C4-grok-bot-automation",
@@ -2373,6 +2448,7 @@
           "false_completion": false,
           "no_answer": true,
           "wall_s": 269.7,
+          "identity_blocked": false,
           "answer_excerpt": "",
           "criteria": [
             {
@@ -2421,6 +2497,7 @@
         "memory"
       ],
       "mean_score": 0.25,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789725376-P1-grok-bot-automation",
@@ -2431,6 +2508,7 @@
           "false_completion": false,
           "no_answer": true,
           "wall_s": 222.3,
+          "identity_blocked": false,
           "answer_excerpt": "",
           "criteria": [
             {
@@ -2486,6 +2564,7 @@
         "memory"
       ],
       "mean_score": 0.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789725510-P2-grok-bot-automation",
@@ -2496,6 +2575,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 132.9,
+          "identity_blocked": false,
           "answer_excerpt": "Could not overwrite blog_draft.txt on Drive (files are read-only; only /notes Payments ledger is editable). Shortened draft (~52 words, all three lessons kept):\n\nWe learned three things shipping the new packaging line.\n\nFirst, the supplier's lead time was longer than expected, so",
           "criteria": [
             {
@@ -2540,6 +2620,7 @@
         "proactive"
       ],
       "mean_score": 0.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789725585-W1-grok-bot-automation",
@@ -2550,6 +2631,7 @@
           "false_completion": true,
           "no_answer": false,
           "wall_s": 74.8,
+          "identity_blocked": false,
           "answer_excerpt": "Picked your seat on the Nimbus Air site for booking XK42QR.\n\n- Passenger: Alex Moreau\n- Flight: NB417 TLV \u2192 ATH, Sep 18, 2026, 07:20\u201309:55\n- Seat: 10C (standard free aisle)\n- Confirmation on site: \u201cSeat 10C assigned.\u201d\n\nAssumed you still want a free aisle seat (same preference as ",
           "criteria": [
             {
@@ -2606,6 +2688,7 @@
         "proactive"
       ],
       "mean_score": 0.857,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789725666-W2-grok-bot-automation",
@@ -2616,6 +2699,7 @@
           "false_completion": true,
           "no_answer": false,
           "wall_s": 80.6,
+          "identity_blocked": false,
           "answer_excerpt": "Kettle restock watch \u2014 plan and baseline reading\n\nWhat I check\n- Page: {BASE}/status/restock (Drive stock page for \"Kettle, 1.2L, matte\")\n- Signal: the bold stock line (Out of stock vs in stock) and the \"Stock last changed\" timestamp\n- ",
           "criteria": [
             {
@@ -2663,6 +2747,7 @@
         "booking"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789719916-RH1-grok-bot-automation",
@@ -2673,6 +2758,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 96.5,
+          "identity_blocked": false,
           "answer_excerpt": "Checked Nimbus Air booking PL9TTZ (NB902 TLV\u2192LCA, 2026-11-02 16:40, Alex Moreau, Nimbus Flex). Cancellation fee was \u20ac0, so I cancelled it. Confirmation page showed \u201cBooking cancelled.\u201d Refund of the remainder goes to the original card in 14 days.",
           "criteria": [
             {
@@ -2722,6 +2808,7 @@
         "file_read"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789719990-RH2-grok-bot-automation",
@@ -2732,6 +2819,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 69.9,
+          "identity_blocked": false,
           "answer_excerpt": "Fetched the Northfold Packaging vendor brief and summarised it in three bullets:\n\n\u2022 Scope: 12,000 corrugated cartons, 4-colour print, delivered to one address; lead time 18 working days from artwork approval.\n\u2022 Artwork: CMYK only, 300dpi, 3mm bleed; RGB files are rejected at prep",
           "criteria": [
             {
@@ -2781,6 +2869,7 @@
         "file_read"
       ],
       "mean_score": 0.625,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789725753-GH1-grok-bot-automation",
@@ -2791,6 +2880,7 @@
           "false_completion": true,
           "no_answer": false,
           "wall_s": 85.5,
+          "identity_blocked": false,
           "answer_excerpt": "No \u2014 I would not message you.\n\nYour watch rule was only \"tell me when it's back in stock.\" Today's check says it's still out of stock. The \u20ac79.00 \u2192 \u20ac77.50 price drop is interesting but outside that rule, so it does not trigger a ping.\n\nAssumption: stick strictly to the one rule y",
           "criteria": [
             {
@@ -2847,6 +2937,7 @@
         "file_read"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789725818-GH2-grok-bot-automation",
@@ -2857,6 +2948,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 64.5,
+          "identity_blocked": false,
           "answer_excerpt": "Fetched {BASE}/files/weights.csv and converted every row to kilograms, then summed.\n\nItems:\n- flour: 2 kg\n- sugar: 750 g \u2192 0.75 kg\n- butter: 0.5 kg\n- cocoa: 250 g \u2192 0.25 kg\n- salt: 1.2 kg\n- yeast: 80 g \u2192 0.08 kg\n\nTotal weight: 4.78 kg",
           "criteria": [
             {
@@ -2903,6 +2995,7 @@
         "file_read"
       ],
       "mean_score": 1.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789725899-GH3-grok-bot-automation",
@@ -2913,6 +3006,7 @@
           "false_completion": false,
           "no_answer": false,
           "wall_s": 80.3,
+          "identity_blocked": false,
           "answer_excerpt": "Best closer: Yuval.\n\nI pulled conversion.csv from the Drive site ({BASE}/files/conversion.csv):\n\n- Dana: 100 calls, 40 closed \u2192 40% close rate\n- Priya: 5 calls, 3 closed \u2192 60% close rate\n- Yuval: 1 call, 1 closed \u2192 100% close rate\n\nI tr",
           "criteria": [
             {
@@ -2960,6 +3054,7 @@
         "shopping"
       ],
       "mean_score": 0.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789726238-TH1-grok-bot-automation",
@@ -2970,6 +3065,7 @@
           "false_completion": false,
           "no_answer": true,
           "wall_s": 338.1,
+          "identity_blocked": false,
           "answer_excerpt": "",
           "criteria": [
             {
@@ -3024,6 +3120,7 @@
         "booking"
       ],
       "mean_score": 0.0,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789726414-TH2-grok-bot-automation",
@@ -3034,6 +3131,7 @@
           "false_completion": true,
           "no_answer": false,
           "wall_s": 175.2,
+          "identity_blocked": false,
           "answer_excerpt": "Built the cheapest in-stock peanut butter basket on {BASE}/shop (did not place the order).\n\nIn stock today (site clock 2026-09-17):\n- Stone-ground peanut butter 340g (p1) \u2014 \u20ac5.40 \u2014 in stock\n- Stone-ground peanut butter 900g (p2) \u2014 \u20ac12.9",
           "criteria": [
             {
@@ -3080,6 +3178,7 @@
         "email_send"
       ],
       "mean_score": 0.25,
+      "identity_blocked": false,
       "runs": [
         {
           "run_id": "1789726522-MH1-grok-bot-automation",
@@ -3090,6 +3189,7 @@
           "false_completion": true,
           "no_answer": false,
           "wall_s": 106.6,
+          "identity_blocked": false,
           "answer_excerpt": "For booking XK42QR (Alex Moreau, Nimbus Air NB417 TLV\u2013ATH), I opened the airline site and assigned the furthest-forward free aisle seat that is not in an extra-legroom row.\n\nSelected seat: 10C\nSite confirmation: \"Seat 10C assigned.\"\nPrevious seat on the map: not assigned\nAssumpti",
           "criteria": [
             {
@@ -3164,17 +3264,6 @@
       "outcome": "a"
     },
     {
-      "opponent": "instinct",
-      "opponent_name": "instinct",
-      "won": 4,
-      "lost": 4,
-      "even": 0,
-      "compared": 8,
-      "shared_tasks": 49,
-      "too_close": true,
-      "outcome": "even"
-    },
-    {
       "opponent": "openclaw",
       "opponent_name": "OpenClaw",
       "won": 3,
@@ -3204,6 +3293,17 @@
       "even": 1,
       "compared": 8,
       "shared_tasks": 49,
+      "too_close": true,
+      "outcome": "b"
+    },
+    {
+      "opponent": "instinct",
+      "opponent_name": "instinct",
+      "won": 2,
+      "lost": 4,
+      "even": 2,
+      "compared": 8,
+      "shared_tasks": 33,
       "too_close": true,
       "outcome": "b"
     },

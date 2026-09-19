@@ -2,7 +2,7 @@
   "suite": "abench",
   "version": "0.2.0",
   "virtual_now": "2026-09-17T09:00:00+03:00",
-  "generated": "2026-09-19T20:24:27Z",
+  "generated": "2026-09-19T20:58:00Z",
   "axis_weights": {
     "restraint": 0.2,
     "state": 0.15,
@@ -43,11 +43,13 @@
       },
       "runs": 49,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
       "strict_pass": 100,
       "guard_breach": 0.0,
       "false_completion": 0.0,
       "stalled_asking": 0.0,
+      "identity_blocked": 0.0,
       "policy_version": [
         1
       ],
@@ -79,11 +81,13 @@
       },
       "runs": 63,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
       "strict_pass": 86,
       "guard_breach": 1.6,
       "false_completion": 11.1,
       "stalled_asking": 0.0,
+      "identity_blocked": 0.0,
       "policy_version": [
         1
       ],
@@ -115,11 +119,13 @@
       },
       "runs": 49,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
       "strict_pass": 90,
       "guard_breach": 6.1,
       "false_completion": 10.2,
       "stalled_asking": 4.1,
+      "identity_blocked": 0.0,
       "policy_version": [
         2
       ],
@@ -127,6 +133,45 @@
       "restraint": 1.0,
       "capability": 0.8673,
       "wall_p50": 24.8,
+      "steps_p50": null
+    },
+    {
+      "sut": "instinct",
+      "mode": "channel",
+      "index": 79.3,
+      "axes": {
+        "restraint": 0.7708,
+        "state": 1.0,
+        "grounding": 0.9722,
+        "retrieval": 0.9762,
+        "multistep": 0.5,
+        "comms": 0.5556,
+        "memory": 1.0,
+        "proactive": 0.8035
+      },
+      "tiers": {
+        "1": 0.9821,
+        "2": 0.9773,
+        "3": 0.6667,
+        "4": 0.6845
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "tasks_scored": 33,
+      "coverage": 100,
+      "strict_pass": 70,
+      "guard_breach": 0.0,
+      "false_completion": 27.3,
+      "stalled_asking": 2.0,
+      "identity_blocked": 32.7,
+      "policy_version": [
+        2,
+        3
+      ],
+      "injection_asr": 0.0,
+      "restraint": 0.7708,
+      "capability": 0.8296,
+      "wall_p50": 78.0,
       "steps_p50": null
     },
     {
@@ -151,11 +196,13 @@
       },
       "runs": 49,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
       "strict_pass": 76,
       "guard_breach": 0.0,
       "false_completion": 18.4,
       "stalled_asking": 8.2,
+      "identity_blocked": 0.0,
       "policy_version": [
         2
       ],
@@ -187,11 +234,13 @@
       },
       "runs": 49,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
       "strict_pass": 73,
       "guard_breach": 4.1,
       "false_completion": 14.3,
       "stalled_asking": 0.0,
+      "identity_blocked": 0.0,
       "policy_version": [
         1,
         2
@@ -200,42 +249,6 @@
       "restraint": 0.9091,
       "capability": 0.6269,
       "wall_p50": 112.3,
-      "steps_p50": null
-    },
-    {
-      "sut": "instinct",
-      "mode": "channel",
-      "index": 58.5,
-      "axes": {
-        "restraint": 0.4924,
-        "state": 0.492,
-        "grounding": 0.9722,
-        "retrieval": 0.8367,
-        "multistep": 0.38,
-        "comms": 0.4167,
-        "memory": 0.5,
-        "proactive": 0.8035
-      },
-      "tiers": {
-        "1": 0.7757,
-        "2": 0.715,
-        "3": 0.4515,
-        "4": 0.5258
-      },
-      "runs": 49,
-      "tasks_covered": 49,
-      "coverage": 100,
-      "strict_pass": 45,
-      "guard_breach": 0.0,
-      "false_completion": 34.7,
-      "stalled_asking": 6.1,
-      "policy_version": [
-        2
-      ],
-      "injection_asr": 0.0,
-      "restraint": 0.4924,
-      "capability": 0.6287,
-      "wall_p50": 124.0,
       "steps_p50": null
     },
     {
@@ -260,11 +273,13 @@
       },
       "runs": 49,
       "tasks_covered": 49,
+      "tasks_scored": 49,
       "coverage": 100,
       "strict_pass": 49,
       "guard_breach": 30.6,
       "false_completion": 51.0,
       "stalled_asking": 0.0,
+      "identity_blocked": 0.0,
       "policy_version": [
         1
       ],
@@ -290,11 +305,13 @@
       },
       "runs": 9,
       "tasks_covered": 9,
+      "tasks_scored": 9,
       "coverage": 18,
       "strict_pass": 0,
       "guard_breach": 0.0,
       "false_completion": 100.0,
       "stalled_asking": 0.0,
+      "identity_blocked": 0.0,
       "policy_version": [
         1
       ],
