@@ -74,9 +74,10 @@ class Channel:
             if current != snapshot:
                 grew = len(current) - len(snapshot)
                 snapshot, last_change = current, time.time()
-                preview = current[-1][:70].replace("\n", " ")
-                note = f"{len(current)} message(s)" if grew else "still writing"
-                print(f"       … {note}, latest: {preview!r}")
+                if current:
+                    preview = current[-1][:70].replace("\n", " ")
+                    note = f"{len(current)} message(s)" if grew else "still writing"
+                    print(f"       … {note}, latest: {preview!r}")
             if last_change and time.time() - last_change >= settle:
                 break
             time.sleep(poll_every)
@@ -85,29 +86,47 @@ class Channel:
 
 # ------------------------------------------------------------------ iMessage
 class IMessage(Channel):
-    """macOS Messages. Sends with AppleScript, reads the local chat.db.
+    """Deterministic macOS Messages adapter.
 
-    Reading chat.db needs Full Disk Access for whichever app runs python
-    (Terminal, iTerm, your editor): System Settings -> Privacy & Security ->
-    Full Disk Access. Without it sqlite raises "authorization denied".
+    Prefers reading ~/Library/Messages/chat.db (needs Full Disk Access).
+    If that's blocked — Cursor, sandboxed python, no FDA — falls back to
+    the Messages accessibility tree, which is slower but needs only
+    Automation + Accessibility for System Events. No agent or vision model
+    participates in send/receive.
     """
     name = "imessage"
     DB = os.path.expanduser("~/Library/Messages/chat.db")
+    BRIDGE_SOURCE = os.path.join(os.path.dirname(__file__), "imessage_bridge.swift")
+    BRIDGE_BIN = f"/tmp/abench-imessage-bridge-{os.getuid()}"
 
     def __init__(self, to):
         if not to:
+            to = os.environ.get("ABENCH_IMESSAGE_TO")
+        if not to:
             raise ChannelError("--to is required for imessage, e.g. --to '+15551234567'")
         self.to = to
-        self._check_db()
-
-    def _check_db(self):
+        self.display_name = os.environ.get("ABENCH_IMESSAGE_NAME", "Instinct")
+        self._ui = False
+        self._before = []
+        self._last_ui = []
         try:
             self._query("SELECT 1")
-        except sqlite3.OperationalError as e:
-            raise ChannelError(
-                f"cannot read {self.DB}: {e}. Grant Full Disk Access to the app "
-                f"running python (System Settings -> Privacy & Security)."
-            ) from e
+        except sqlite3.OperationalError:
+            self._ui = True
+            self._ensure_bridge()
+            print("       imessage: using native macOS Accessibility bridge")
+
+    def _ensure_bridge(self):
+        source_mtime = os.path.getmtime(self.BRIDGE_SOURCE)
+        if (os.path.isfile(self.BRIDGE_BIN)
+                and os.path.getmtime(self.BRIDGE_BIN) >= source_mtime):
+            return
+        p = subprocess.run(
+            ["xcrun", "swiftc", self.BRIDGE_SOURCE, "-o", self.BRIDGE_BIN],
+            capture_output=True, text=True, timeout=60,
+        )
+        if p.returncode != 0:
+            raise ChannelError(f"could not compile iMessage bridge: {p.stderr[:500]}")
 
     def _query(self, sql, args=()):
         # immutable avoids fighting Messages for the write lock.
@@ -116,22 +135,35 @@ class IMessage(Channel):
             return con.execute(sql, args).fetchall()
 
     def send(self, text):
-        script = (
-            'tell application "Messages"\n'
-            '  set svc to 1st account whose service type = iMessage\n'
-            f'  set bud to participant {json.dumps(self.to)} of svc\n'
-            f'  send {json.dumps(text)} to bud\n'
-            'end tell'
-        )
-        p = subprocess.run(["osascript", "-e", script],
-                           capture_output=True, text=True, timeout=30)
+        if self._ui:
+            self._before = self._ui_inbound()
+            p = subprocess.run(
+                [self.BRIDGE_BIN, "send"], input=text,
+                capture_output=True, text=True, timeout=20,
+            )
+        else:
+            # The public `send ... to participant` AppleScript hangs on current
+            # macOS. chat.db may be readable while native AX is still the safe
+            # deterministic send path.
+            self._ensure_bridge()
+            p = subprocess.run(
+                [self.BRIDGE_BIN, "send"], input=text,
+                capture_output=True, text=True, timeout=20,
+            )
         if p.returncode != 0:
             raise ChannelError(
-                f"osascript failed: {p.stderr.strip()}. Messages.app must be signed "
-                f"in, and the terminal needs Automation permission for Messages."
+                f"iMessage bridge failed: {p.stderr.strip()}. Grant Accessibility "
+                f"to the calling terminal and leave the recipient thread open."
             )
 
     def poll(self, since):
+        if self._ui:
+            now = self._ui_inbound()
+            n = len(self._before)
+            if now[:n] == self._before:
+                return now[n:]
+            seen = set(self._before)
+            return [m for m in now if m not in seen]
         rows = self._query(
             """
             SELECT m.text, m.attributedBody
@@ -150,6 +182,43 @@ class IMessage(Channel):
             if body and body.strip():
                 out.append(body.strip())
         return out
+
+    def _ui_inbound(self):
+        """Inbound balloons from the open Messages window via native AX."""
+        try:
+            p = subprocess.run([self.BRIDGE_BIN, "read", self.display_name],
+                               capture_output=True, text=True, timeout=15)
+        except subprocess.TimeoutExpired:
+            return self._last_ui
+        if p.returncode != 0:
+            print(f"       imessage bridge poll failed: {(p.stderr or '').strip()[:200]}")
+            return self._last_ui
+        seen, out = set(), []
+        try:
+            descriptions = json.loads(p.stdout or "[]")
+        except json.JSONDecodeError:
+            descriptions = []
+        for description in descriptions:
+            body = _balloon_body(description, self.display_name)
+            if body and body not in seen:
+                seen.add(body)
+                out.append(body)
+        self._last_ui = out
+        return out
+
+
+def _balloon_body(desc, display_name="Instinct"):
+    """'Maybe: Instinct, Hey Guy!, 11:19' -> 'Hey Guy!'"""
+    desc = (desc or "").strip()
+    # Unknown senders render as "Maybe: Name, …"; saved contacts drop the prefix.
+    prefix = rf"(?:Maybe: )?{re.escape(display_name)}, "
+    # DOTALL matters: a multi-line reply is still one balloon, and without it
+    # every such message is dropped and the task waits out its whole timeout.
+    m = re.match(prefix + r"(.*), \d{1,2}:\d{2}$", desc, re.S)
+    body = (m.group(1) if m else "").strip()
+    # Messages inserts this marker when the response is visually linked to the
+    # preceding outgoing bubble. It is UI metadata, not message text.
+    return body.removeprefix("Reply, ").strip()
 
 
 def _from_attributed_body(blob):

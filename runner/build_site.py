@@ -384,6 +384,85 @@ def build_index(meta, index):
          "graded on a frozen world's final state.", og, "".join(body), meta)
 
 
+def score_breakdown(card):
+    """Expandable per-task grading detail: which criteria failed and which guards
+    breached, with the exact check behind each, so a score drop is traceable."""
+    lost = [t for t in card["per_task"]
+            if t["mean_score"] < 0.999
+            or any(r["guard_breached"] for r in t["runs"])
+            or any(r["false_completion"] for r in t["runs"])]
+    if not lost:
+        return '<p class="muted">Nothing lost points — every task scored full marks.</p>'
+
+    def what_col(c):
+        if c.get("rubric"):
+            return esc(c["rubric"])
+        if c.get("check"):
+            return f'<code>{esc(c["check"])}</code>'
+        return "&mdash;"
+
+    blocks = []
+    for t in lost:
+        badges = []
+        if any(r["guard_breached"] for r in t["runs"]):
+            badges.append('<span class="pill internal">guard breached</span>')
+        if any(r["false_completion"] for r in t["runs"]):
+            badges.append('<span class="pill wait">false completion</span>')
+        runs_html = []
+        for r in t["runs"]:
+            rows = []
+            g_total = sum((c["weight"] or 0) for c in r["criteria"] if c["passed"] is not None)
+            g_pass = sum((c["weight"] or 0) for c in r["criteria"] if c["passed"] is True)
+            for c in r["criteria"]:
+                if c["passed"] is True:
+                    res, cls = "passed", "res-pass"
+                elif c["passed"] is False:
+                    res, cls = "failed", "res-fail"
+                else:
+                    res, cls = "not graded", "muted"
+                rows.append(
+                    f'<tr class="{"cfail" if c["passed"] is False else ""}">'
+                    f'<td>{esc(c["id"])}</td>'
+                    f'<td class="num">{(c["weight"] or 0):.0f}</td>'
+                    f'<td class="{cls}">{res}</td><td>{what_col(c)}</td></tr>')
+                if c.get("reason") and c["passed"] is not True:
+                    rows.append(f'<tr><td colspan="3"></td>'
+                                f'<td class="reason">judge: {esc(c["reason"])}</td></tr>')
+            crit_tbl = ('<table class="brk"><thead><tr><th class="nosort">Criterion</th>'
+                        '<th class="nosort">Weight</th><th class="nosort">Result</th>'
+                        '<th class="nosort">What it checks</th></tr></thead><tbody>'
+                        + "".join(rows) + '</tbody></table>')
+            breached = [g for g in r["guards"] if not g["held"]]
+            if breached:
+                gl = "; ".join(f'<code>{esc(g["id"])}</code> ({esc(g.get("check") or "")})'
+                               for g in breached)
+                guard_html = (f'<p class="zero">Guard breached &rarr; whole task scored 0: {gl}</p>')
+            elif r["guards"]:
+                guard_html = f'<p class="muted small">All {len(r["guards"])} guard(s) held.</p>'
+            else:
+                guard_html = ""
+            if r["guard_breached"]:
+                math = (f'<p class="small">Score <b>0</b> — a guard breach overrides the '
+                        f'{g_pass:.0f} of {g_total:.0f} criterion points it earned.</p>')
+            else:
+                math = (f'<p class="small">Score <b>{r["score"] * 100:.0f}</b> = {g_pass:.0f} of '
+                        f'{g_total:.0f} weighted criterion points'
+                        + ('. Un-graded rows are rubric checks no judge ran, left out of the total.'
+                           if any(c["passed"] is None for c in r["criteria"]) else '.') + '</p>')
+            ans = ""
+            if r.get("no_answer"):
+                ans = '<p class="muted small">No reply captured.</p>'
+            elif r.get("answer_excerpt"):
+                ans = f'<p class="muted small">Reply: &ldquo;{esc(r["answer_excerpt"])}&hellip;&rdquo;</p>'
+            runs_html.append(crit_tbl + guard_html + math + ans)
+        blocks.append(
+            f'<details class="brk"><summary><b>{esc(t["task"])}</b> &middot; {esc(t["title"])} '
+            f'&mdash; <span class="num">{t["mean_score"] * 100:.0f}</span> &middot; '
+            f'tier {t["difficulty"]} {" ".join(badges)}</summary>'
+            f'<div class="body">{"".join(runs_html)}</div></details>')
+    return "".join(blocks)
+
+
 def build_agent(meta, index, slug):
     card = load(f"agents/{slug}.json")
     ag = card["agent"]
@@ -503,6 +582,12 @@ def build_agent(meta, index, slug):
                   f'<td class="num">{len(t["runs"])}</td></tr>')
     pt.append("</tbody></table>")
     body.append("".join(pt))
+
+    # where points were lost — the explainability layer
+    body.append('<h2>Where points were lost</h2>')
+    body.append('<p>Every task that did not score full marks, and exactly which criterion '
+                'or guard cost the points. A breached guard zeros the task on its own.</p>')
+    body.append(score_breakdown(card))
 
     # embed badge
     badge_url = f'{SITE_URL}/embed/{slug}.svg'

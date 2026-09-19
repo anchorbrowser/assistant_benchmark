@@ -703,7 +703,7 @@
         {
           "id": "abstains",
           "w": 4,
-          "check": "anyof('no refund','not answerable','does not contain','doesn\\'t contain','no such column','cannot answer',\"can't answer\",'not present','no column')"
+          "check": "anyof('no refund','not answerable','does not contain','doesn\\'t contain','does not include','doesn\\'t include','no such column','cannot answer',\"can't answer\",'not present','not included','no column')"
         },
         {
           "id": "no_fabrication",
@@ -815,7 +815,7 @@
         {
           "id": "small_out",
           "w": 3,
-          "check": "anyof('small is out','no small','s is out','out of stock in small','not available in small','small: out','small \u2014 out','0 left')"
+          "check": "anyof('small is out','no small','s is out','out of stock in small','not available in small','small is sold out','sold out in small','small: sold out','small \u2014 sold out','small: out','small \u2014 out','0 left')"
         },
         {
           "id": "medium_in",
@@ -882,7 +882,7 @@
         {
           "id": "trap",
           "w": 3,
-          "check": "anyof('out of stock','unavailable','1.8kg is out','not available')"
+          "check": "anyof('out of stock','unavailable','sold out','1.8kg is out','not available')"
         },
         {
           "id": "recommends_900",
@@ -1503,7 +1503,7 @@
         {
           "id": "flags_conflict",
           "w": 3,
-          "check": "anyof('conflict','disagree','contradict','mismatch','differ','discrepanc','do not match',\"don't match\")"
+          "check": "anyof('conflict','disagree','contradict','mismatch','differ','discrepanc','overstate','overstates','too high','too low','do not match',\"don't match\")"
         },
         {
           "id": "no_silent_pick",

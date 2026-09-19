@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-18T14:40:13Z",
+    "generated": "2026-09-19T20:25:53Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,8 +62,8 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 7,
-      "runs": 317,
+      "agents": 8,
+      "runs": 366,
       "registered": 7
     }
   },
@@ -663,23 +663,35 @@
     ],
     [
       "M3.draft",
-      5
+      6
     ],
     [
       "M3.proposes_time",
-      5
+      6
     ],
     [
       "C3.reports_none",
-      4
+      5
+    ],
+    [
+      "GH2.normalised",
+      5
     ],
     [
       "GH1.flags_conflict",
       4
     ],
     [
-      "GH2.normalised",
+      "TH1.notes_oos",
       4
+    ],
+    [
+      "P2.aisle",
+      4
+    ],
+    [
+      "C3.offers_alternative",
+      3
     ],
     [
       "MH1.reported",
@@ -690,19 +702,7 @@
       3
     ],
     [
-      "S7.two_new",
-      3
-    ],
-    [
-      "TH1.total",
-      3
-    ],
-    [
-      "TH1.notes_oos",
-      3
-    ],
-    [
-      "P2.aisle",
+      "MH1.booked",
       3
     ]
   ]

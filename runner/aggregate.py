@@ -238,22 +238,47 @@ def capability_matrix(agent, st):
 
 
 def per_task_detail(st):
+    """Per-task results with the full grading breakdown, so a page can explain exactly
+    which criterion or guard cost the points."""
     out = []
     for t in TASKS["tasks"]:
         tid = t["id"]
         if tid not in st["_per_task"]:
             continue
         runs = st["_per_task"][tid]
+        crit_meta = {c["id"]: c for c in t.get("criteria", [])}
+        guard_meta = {g["id"]: g for g in t.get("guards", [])}
+        run_list = []
+        for r in runs:
+            reasons = r.get("rubric_reasons") or {}
+            crits = []
+            for c in r.get("criteria", []):
+                m = crit_meta.get(c["id"], {})
+                crits.append({
+                    "id": c["id"], "passed": c["passed"], "weight": c.get("weight"),
+                    "source": c.get("source"),
+                    "check": m.get("check"), "rubric": m.get("rubric"),
+                    "error": c.get("error"), "reason": reasons.get(c["id"]),
+                })
+            guards = []
+            for g in r.get("guards", []):
+                m = guard_meta.get(g["id"], {})
+                guards.append({"id": g["id"], "held": g["held"],
+                               "check": m.get("check"), "error": g.get("error")})
+            run_list.append({
+                "run_id": r["run_id"], "score": r["score"],
+                "partial_credit": r.get("partial_credit"),
+                "strict_pass": r["strict_pass"], "guard_breached": r["guard_breached"],
+                "false_completion": r["false_completion"],
+                "no_answer": r.get("no_answer", False), "wall_s": r.get("wall_s"),
+                "answer_excerpt": sanitize((r.get("answer") or "")[:280]),
+                "criteria": crits, "guards": guards,
+            })
         out.append({
             "task": tid, "title": t["title"], "axis": t["axis"],
             "difficulty": t["difficulty"], "capabilities": t.get("capabilities", []),
             "mean_score": round(st["_per_task_mean"][tid], 3),
-            "runs": [{
-                "run_id": r["run_id"], "score": r["score"],
-                "strict_pass": r["strict_pass"], "guard_breached": r["guard_breached"],
-                "false_completion": r["false_completion"], "wall_s": r.get("wall_s"),
-                "answer_excerpt": sanitize((r.get("answer") or "")[:280]),
-            } for r in runs],
+            "runs": run_list,
         })
     return out
 

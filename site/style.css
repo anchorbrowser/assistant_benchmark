@@ -116,6 +116,24 @@ svg.chart{display:block;width:100%;height:auto}
 .claimgap{color:var(--breach);font-weight:600}
 .claimwin{color:var(--good)}
 
+/* score breakdown (explainability) */
+details.brk{border:1px solid var(--rule);margin:8px 0;background:var(--paper)}
+details.brk>summary{cursor:pointer;padding:10px 12px;font-size:14px;list-style:none;
+  display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+details.brk>summary::-webkit-details-marker{display:none}
+details.brk>summary::before{content:"\25B8";color:var(--quiet);font-size:11px}
+details.brk[open]>summary::before{content:"\25BE"}
+details.brk[open]>summary{border-bottom:1px solid var(--rule)}
+details.brk .body{padding:8px 14px 14px}
+table.brk{margin:6px 0}
+table.brk td,table.brk th{font-size:13px;padding:6px 8px}
+table.brk td:nth-child(4),table.brk th:nth-child(4){text-align:left;white-space:normal}
+table.brk td code{white-space:normal;word-break:break-word}
+tr.cfail{background:#b3231708}
+td.res-pass{color:var(--good)} td.res-fail{color:var(--breach);font-weight:600}
+.reason{color:var(--quiet);font-size:12.5px}
+.brk .zero{color:var(--breach);font-weight:600;margin:8px 0 4px}
+
 /* task inventory */
 .tasks{columns:2 300px;column-gap:34px;font-size:13.5px;margin-top:10px}
 .tasks div{break-inside:avoid;padding:3px 0;border-bottom:1px solid var(--wash)}

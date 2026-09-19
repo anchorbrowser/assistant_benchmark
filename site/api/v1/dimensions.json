@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-18T14:40:13Z",
+    "generated": "2026-09-19T20:25:53Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,8 +62,8 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 7,
-      "runs": 317,
+      "agents": 8,
+      "runs": 366,
       "registered": 7
     }
   },
@@ -99,12 +99,16 @@
           "score": 1.0
         },
         {
+          "slug": "openclaw",
+          "score": 1.0
+        },
+        {
           "slug": "grok-bot",
           "score": 0.9091
         },
         {
-          "slug": "openclaw",
-          "score": 0.9091
+          "slug": "instinct",
+          "score": 0.4924
         },
         {
           "slug": "reference-careless",
@@ -144,6 +148,10 @@
           "score": 0.9464
         },
         {
+          "slug": "openclaw",
+          "score": 0.9375
+        },
+        {
           "slug": "claude-sonnet-5",
           "score": 0.9048
         },
@@ -152,12 +160,12 @@
           "score": 0.875
         },
         {
-          "slug": "openclaw",
-          "score": 0.6348
-        },
-        {
           "slug": "x",
           "score": 0.5
+        },
+        {
+          "slug": "instinct",
+          "score": 0.492
         }
       ]
     },
@@ -187,6 +195,10 @@
         },
         {
           "slug": "openclaw",
+          "score": 0.9722
+        },
+        {
+          "slug": "instinct",
           "score": 0.9722
         },
         {
@@ -238,6 +250,10 @@
           "score": 0.8571
         },
         {
+          "slug": "instinct",
+          "score": 0.8367
+        },
+        {
           "slug": "grok-bot",
           "score": 0.7143
         },
@@ -274,7 +290,7 @@
         },
         {
           "slug": "grok-bot",
-          "score": 0.6806
+          "score": 0.8472
         },
         {
           "slug": "reference-careless",
@@ -286,7 +302,11 @@
         },
         {
           "slug": "openclaw",
-          "score": 0.2738
+          "score": 0.5952
+        },
+        {
+          "slug": "instinct",
+          "score": 0.38
         },
         {
           "slug": "x",
@@ -322,12 +342,16 @@
           "score": 0.5
         },
         {
+          "slug": "instinct",
+          "score": 0.4167
+        },
+        {
           "slug": "reference-careless",
           "score": 0.375
         },
         {
           "slug": "openclaw",
-          "score": 0.0
+          "score": 0.125
         }
       ]
     },
@@ -359,6 +383,10 @@
         {
           "slug": "openclaw",
           "score": 0.7
+        },
+        {
+          "slug": "instinct",
+          "score": 0.5
         },
         {
           "slug": "grok-bot",
@@ -394,6 +422,10 @@
         {
           "slug": "openclaw",
           "score": 1.0
+        },
+        {
+          "slug": "instinct",
+          "score": 0.8035
         },
         {
           "slug": "grok-bot",

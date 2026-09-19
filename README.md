@@ -110,6 +110,8 @@ cp .env.template .env          # then fill in the keys you actually need
 | `ABENCH_BASE` | Public world URL (channel / manual). Not needed for `--mode api`. |
 | `ABENCH_CURSOR_WEBHOOK` | Cursor automation **Webhook** URL (or pass `--to`) |
 | `ABENCH_CURSOR_TOKEN` | Cursor automation **key** (`crsr_…`), sent as `Authorization: Bearer` |
+| `ABENCH_IMESSAGE_TO` | iMessage recipient number; optional alternative to `--to` |
+| `ABENCH_IMESSAGE_NAME` | Recipient display name used to identify inbound bubbles (default `Instinct`) |
 | `ANTHROPIC_API_KEY` | Claude API runs, and the written-quality judge |
 | `XAI_API_KEY` | Grok API runs (`GROK_API_KEY` also works) |
 
@@ -212,7 +214,7 @@ python3 runner/run.py --sut poke --mode channel --channel imessage \
 |---|---|---|
 | `browser` | Drives the real web UI: types into the composer, scrapes the reply | `pip install playwright`, then log in once (below) |
 | `cursor` | Fires a trigger-only webhook (a Cursor automation); the answer comes back through the world's mailbox | `ABENCH_CURSOR_TOKEN`, `--to <webhook url>` |
-| `imessage` | AppleScript sends, local `chat.db` is polled for replies | macOS, Messages signed in, **Full Disk Access** for the app running python |
+| `imessage` | Native Swift bridge calls macOS Accessibility for send/receive; no AI or clicking loop | macOS, Messages signed in, recipient thread open, Accessibility permission |
 | `email` | `smtplib` sends, `imaplib` polls; a token in the Subject correlates the reply | `ABENCH_EMAIL_USER`, `ABENCH_EMAIL_PASS`, `ABENCH_SMTP_HOST`, `ABENCH_IMAP_HOST` |
 | `openclaw` | Local `openclaw agent --local` (no gateway) | Anthropic/OpenAI key in the env; Node 24 on PATH for npx |
 
@@ -221,8 +223,13 @@ ship no API at all, so `browser` is the only option** — there is nothing to
 connect to but their UI. `imessage`/`email` are for assistants that text you.
 `webhook` is for a bot you run yourself.
 
-`chat.db` raises `authorization denied` until you grant Full Disk Access in
-System Settings → Privacy & Security. That is the one manual step there.
+The iMessage adapter compiles `runner/imessage_bridge.swift` on first use. It
+sets the composer value, invokes Messages' native `send_message` action, and
+reads reply balloons through Accessibility. This works without Full Disk
+Access; if `chat.db` is readable, the adapter may use it for faster polling.
+Keep the recipient thread open and grant Accessibility to the terminal running
+the benchmark. `ABENCH_IMESSAGE_TO` and `ABENCH_IMESSAGE_NAME` can replace
+`--to` and the default display name (`Instinct`).
 
 #### The cursor channel (a trigger-only webhook)
 

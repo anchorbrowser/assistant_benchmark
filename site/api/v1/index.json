@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-18T14:40:13Z",
+    "generated": "2026-09-19T20:25:53Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,8 +62,8 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 7,
-      "runs": 317,
+      "agents": 8,
+      "runs": 366,
       "registered": 7
     }
   },
@@ -119,7 +119,7 @@
         "cli"
       ],
       "record": {
-        "won": 6,
+        "won": 7,
         "lost": 0,
         "even": 0
       },
@@ -180,7 +180,7 @@
         "api"
       ],
       "record": {
-        "won": 4,
+        "won": 5,
         "lost": 1,
         "even": 1
       },
@@ -241,7 +241,7 @@
         "cli"
       ],
       "record": {
-        "won": 4,
+        "won": 5,
         "lost": 1,
         "even": 1
       },
@@ -252,61 +252,60 @@
       "rank": 3
     },
     {
-      "slug": "grok-bot",
+      "slug": "openclaw",
       "mode": "channel",
-      "index": 73.3,
-      "ci_low": 63.0,
-      "ci_high": 83.2,
+      "index": 77.4,
+      "ci_low": 69.7,
+      "ci_high": 84.6,
       "provisional": false,
       "axes": {
-        "restraint": 0.9091,
-        "state": 1.0,
-        "grounding": 0.7731,
+        "restraint": 1.0,
+        "state": 0.9375,
+        "grounding": 0.9722,
         "retrieval": 0.7143,
-        "multistep": 0.6806,
-        "comms": 0.5,
-        "memory": 0.125,
-        "proactive": 0.4285
+        "multistep": 0.5952,
+        "comms": 0.125,
+        "memory": 0.7,
+        "proactive": 1.0
       },
       "axes_covered": 8,
       "axes_total": 8,
       "tiers": {
-        "1": 0.9857,
-        "2": 0.799,
-        "3": 0.6154,
-        "4": 0.6343
+        "1": 0.85,
+        "2": 0.8767,
+        "3": 0.7231,
+        "4": 0.7685
       },
       "runs": 49,
       "tasks_covered": 49,
       "coverage": 100,
-      "strict_pass": 71,
-      "guard_breach": 6.1,
-      "false_completion": 16.3,
-      "stalled_asking": 0.0,
+      "strict_pass": 76,
+      "guard_breach": 0.0,
+      "false_completion": 18.4,
+      "stalled_asking": 8.2,
       "policy_version": [
-        1,
         2
       ],
       "injection_asr": 0.0,
-      "restraint": 0.9091,
-      "capability": 0.6031,
-      "wall_p50": 112.3,
+      "restraint": 1.0,
+      "capability": 0.7206,
+      "wall_p50": 41.8,
       "steps_p50": null,
-      "name": "Grok Bot",
-      "vendor": "xAI",
+      "name": "OpenClaw",
+      "vendor": "OpenClaw",
       "status": "beta",
       "registered": true,
       "access_tier": "public",
-      "pricing": "paid",
-      "hosting_tier": "closed-saas",
+      "pricing": "free",
+      "hosting_tier": "fully-local",
       "surfaces": [
-        "chat",
-        "webhook"
+        "cli",
+        "browser"
       ],
       "record": {
-        "won": 2,
-        "lost": 3,
-        "even": 1
+        "won": 3,
+        "lost": 4,
+        "even": 0
       },
       "frontier": {
         "cap_restraint": false,
@@ -365,7 +364,7 @@
         "cli"
       ],
       "record": {
-        "won": 2,
+        "won": 3,
         "lost": 4,
         "even": 0
       },
@@ -376,58 +375,59 @@
       "rank": 5
     },
     {
-      "slug": "openclaw",
+      "slug": "grok-bot",
       "mode": "channel",
-      "index": 63.4,
-      "ci_low": 55.1,
-      "ci_high": 72.5,
+      "index": 76.6,
+      "ci_low": 67.1,
+      "ci_high": 85.1,
       "provisional": false,
       "axes": {
         "restraint": 0.9091,
-        "state": 0.6348,
-        "grounding": 0.9722,
+        "state": 1.0,
+        "grounding": 0.7731,
         "retrieval": 0.7143,
-        "multistep": 0.2738,
-        "comms": 0.0,
-        "memory": 0.7,
-        "proactive": 1.0
+        "multistep": 0.8472,
+        "comms": 0.5,
+        "memory": 0.125,
+        "proactive": 0.4285
       },
       "axes_covered": 8,
       "axes_total": 8,
       "tiers": {
-        "1": 0.79,
-        "2": 0.7395,
-        "3": 0.6269,
-        "4": 0.5833
+        "1": 0.9857,
+        "2": 0.799,
+        "3": 0.6154,
+        "4": 0.7454
       },
       "runs": 49,
       "tasks_covered": 49,
       "coverage": 100,
-      "strict_pass": 63,
-      "guard_breach": 0.0,
-      "false_completion": 36.7,
-      "stalled_asking": 10.2,
+      "strict_pass": 73,
+      "guard_breach": 4.1,
+      "false_completion": 14.3,
+      "stalled_asking": 0.0,
       "policy_version": [
+        1,
         2
       ],
       "injection_asr": 0.0,
       "restraint": 0.9091,
-      "capability": 0.6136,
-      "wall_p50": 35.4,
+      "capability": 0.6269,
+      "wall_p50": 112.3,
       "steps_p50": null,
-      "name": "OpenClaw",
-      "vendor": "OpenClaw",
+      "name": "Grok Bot",
+      "vendor": "xAI",
       "status": "beta",
       "registered": true,
       "access_tier": "public",
-      "pricing": "free",
-      "hosting_tier": "fully-local",
+      "pricing": "paid",
+      "hosting_tier": "closed-saas",
       "surfaces": [
-        "cli",
-        "browser"
+        "chat",
+        "webhook"
       ],
       "record": {
-        "won": 1,
+        "won": 2,
         "lost": 4,
         "even": 1
       },
@@ -436,6 +436,67 @@
         "cap_latency": false
       },
       "rank": 6
+    },
+    {
+      "slug": "instinct",
+      "mode": "channel",
+      "index": 58.5,
+      "ci_low": 47.9,
+      "ci_high": 68.7,
+      "provisional": false,
+      "axes": {
+        "restraint": 0.4924,
+        "state": 0.492,
+        "grounding": 0.9722,
+        "retrieval": 0.8367,
+        "multistep": 0.38,
+        "comms": 0.4167,
+        "memory": 0.5,
+        "proactive": 0.8035
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 0.7757,
+        "2": 0.715,
+        "3": 0.4515,
+        "4": 0.5258
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "coverage": 100,
+      "strict_pass": 45,
+      "guard_breach": 0.0,
+      "false_completion": 34.7,
+      "stalled_asking": 6.1,
+      "policy_version": [
+        2
+      ],
+      "injection_asr": 0.0,
+      "restraint": 0.4924,
+      "capability": 0.6287,
+      "wall_p50": 124.0,
+      "steps_p50": null,
+      "name": "instinct",
+      "vendor": "unknown",
+      "status": "experimental",
+      "registered": false,
+      "access_tier": "internal",
+      "pricing": "unknown",
+      "hosting_tier": "closed-saas",
+      "surfaces": [
+        "chat"
+      ],
+      "record": {
+        "won": 1,
+        "lost": 5,
+        "even": 1
+      },
+      "frontier": {
+        "cap_restraint": false,
+        "cap_latency": false
+      },
+      "rank": 7
     },
     {
       "slug": "x",
@@ -483,14 +544,14 @@
       ],
       "record": {
         "won": 0,
-        "lost": 6,
+        "lost": 7,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 7
+      "rank": 8
     }
   ]
 }
