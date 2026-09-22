@@ -21,8 +21,12 @@ import pathlib
 import random
 import re
 import statistics as stats
+import sys
 from collections import defaultdict, OrderedDict
 from datetime import datetime, timezone
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import verify  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TASKS = json.loads((ROOT / "tasks" / "tasks.json").read_text())
@@ -145,13 +149,18 @@ def agent_stats(slug, rs):
     per_task = defaultdict(list)
     for r in rs:
         per_task[r["task"]].append(r)
-    per_task_mean = {k: mean([x["score"] for x in v]) for k, v in per_task.items()}
+    per_task_mean = {}
+    for k, v in per_task.items():
+        scored = [x for x in v if not verify.run_identity_blocked(x)]
+        if scored:
+            per_task_mean[k] = mean([x["score"] for x in scored])
+    scored_runs = [r for r in rs if not verify.run_identity_blocked(r)]
 
     # axis scores, and the per-task scores that feed each axis (for the bootstrap)
     axis_scores = {}
     axis_task_scores = defaultdict(list)
     for ax in AXES:
-        vals = [per_task_mean[k] for k in per_task if BY_ID[k]["axis"] == ax]
+        vals = [per_task_mean[k] for k in per_task_mean if BY_ID[k]["axis"] == ax]
         if vals:
             axis_scores[ax] = round(mean(vals), 4)
             axis_task_scores[ax] = vals
@@ -160,7 +169,7 @@ def agent_stats(slug, rs):
 
     tiers = {}
     for tier in TIERS:
-        vals = [per_task_mean[k] for k in per_task if BY_ID[k]["difficulty"] == tier]
+        vals = [per_task_mean[k] for k in per_task_mean if BY_ID[k]["difficulty"] == tier]
         if vals:
             tiers[str(tier)] = round(mean(vals), 4)
 
@@ -197,11 +206,13 @@ def agent_stats(slug, rs):
         "tiers": tiers,
         "runs": len(rs),
         "tasks_covered": len(per_task),
+        "tasks_scored": len(per_task_mean),
         "coverage": round(100 * len(per_task) / TOTAL_TASKS),
-        "strict_pass": round(100 * mean([r["strict_pass"] for r in rs])),
+        "strict_pass": round(100 * mean([r["strict_pass"] for r in scored_runs])) if scored_runs else 0,
         "guard_breach": round(100 * mean([r["guard_breached"] for r in rs]), 1),
-        "false_completion": round(100 * mean([r["false_completion"] for r in rs]), 1),
+        "false_completion": round(100 * mean([r["false_completion"] for r in scored_runs]), 1) if scored_runs else 0,
         "stalled_asking": round(100 * mean([r.get("stalled_asking") or False for r in rs]), 1),
+        "identity_blocked": round(100 * mean([verify.run_identity_blocked(r) for r in rs]), 1),
         "policy_version": sorted({r.get("policy_version", 1) for r in rs}),
         "injection_asr": round(100 * mean([r["guard_breached"] for r in inj]), 1) if inj else None,
         "restraint": axis_scores.get("restraint"),
@@ -271,13 +282,16 @@ def per_task_detail(st):
                 "strict_pass": r["strict_pass"], "guard_breached": r["guard_breached"],
                 "false_completion": r["false_completion"],
                 "no_answer": r.get("no_answer", False), "wall_s": r.get("wall_s"),
+                "identity_blocked": verify.run_identity_blocked(r),
                 "answer_excerpt": sanitize((r.get("answer") or "")[:280]),
                 "criteria": crits, "guards": guards,
             })
+        mean = st["_per_task_mean"].get(tid)
         out.append({
             "task": tid, "title": t["title"], "axis": t["axis"],
             "difficulty": t["difficulty"], "capabilities": t.get("capabilities", []),
-            "mean_score": round(st["_per_task_mean"][tid], 3),
+            "mean_score": None if mean is None else round(mean, 3),
+            "identity_blocked": mean is None,
             "runs": run_list,
         })
     return out
@@ -286,8 +300,10 @@ def per_task_detail(st):
 # ---------------------------------------------------------------- head to head
 
 def head_to_head(a, b, sa, sb):
-    """Compare two agents only on the tasks both actually ran."""
-    shared = sorted(set(sa["_per_task"]) & set(sb["_per_task"]),
+    """Compare two agents only on the tasks both actually scored.
+    Identity-blocked runs are attempted but have no mean, so they stay out
+    of the matchup rather than looking like a 0–0 fight."""
+    shared = sorted(set(sa["_per_task_mean"]) & set(sb["_per_task_mean"]),
                     key=lambda t: list(BY_ID).index(t))
     axis_detail = []
     won = lost = even = 0

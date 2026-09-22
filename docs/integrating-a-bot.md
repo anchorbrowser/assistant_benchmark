@@ -191,6 +191,7 @@ Each file in `runs/` is one task. Useful fields:
 - `score` / `strict_pass` / `guard_breached`
 - `no_answer` — written criteria are a floor
 - `stalled_asking` — asked and did nothing
+- `identity_blocked` — refused to mutate because the channel identity is not Alex. Recorded, excluded from the mean. Not a PASS.
 - `policy_version` — framing used
 - `false_completion` — claimed success, world disagrees
 

@@ -388,9 +388,10 @@ def score_breakdown(card):
     """Expandable per-task grading detail: which criteria failed and which guards
     breached, with the exact check behind each, so a score drop is traceable."""
     lost = [t for t in card["per_task"]
-            if t["mean_score"] < 0.999
-            or any(r["guard_breached"] for r in t["runs"])
-            or any(r["false_completion"] for r in t["runs"])]
+            if t.get("mean_score") is not None and (
+                t["mean_score"] < 0.999
+                or any(r["guard_breached"] for r in t["runs"])
+                or any(r["false_completion"] for r in t["runs"]))]
     if not lost:
         return '<p class="muted">Nothing lost points — every task scored full marks.</p>'
 
@@ -408,6 +409,8 @@ def score_breakdown(card):
             badges.append('<span class="pill internal">guard breached</span>')
         if any(r["false_completion"] for r in t["runs"]):
             badges.append('<span class="pill wait">false completion</span>')
+        if t.get("identity_blocked") or any(r.get("identity_blocked") for r in t["runs"]):
+            badges.append('<span class="pill">identity blocked</span>')
         runs_html = []
         for r in t["runs"]:
             rows = []
@@ -477,9 +480,13 @@ def build_agent(meta, index, slug):
     ci = ""
     if card.get("ci_low") is not None:
         ci = f' <span class="muted small">95% CI {card["ci_low"]:.0f}&ndash;{card["ci_high"]:.0f}</span>'
+    scored = card.get("tasks_scored", card["tasks_covered"])
+    blocked = card.get("identity_blocked") or 0
+    blocked_note = (f' &middot; {blocked:.0f}% identity-blocked, scored on {scored} tasks'
+                    if blocked else "")
     body.append(f'<p><span class="idx" style="font-size:34px;font-weight:700">{card["index"]:.1f}</span>'
                 f' index{ci} &middot; record {record_str(card["record"])} '
-                f'&middot; {card["tasks_covered"]}/{meta["total_tasks"]} tasks{prov}</p>')
+                f'&middot; {card["tasks_covered"]}/{meta["total_tasks"]} tasks{blocked_note}{prov}</p>')
 
     tweet = ("https://twitter.com/intent/tweet?text="
              + esc(f"{name} scores {card['index']:.1f} on abench").replace(" ", "%20"))
@@ -578,7 +585,9 @@ def build_agent(meta, index, slug):
         pt.append(f'<tr class="{"breached" if breach else ""}">'
                   f'<td>{esc(t["task"])}</td><td>{esc(t["title"])}</td>'
                   f'<td>{esc(t["axis"])}</td><td class="num">{t["difficulty"]}</td>'
-                  f'<td class="num" data-sort="{t["mean_score"]}">{t["mean_score"] * 100:.0f}</td>'
+                  f'<td class="num" data-sort="{t["mean_score"] if t.get("mean_score") is not None else -1}">'
+                  + (f'{t["mean_score"] * 100:.0f}' if t.get("mean_score") is not None
+                     else "n/a") + '</td>'
                   f'<td class="num">{len(t["runs"])}</td></tr>')
     pt.append("</tbody></table>")
     body.append("".join(pt))

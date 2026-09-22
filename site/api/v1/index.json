@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-19T20:59:47Z",
+    "generated": "2026-09-22T17:12:01Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,9 +62,9 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 8,
-      "runs": 366,
-      "registered": 7
+      "agents": 9,
+      "runs": 415,
+      "registered": 8
     }
   },
   "rows": [
@@ -121,7 +121,7 @@
         "cli"
       ],
       "record": {
-        "won": 7,
+        "won": 8,
         "lost": 0,
         "even": 0
       },
@@ -184,7 +184,7 @@
         "api"
       ],
       "record": {
-        "won": 5,
+        "won": 6,
         "lost": 1,
         "even": 1
       },
@@ -247,7 +247,7 @@
         "cli"
       ],
       "record": {
-        "won": 5,
+        "won": 6,
         "lost": 1,
         "even": 1
       },
@@ -256,6 +256,70 @@
         "cap_latency": false
       },
       "rank": 3
+    },
+    {
+      "slug": "muse",
+      "mode": "manual",
+      "index": 89.0,
+      "ci_low": 81.7,
+      "ci_high": 95.3,
+      "provisional": false,
+      "axes": {
+        "restraint": 0.8333,
+        "state": 0.875,
+        "grounding": 1.0,
+        "retrieval": 1.0,
+        "multistep": 0.7897,
+        "comms": 0.875,
+        "memory": 1.0,
+        "proactive": 0.9285
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 0.9857,
+        "2": 0.9265,
+        "3": 0.8782,
+        "4": 0.8042
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "tasks_scored": 49,
+      "coverage": 100,
+      "strict_pass": 82,
+      "guard_breach": 2.0,
+      "false_completion": 12.2,
+      "stalled_asking": 12.2,
+      "identity_blocked": 0.0,
+      "policy_version": [
+        2
+      ],
+      "injection_asr": 0.0,
+      "restraint": 0.8333,
+      "capability": 0.924,
+      "wall_p50": 55.0,
+      "steps_p50": null,
+      "name": "Muse",
+      "vendor": "Meta",
+      "status": "ga",
+      "registered": true,
+      "access_tier": "public",
+      "pricing": "free-tier",
+      "hosting_tier": "closed-saas",
+      "surfaces": [
+        "chat",
+        "browser"
+      ],
+      "record": {
+        "won": 5,
+        "lost": 3,
+        "even": 0
+      },
+      "frontier": {
+        "cap_restraint": false,
+        "cap_latency": false
+      },
+      "rank": 4
     },
     {
       "slug": "instinct",
@@ -312,14 +376,14 @@
       ],
       "record": {
         "won": 4,
-        "lost": 3,
+        "lost": 4,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 4
+      "rank": 5
     },
     {
       "slug": "openclaw",
@@ -376,14 +440,14 @@
       ],
       "record": {
         "won": 2,
-        "lost": 5,
+        "lost": 6,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 5
+      "rank": 6
     },
     {
       "slug": "grok-bot",
@@ -441,14 +505,14 @@
       ],
       "record": {
         "won": 2,
-        "lost": 5,
+        "lost": 6,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 6
+      "rank": 7
     },
     {
       "slug": "reference-careless",
@@ -504,14 +568,14 @@
       ],
       "record": {
         "won": 2,
-        "lost": 5,
+        "lost": 6,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": true
       },
-      "rank": 7
+      "rank": 8
     },
     {
       "slug": "x",
@@ -561,14 +625,14 @@
       ],
       "record": {
         "won": 0,
-        "lost": 7,
+        "lost": 8,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 8
+      "rank": 9
     }
   ]
 }

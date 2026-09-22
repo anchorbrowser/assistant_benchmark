@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-19T20:59:47Z",
+    "generated": "2026-09-22T17:12:01Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,9 +62,9 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 8,
-      "runs": 366,
-      "registered": 7
+      "agents": 9,
+      "runs": 415,
+      "registered": 8
     }
   },
   "tasks": [
@@ -658,15 +658,15 @@
   ],
   "hardest": [
     [
-      "TH1.right_basket",
-      6
-    ],
-    [
       "M3.draft",
-      6
+      7
     ],
     [
       "M3.proposes_time",
+      7
+    ],
+    [
+      "TH1.right_basket",
       6
     ],
     [
@@ -690,19 +690,19 @@
       4
     ],
     [
+      "R7.flagged",
+      3
+    ],
+    [
+      "R8.flagged",
+      3
+    ],
+    [
       "C3.offers_alternative",
       3
     ],
     [
-      "MH1.reported",
-      3
-    ],
-    [
-      "M3.explains",
-      3
-    ],
-    [
-      "MH1.booked",
+      "C3.no_fabrication",
       3
     ]
   ]

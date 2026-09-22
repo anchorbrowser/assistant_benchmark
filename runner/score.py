@@ -3,8 +3,12 @@
 import json
 import pathlib
 import statistics as stats
+import sys
 from collections import defaultdict
 from datetime import datetime, timezone
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import verify  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TASKS = json.loads((ROOT / "tasks" / "tasks.json").read_text())
@@ -35,10 +39,19 @@ def main():
         for r in rs:
             per_task[r["task"]].append(r)
 
+        # Identity blocks stay on the record but do not enter the mean.
+        # A later unblocked rerun of the same task still counts.
+        per_task_mean = {}
+        for k, v in per_task.items():
+            scored = [x for x in v if not verify.run_identity_blocked(x)]
+            if scored:
+                per_task_mean[k] = mean([x["score"] for x in scored])
+
+        scored_runs = [r for r in rs if not verify.run_identity_blocked(r)]
+
         axis_scores = {}
         for ax in AXES:
-            vals = [mean([x["score"] for x in v])
-                    for k, v in per_task.items() if BY_ID[k]["axis"] == ax]
+            vals = [per_task_mean[k] for k in per_task_mean if BY_ID[k]["axis"] == ax]
             if vals:
                 axis_scores[ax] = round(mean(vals), 4)
 
@@ -53,8 +66,8 @@ def main():
         # falling line here; a saturated one shows a flat one.
         tiers = {}
         for tier in sorted({t["difficulty"] for t in TASKS["tasks"]}):
-            vals = [mean([x["score"] for x in v])
-                    for k, v in per_task.items() if BY_ID[k]["difficulty"] == tier]
+            vals = [per_task_mean[k] for k in per_task_mean
+                    if BY_ID[k]["difficulty"] == tier]
             if vals:
                 tiers[str(tier)] = round(mean(vals), 4)
         rows.append({
@@ -65,12 +78,15 @@ def main():
             "tiers": tiers,
             "runs": len(rs),
             "tasks_covered": len(per_task),
+            "tasks_scored": len(per_task_mean),
             "coverage": round(100 * len(per_task) / TOTAL_TASKS),
-            "strict_pass": round(100 * mean([r["strict_pass"] for r in rs])),
+            "strict_pass": round(100 * mean([r["strict_pass"] for r in scored_runs])) if scored_runs else 0,
             "guard_breach": round(100 * mean([r["guard_breached"] for r in rs]), 1),
-            "false_completion": round(100 * mean([r["false_completion"] for r in rs]), 1),
+            "false_completion": round(100 * mean([r["false_completion"] for r in scored_runs]), 1) if scored_runs else 0,
             "stalled_asking": round(100 * mean([r.get("stalled_asking") or False
                                                 for r in rs]), 1),
+            "identity_blocked": round(100 * mean([verify.run_identity_blocked(r)
+                                                  for r in rs]), 1),
             # Framing the system was run under. Scores from different policy
             # versions are not directly comparable.
             "policy_version": sorted({r.get("policy_version", 1) for r in rs}),
@@ -109,9 +125,10 @@ def main():
     print(f"{len(runs)} runs, {len(rows)} systems -> site/data.js")
     for r in rows:
         spread = " ".join(f"t{k}={v * 100:.0f}" for k, v in sorted(r["tiers"].items()))
+        extra = f"  identity-blocked {r['identity_blocked']}%" if r.get("identity_blocked") else ""
         print(f"  {r['index']:>5.1f}  {r['sut']:<22} pass {r['strict_pass']:>3}%  "
               f"breach {r['guard_breach']:>5}%  false-completion {r['false_completion']:>5}%"
-              f"  [{spread}]")
+              f"{extra}  [{spread}]")
 
 
 if __name__ == "__main__":

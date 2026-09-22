@@ -120,7 +120,7 @@
   },
   "record": {
     "won": 2,
-    "lost": 5,
+    "lost": 6,
     "even": 0
   },
   "capabilities": [
@@ -3285,6 +3285,17 @@
       "won": 1,
       "lost": 5,
       "even": 2,
+      "compared": 8,
+      "shared_tasks": 49,
+      "too_close": false,
+      "outcome": "b"
+    },
+    {
+      "opponent": "muse",
+      "opponent_name": "Muse",
+      "won": 1,
+      "lost": 6,
+      "even": 1,
       "compared": 8,
       "shared_tasks": 49,
       "too_close": false,

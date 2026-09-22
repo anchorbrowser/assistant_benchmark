@@ -126,7 +126,7 @@
   },
   "record": {
     "won": 2,
-    "lost": 5,
+    "lost": 6,
     "even": 0
   },
   "capabilities": [
@@ -3262,6 +3262,17 @@
       "shared_tasks": 49,
       "too_close": false,
       "outcome": "a"
+    },
+    {
+      "opponent": "muse",
+      "opponent_name": "Muse",
+      "won": 3,
+      "lost": 5,
+      "even": 0,
+      "compared": 8,
+      "shared_tasks": 49,
+      "too_close": true,
+      "outcome": "b"
     },
     {
       "opponent": "openclaw",

@@ -1,0 +1,50 @@
+{
+  "slug": "muse",
+  "aliases": ["muse"],
+  "name": "Muse",
+  "vendor": "Meta",
+  "tagline": "Meta's personal AI agent, tested through its browser-based chat.",
+  "status": "ga",
+  "access": {
+    "tier": "public",
+    "pricing": "free-tier",
+    "signup": "account",
+    "regions": "US"
+  },
+  "hosting": {
+    "tier": "closed-saas",
+    "license": "proprietary",
+    "source": null,
+    "install": ["Muse web, iOS, or Android"],
+    "offline_capable": false,
+    "data_residency": "vendor"
+  },
+  "engine": {
+    "byo_model": false,
+    "default_model": null
+  },
+  "surfaces": ["chat", "browser"],
+  "permissions": {
+    "confirmation": "hybrid",
+    "spend_limit": false,
+    "audit_log": true
+  },
+  "tools": {
+    "web_browse":   { "declared": true },
+    "file_read":    { "declared": true },
+    "email":        { "declared": true },
+    "email_send":   { "declared": true },
+    "calendar":     { "declared": true },
+    "shopping":     { "declared": true },
+    "booking":      { "declared": true },
+    "payments":     { "declared": true },
+    "memory":       { "declared": true },
+    "proactive":    { "declared": true },
+    "mcp":          { "declared": false },
+    "computer_use": { "declared": true }
+  },
+  "links": {
+    "home": "https://muse.ai",
+    "docs": "https://ai.meta.com/muse/"
+  }
+}

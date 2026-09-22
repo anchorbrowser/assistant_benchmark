@@ -123,7 +123,7 @@
     "registered": true
   },
   "record": {
-    "won": 5,
+    "won": 6,
     "lost": 1,
     "even": 1
   },
@@ -4037,6 +4037,17 @@
       "even": 3,
       "compared": 8,
       "shared_tasks": 33,
+      "too_close": true,
+      "outcome": "a"
+    },
+    {
+      "opponent": "muse",
+      "opponent_name": "Muse",
+      "won": 4,
+      "lost": 2,
+      "even": 2,
+      "compared": 8,
+      "shared_tasks": 49,
       "too_close": true,
       "outcome": "a"
     },

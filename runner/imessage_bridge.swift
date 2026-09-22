@@ -167,12 +167,17 @@ func send(_ text: String) throws {
     }
     guard let composer else { throw BridgeError.composerNotFound }
 
+    // Setting AXFocused alone does not always make the field first responder,
+    // and key events then go nowhere. Pressing it first is the equivalent of
+    // clicking into the box, which does.
+    AXUIElementPerformAction(composer, kAXPressAction as CFString)
     let focusError = AXUIElementSetAttributeValue(
         composer, kAXFocusedAttribute as CFString, kCFBooleanTrue
     )
     guard focusError == .success else {
         throw BridgeError.ax("focus composer", focusError)
     }
+    Thread.sleep(forTimeInterval: 0.2)
     AXUIElementSetAttributeValue(composer, kAXValueAttribute as CFString, "" as CFString)
 
     // Writing AXValue puts text on screen but leaves Messages believing the
