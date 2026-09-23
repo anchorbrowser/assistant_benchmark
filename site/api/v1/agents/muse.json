@@ -123,7 +123,7 @@
     "registered": true
   },
   "record": {
-    "won": 3,
+    "won": 4,
     "lost": 2,
     "even": 0
   },
@@ -3280,6 +3280,17 @@
       "even": 5,
       "compared": 8,
       "shared_tasks": 33,
+      "too_close": true,
+      "outcome": "a"
+    },
+    {
+      "opponent": "manus",
+      "opponent_name": "Manus",
+      "won": 3,
+      "lost": 2,
+      "even": 3,
+      "compared": 8,
+      "shared_tasks": 49,
       "too_close": true,
       "outcome": "a"
     },

@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-23T05:43:01Z",
+    "generated": "2026-09-23T10:50:41Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,9 +62,9 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 6,
-      "runs": 308,
-      "registered": 5
+      "agents": 7,
+      "runs": 357,
+      "registered": 6
     }
   },
   "rows": [
@@ -121,7 +121,7 @@
         "api"
       ],
       "record": {
-        "won": 4,
+        "won": 5,
         "lost": 0,
         "even": 1
       },
@@ -184,7 +184,7 @@
         "cli"
       ],
       "record": {
-        "won": 4,
+        "won": 5,
         "lost": 0,
         "even": 1
       },
@@ -248,7 +248,7 @@
         "browser"
       ],
       "record": {
-        "won": 3,
+        "won": 4,
         "lost": 2,
         "even": 0
       },
@@ -257,6 +257,70 @@
         "cap_latency": true
       },
       "rank": 3
+    },
+    {
+      "slug": "manus",
+      "mode": "channel",
+      "index": 85.7,
+      "ci_low": 79.0,
+      "ci_high": 91.7,
+      "provisional": false,
+      "axes": {
+        "restraint": 0.8939,
+        "state": 0.9196,
+        "grounding": 0.7683,
+        "retrieval": 0.9524,
+        "multistep": 0.9286,
+        "comms": 0.625,
+        "memory": 0.7,
+        "proactive": 0.9285
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 0.9024,
+        "2": 0.9377,
+        "3": 0.7396,
+        "4": 0.8357
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "tasks_scored": 49,
+      "coverage": 100,
+      "strict_pass": 65,
+      "guard_breach": 0.0,
+      "false_completion": 20.4,
+      "stalled_asking": 2.0,
+      "identity_blocked": 0.0,
+      "policy_version": [
+        3
+      ],
+      "injection_asr": 0.0,
+      "restraint": 0.8939,
+      "capability": 0.8318,
+      "wall_p50": 159.2,
+      "steps_p50": null,
+      "name": "Manus",
+      "vendor": "Manus",
+      "status": "ga",
+      "registered": true,
+      "access_tier": "public",
+      "pricing": "paid",
+      "hosting_tier": "closed-saas",
+      "surfaces": [
+        "api",
+        "browser"
+      ],
+      "record": {
+        "won": 2,
+        "lost": 3,
+        "even": 1
+      },
+      "frontier": {
+        "cap_restraint": false,
+        "cap_latency": false
+      },
+      "rank": 4
     },
     {
       "slug": "instinct",
@@ -313,14 +377,14 @@
       ],
       "record": {
         "won": 2,
-        "lost": 3,
+        "lost": 4,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 4
+      "rank": 5
     },
     {
       "slug": "openclaw",
@@ -378,13 +442,13 @@
       "record": {
         "won": 1,
         "lost": 4,
-        "even": 0
+        "even": 1
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 5
+      "rank": 6
     },
     {
       "slug": "grok-bot",
@@ -442,14 +506,14 @@
       ],
       "record": {
         "won": 0,
-        "lost": 5,
+        "lost": 6,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 6
+      "rank": 7
     }
   ]
 }

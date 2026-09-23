@@ -67,7 +67,7 @@
   },
   "record": {
     "won": 2,
-    "lost": 3,
+    "lost": 4,
     "even": 0
   },
   "capabilities": [
@@ -3214,6 +3214,17 @@
       "shared_tasks": 33,
       "too_close": true,
       "outcome": "a"
+    },
+    {
+      "opponent": "manus",
+      "opponent_name": "Manus",
+      "won": 2,
+      "lost": 3,
+      "even": 3,
+      "compared": 8,
+      "shared_tasks": 33,
+      "too_close": true,
+      "outcome": "b"
     },
     {
       "opponent": "claude-cowork",

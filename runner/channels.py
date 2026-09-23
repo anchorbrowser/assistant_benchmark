@@ -30,6 +30,7 @@ import sqlite3
 import subprocess
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 
 APPLE_EPOCH = 978307200  # 2001-01-01 in unix seconds
@@ -907,9 +908,231 @@ def _env(name):
     return val
 
 
+# ----------------------------------------------------------------------- manus
+class Manus(Channel):
+    """Manus cloud agent via https://api.manus.ai/v2.
+
+    Each task is a new task.create, so memory does not leak across the suite.
+    The agent browses with its own cloud browser, which is why the world has
+    to be on a public URL. A local-browser attach (needConnectMyBrowser) is
+    skipped. Questions get one instruction to decide and finish. Confirmations
+    that would touch the account's real mail, calendar, or connectors are
+    left unanswered — those are not the benchmark world.
+    """
+    name = "manus"
+    needs_public_world = True
+    API = "https://api.manus.ai/v2"
+    ASK = {"messageAskUser", "cascadeAskUser"}
+    # Manus's own sandbox. Approving these lets the cloud agent keep working.
+    ACCEPT = {
+        "terminalExecute": {"accept": True, "always_allow": True},
+        "deployAction": {"accept": True, "global_allow": True},
+        "apiHighCreditNotice": {"action": "accept"},
+        "webdevRunAction": {"accept": True, "mode": "speed"},
+        "mapreduceAction": {"accept": True},
+        "videoGenerate": {"choice": "standard"},
+    }
+
+    def __init__(self, to=None):
+        self.key = os.environ.get("MANUS_API_KEY") or ""
+        if not self.key:
+            raise ChannelError("set MANUS_API_KEY")
+        self.timeout = int(os.environ.get("ABENCH_MANUS_TIMEOUT", "900"))
+        self.poll_every = int(os.environ.get("ABENCH_MANUS_POLL", "8"))
+        self._task_id = None
+        self._reply = ""
+        self._handled = set()
+        self._asks = 0
+
+    def send(self, text):
+        self._task_id = None
+        self._reply = ""
+        self._handled = set()
+        self._asks = 0
+        got = self._call("POST", "/task.create", {"message": {"content": text}})
+        self._task_id = got.get("task_id")
+        if not self._task_id:
+            raise ChannelError(f"manus task.create returned no task_id: {list(got)}")
+        url = got.get("task_url") or ""
+        print(f"       manus task {self._task_id}" + (f"  {url}" if url else ""))
+
+    def poll(self, since):
+        return [self._reply] if self._reply.strip() else []
+
+    def wait_for_reply(self, since, timeout=900, settle=25, poll_every=5):
+        if not self._task_id:
+            return ""
+        deadline = time.time() + min(timeout, self.timeout)
+        last_status = None
+        while time.time() < deadline:
+            status, detail, texts = self._snapshot()
+            if texts:
+                self._reply = "\n\n".join(texts).strip()
+            if status != last_status:
+                last_status = status
+                if status:
+                    print(f"       … manus {status}")
+            if status in ("stopped", "error") or status is None and self._reply:
+                # None only if the API omitted status after we already have text
+                # and a later poll still says nothing — keep going unless stopped.
+                if status in ("stopped", "error"):
+                    return self._reply
+            if status == "waiting":
+                if not self._nudge(detail):
+                    print("       !! manus is waiting on something this runner "
+                          "will not approve; taking the answer so far")
+                    return self._reply
+            time.sleep(self.poll_every)
+        print(f"       !! manus still {last_status or 'running'} after {timeout}s")
+        return self._reply
+
+    def _nudge(self, detail):
+        event_id = detail.get("waiting_for_event_id") or ""
+        kind = detail.get("waiting_for_event_type") or ""
+        token = event_id or kind
+        if token in self._handled:
+            return True
+        self._handled.add(token)
+        if kind in self.ASK:
+            self._asks += 1
+            if self._asks > 2:
+                return False
+            print(f"       … manus asked ({kind}); telling it to decide and finish")
+            self._call("POST", "/task.sendMessage", {
+                "task_id": self._task_id,
+                "message": {"content": (
+                    "Nobody can answer you. Pick the most reasonable option, "
+                    "do the work on the site in the task, finish, and say what "
+                    "you assumed."
+                )},
+            })
+            return True
+        if kind == "needConnectMyBrowser":
+            print("       … skipping local-browser attach; cloud browser only")
+            self._confirm(event_id, {"action": "skip"})
+            return True
+        if kind in self.ACCEPT:
+            print(f"       … confirming {kind}")
+            self._confirm(event_id, self.ACCEPT[kind])
+            return True
+        print(f"       !! not confirming {kind or 'unknown wait'}"
+              + (f": {detail.get('waiting_description')}" if detail.get("waiting_description") else ""))
+        return False
+
+    def _confirm(self, event_id, payload):
+        if not event_id:
+            raise ChannelError("manus waiting event has no event_id")
+        self._call("POST", "/task.confirmAction", {
+            "task_id": self._task_id,
+            "event_id": event_id,
+            "input": payload,
+        })
+
+    def _snapshot(self):
+        got = self._call("GET", "/task.listMessages", query={
+            "task_id": self._task_id, "order": "desc", "limit": "50",
+        })
+        messages = got.get("messages") or []
+        status, detail = None, {}
+        for msg in messages:
+            if msg.get("type") == "status_update":
+                su = msg.get("status_update") or {}
+                status = su.get("agent_status")
+                detail = su.get("status_detail") or {}
+                break
+        if status not in ("stopped", "error"):
+            texts = [_message_text(m) for m in reversed(messages)]
+            return status, detail, [t for t in texts if t]
+        texts = []
+        cursor = None
+        for _ in range(20):
+            query = {"task_id": self._task_id, "order": "asc", "limit": "100"}
+            if cursor:
+                query["cursor"] = cursor
+            page = self._call("GET", "/task.listMessages", query=query)
+            for msg in page.get("messages") or []:
+                text = _message_text(msg)
+                if text:
+                    texts.append(text)
+                if status is None and msg.get("type") == "status_update":
+                    su = msg.get("status_update") or {}
+                    status = su.get("agent_status")
+            if not page.get("has_more") or not page.get("next_cursor"):
+                break
+            cursor = page["next_cursor"]
+        return status, detail, texts
+
+    def _call(self, method, path, body=None, query=None):
+        url = self.API + path
+        if query:
+            url += "?" + urllib.parse.urlencode(query)
+        data = json.dumps(body).encode() if body is not None else None
+        delay = 2
+        for attempt in range(5):
+            req = urllib.request.Request(
+                url, data=data, method=method,
+                headers={"content-type": "application/json",
+                         "x-manus-api-key": self.key})
+            try:
+                with urllib.request.urlopen(req, timeout=60) as r:
+                    raw = r.read().decode("utf-8", "replace")
+                break
+            except urllib.error.HTTPError as e:
+                err = e.read().decode("utf-8", "replace")[:400]
+                if e.code in (404, 429) and attempt < 4:
+                    why = "task not visible yet" if e.code == 404 else "rate limited"
+                    print(f"       … manus {why}, waiting {delay}s")
+                    time.sleep(delay)
+                    delay *= 2
+                    continue
+                raise ChannelError(f"manus {method} {path} -> {e.code}: {err}") from e
+            except OSError as e:
+                if attempt < 4:
+                    time.sleep(delay)
+                    delay *= 2
+                    continue
+                raise ChannelError(f"manus {method} {path} failed: {e}") from e
+        else:
+            raise ChannelError(f"manus {method} {path} failed")
+        try:
+            got = json.loads(raw)
+        except json.JSONDecodeError as e:
+            raise ChannelError(f"manus {path} returned non-JSON") from e
+        if isinstance(got, dict) and got.get("ok") is False:
+            err = got.get("error") or {}
+            raise ChannelError(
+                f"manus {path}: {err.get('code') or 'error'}: {err.get('message') or err}"
+            )
+        return got if isinstance(got, dict) else {"messages": got}
+
+
+def _message_text(msg):
+    kind = msg.get("type")
+    if kind == "assistant_message":
+        return _as_text((msg.get("assistant_message") or {}).get("content"))
+    if kind == "error_message":
+        body = msg.get("error_message") or {}
+        return _as_text(body.get("content") or body.get("message") or body.get("error") or body)
+    return ""
+
+
+def _as_text(content):
+    if content is None:
+        return ""
+    if isinstance(content, str):
+        return content.strip()
+    if isinstance(content, list):
+        parts = [_as_text(p if not isinstance(p, dict) else (p.get("text") or p.get("content")))
+                 for p in content]
+        return "\n".join(p for p in parts if p).strip()
+    if isinstance(content, dict):
+        return _as_text(content.get("text") or content.get("content") or content.get("message"))
+    return str(content).strip()
+
+
 BUILDERS = {"imessage": IMessage, "email": Email, "webhook": Webhook,
             "browser": Browser, "cursor": CursorAutomation, "hermes": Hermes,
-            "openclaw": OpenClaw}
+            "openclaw": OpenClaw, "manus": Manus}
 
 # Channels that need to know the world's public URL to build a return address.
 WANTS_BASE = {"cursor"}
