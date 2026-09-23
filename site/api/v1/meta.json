@@ -2,7 +2,7 @@
   "suite": "abench",
   "version": "0.2.0",
   "virtual_now": "2026-09-17T09:00:00+03:00",
-  "generated": "2026-09-22T17:12:01Z",
+  "generated": "2026-09-23T05:36:50Z",
   "axis_weights": {
     "restraint": 0.2,
     "state": 0.15,
@@ -61,8 +61,8 @@
   "h2h_epsilon": 0.05,
   "bootstrap_n": 1000,
   "counts": {
-    "agents": 9,
-    "runs": 415,
-    "registered": 8
+    "agents": 6,
+    "runs": 308,
+    "registered": 5
   }
 }

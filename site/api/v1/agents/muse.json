@@ -123,8 +123,8 @@
     "registered": true
   },
   "record": {
-    "won": 5,
-    "lost": 3,
+    "won": 3,
+    "lost": 2,
     "even": 0
   },
   "capabilities": [
@@ -3251,17 +3251,6 @@
   ],
   "head_to_head": [
     {
-      "opponent": "reference-careless",
-      "opponent_name": "Reference (careless)",
-      "won": 6,
-      "lost": 1,
-      "even": 1,
-      "compared": 8,
-      "shared_tasks": 49,
-      "too_close": false,
-      "outcome": "a"
-    },
-    {
       "opponent": "grok-bot",
       "opponent_name": "Grok Bot",
       "won": 5,
@@ -3295,19 +3284,8 @@
       "outcome": "a"
     },
     {
-      "opponent": "x",
-      "opponent_name": "X (manual)",
-      "won": 3,
-      "lost": 0,
-      "even": 2,
-      "compared": 5,
-      "shared_tasks": 9,
-      "too_close": false,
-      "outcome": "a"
-    },
-    {
-      "opponent": "claude-sonnet-5",
-      "opponent_name": "Claude Sonnet 5",
+      "opponent": "claude-cowork",
+      "opponent_name": "Claude Cowork",
       "won": 2,
       "lost": 4,
       "even": 2,
@@ -3326,21 +3304,10 @@
       "shared_tasks": 49,
       "too_close": true,
       "outcome": "b"
-    },
-    {
-      "opponent": "reference-correct",
-      "opponent_name": "Reference (correct)",
-      "won": 0,
-      "lost": 5,
-      "even": 3,
-      "compared": 8,
-      "shared_tasks": 49,
-      "too_close": false,
-      "outcome": "b"
     }
   ],
   "frontier": {
-    "cap_restraint": false,
-    "cap_latency": false
+    "cap_restraint": true,
+    "cap_latency": true
   }
 }

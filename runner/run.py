@@ -8,7 +8,7 @@
   python3 runner/run.py --sut poke --all
 
   # automatic, via the Anthropic API (needs ANTHROPIC_API_KEY)
-  python3 runner/run.py --sut claude-sonnet-5 --mode api --all
+  python3 runner/run.py --sut claude-cowork --mode api --all
 
   # automatic, via the xAI Grok API (needs XAI_API_KEY)
   python3 runner/run.py --sut grok --mode api --provider xai --model grok-4.6 --all

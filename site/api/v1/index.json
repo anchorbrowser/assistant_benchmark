@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-22T17:12:01Z",
+    "generated": "2026-09-23T05:36:50Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,80 +62,17 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 9,
-      "runs": 415,
-      "registered": 8
+      "agents": 6,
+      "runs": 308,
+      "registered": 5
     }
   },
   "rows": [
     {
-      "slug": "reference-correct",
-      "mode": "scripted",
-      "index": 100.0,
-      "ci_low": 100.0,
-      "ci_high": 100.0,
-      "provisional": false,
-      "axes": {
-        "restraint": 1.0,
-        "state": 1.0,
-        "grounding": 1.0,
-        "retrieval": 1.0,
-        "multistep": 1.0,
-        "comms": 1.0,
-        "memory": 1.0,
-        "proactive": 1.0
-      },
-      "axes_covered": 8,
-      "axes_total": 8,
-      "tiers": {
-        "1": 1.0,
-        "2": 1.0,
-        "3": 1.0,
-        "4": 1.0
-      },
-      "runs": 49,
-      "tasks_covered": 49,
-      "tasks_scored": 49,
-      "coverage": 100,
-      "strict_pass": 100,
-      "guard_breach": 0.0,
-      "false_completion": 0.0,
-      "stalled_asking": 0.0,
-      "identity_blocked": 0.0,
-      "policy_version": [
-        1
-      ],
-      "injection_asr": 0.0,
-      "restraint": 1.0,
-      "capability": 1.0,
-      "wall_p50": 15.6,
-      "steps_p50": 2,
-      "name": "Reference (correct)",
-      "vendor": "abench",
-      "status": "reference",
-      "registered": true,
-      "access_tier": "public",
-      "pricing": "free",
-      "hosting_tier": "fully-local",
-      "surfaces": [
-        "cli"
-      ],
-      "record": {
-        "won": 8,
-        "lost": 0,
-        "even": 0
-      },
-      "frontier": {
-        "cap_restraint": true,
-        "cap_latency": true
-      },
-      "rank": 1
-    },
-    {
-      "slug": "claude-sonnet-5",
+      "slug": "claude-cowork",
       "mode": "api",
       "index": 93.5,
-      "ci_low": 87.5,
+      "ci_low": 87.2,
       "ci_high": 98.5,
       "provisional": false,
       "axes": {
@@ -173,7 +110,7 @@
       "capability": 0.9136,
       "wall_p50": 9.1,
       "steps_p50": 3,
-      "name": "Claude Sonnet 5",
+      "name": "Claude Cowork",
       "vendor": "Anthropic",
       "status": "ga",
       "registered": true,
@@ -184,15 +121,15 @@
         "api"
       ],
       "record": {
-        "won": 6,
-        "lost": 1,
+        "won": 4,
+        "lost": 0,
         "even": 1
       },
       "frontier": {
-        "cap_restraint": false,
+        "cap_restraint": true,
         "cap_latency": true
       },
-      "rank": 2
+      "rank": 1
     },
     {
       "slug": "hermes",
@@ -247,15 +184,15 @@
         "cli"
       ],
       "record": {
-        "won": 6,
-        "lost": 1,
+        "won": 4,
+        "lost": 0,
         "even": 1
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 3
+      "rank": 2
     },
     {
       "slug": "muse",
@@ -311,15 +248,15 @@
         "browser"
       ],
       "record": {
-        "won": 5,
-        "lost": 3,
+        "won": 3,
+        "lost": 2,
         "even": 0
       },
       "frontier": {
-        "cap_restraint": false,
-        "cap_latency": false
+        "cap_restraint": true,
+        "cap_latency": true
       },
-      "rank": 4
+      "rank": 3
     },
     {
       "slug": "instinct",
@@ -375,15 +312,15 @@
         "chat"
       ],
       "record": {
-        "won": 4,
-        "lost": 4,
+        "won": 2,
+        "lost": 3,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 5
+      "rank": 4
     },
     {
       "slug": "openclaw",
@@ -439,15 +376,15 @@
         "browser"
       ],
       "record": {
-        "won": 2,
-        "lost": 6,
+        "won": 1,
+        "lost": 4,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 6
+      "rank": 5
     },
     {
       "slug": "grok-bot",
@@ -504,135 +441,15 @@
         "webhook"
       ],
       "record": {
-        "won": 2,
-        "lost": 6,
-        "even": 0
-      },
-      "frontier": {
-        "cap_restraint": false,
-        "cap_latency": false
-      },
-      "rank": 7
-    },
-    {
-      "slug": "reference-careless",
-      "mode": "scripted",
-      "index": 56.2,
-      "ci_low": 44.8,
-      "ci_high": 67.0,
-      "provisional": false,
-      "axes": {
-        "restraint": 0.0909,
-        "state": 0.875,
-        "grounding": 0.4561,
-        "retrieval": 0.8571,
-        "multistep": 0.6667,
-        "comms": 0.375,
-        "memory": 0.75,
-        "proactive": 1.0
-      },
-      "axes_covered": 8,
-      "axes_total": 8,
-      "tiers": {
-        "1": 0.7,
-        "2": 0.6814,
-        "3": 0.4863,
-        "4": 0.2444
-      },
-      "runs": 49,
-      "tasks_covered": 49,
-      "tasks_scored": 49,
-      "coverage": 100,
-      "strict_pass": 49,
-      "guard_breach": 30.6,
-      "false_completion": 51.0,
-      "stalled_asking": 0.0,
-      "identity_blocked": 0.0,
-      "policy_version": [
-        1
-      ],
-      "injection_asr": 100.0,
-      "restraint": 0.0909,
-      "capability": 0.7114,
-      "wall_p50": 7.7,
-      "steps_p50": 3,
-      "name": "Reference (careless)",
-      "vendor": "abench",
-      "status": "reference",
-      "registered": true,
-      "access_tier": "public",
-      "pricing": "free",
-      "hosting_tier": "fully-local",
-      "surfaces": [
-        "cli"
-      ],
-      "record": {
-        "won": 2,
-        "lost": 6,
-        "even": 0
-      },
-      "frontier": {
-        "cap_restraint": false,
-        "cap_latency": true
-      },
-      "rank": 8
-    },
-    {
-      "slug": "x",
-      "mode": "manual",
-      "index": 13.8,
-      "ci_low": 9.4,
-      "ci_high": 18.2,
-      "provisional": true,
-      "axes": {
-        "restraint": 0.0,
-        "state": 0.5,
-        "grounding": 0.125,
-        "retrieval": 0.0,
-        "multistep": 0.0833
-      },
-      "axes_covered": 5,
-      "axes_total": 8,
-      "tiers": {
-        "4": 0.1111
-      },
-      "runs": 9,
-      "tasks_covered": 9,
-      "tasks_scored": 9,
-      "coverage": 18,
-      "strict_pass": 0,
-      "guard_breach": 0.0,
-      "false_completion": 100.0,
-      "stalled_asking": 0.0,
-      "identity_blocked": 0.0,
-      "policy_version": [
-        1
-      ],
-      "injection_asr": null,
-      "restraint": 0.0,
-      "capability": 0.1771,
-      "wall_p50": null,
-      "steps_p50": null,
-      "name": "X (manual)",
-      "vendor": "unknown",
-      "status": "experimental",
-      "registered": true,
-      "access_tier": "internal",
-      "pricing": "unknown",
-      "hosting_tier": "closed-saas",
-      "surfaces": [
-        "chat"
-      ],
-      "record": {
         "won": 0,
-        "lost": 8,
+        "lost": 5,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 9
+      "rank": 6
     }
   ]
 }

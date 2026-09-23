@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-22T17:12:01Z",
+    "generated": "2026-09-23T05:36:50Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,9 +62,9 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 9,
-      "runs": 415,
-      "registered": 8
+      "agents": 6,
+      "runs": 308,
+      "registered": 5
     }
   },
   "dimensions": [
@@ -87,11 +87,7 @@
       ],
       "rows": [
         {
-          "slug": "reference-correct",
-          "score": 1.0
-        },
-        {
-          "slug": "claude-sonnet-5",
+          "slug": "claude-cowork",
           "score": 1.0
         },
         {
@@ -113,14 +109,6 @@
         {
           "slug": "instinct",
           "score": 0.7708
-        },
-        {
-          "slug": "reference-careless",
-          "score": 0.0909
-        },
-        {
-          "slug": "x",
-          "score": 0.0
         }
       ]
     },
@@ -140,10 +128,6 @@
       ],
       "rows": [
         {
-          "slug": "reference-correct",
-          "score": 1.0
-        },
-        {
           "slug": "grok-bot",
           "score": 1.0
         },
@@ -160,20 +144,12 @@
           "score": 0.9375
         },
         {
-          "slug": "claude-sonnet-5",
+          "slug": "claude-cowork",
           "score": 0.9048
-        },
-        {
-          "slug": "reference-careless",
-          "score": 0.875
         },
         {
           "slug": "muse",
           "score": 0.875
-        },
-        {
-          "slug": "x",
-          "score": 0.5
         }
       ]
     },
@@ -194,15 +170,11 @@
       ],
       "rows": [
         {
-          "slug": "reference-correct",
-          "score": 1.0
-        },
-        {
           "slug": "muse",
           "score": 1.0
         },
         {
-          "slug": "claude-sonnet-5",
+          "slug": "claude-cowork",
           "score": 0.9907
         },
         {
@@ -220,14 +192,6 @@
         {
           "slug": "grok-bot",
           "score": 0.7731
-        },
-        {
-          "slug": "reference-careless",
-          "score": 0.4561
-        },
-        {
-          "slug": "x",
-          "score": 0.125
         }
       ]
     },
@@ -246,10 +210,6 @@
       ],
       "rows": [
         {
-          "slug": "reference-correct",
-          "score": 1.0
-        },
-        {
           "slug": "hermes",
           "score": 1.0
         },
@@ -262,12 +222,8 @@
           "score": 0.9762
         },
         {
-          "slug": "claude-sonnet-5",
+          "slug": "claude-cowork",
           "score": 0.9388
-        },
-        {
-          "slug": "reference-careless",
-          "score": 0.8571
         },
         {
           "slug": "grok-bot",
@@ -276,10 +232,6 @@
         {
           "slug": "openclaw",
           "score": 0.7143
-        },
-        {
-          "slug": "x",
-          "score": 0.0
         }
       ]
     },
@@ -297,11 +249,7 @@
       ],
       "rows": [
         {
-          "slug": "reference-correct",
-          "score": 1.0
-        },
-        {
-          "slug": "claude-sonnet-5",
+          "slug": "claude-cowork",
           "score": 0.8611
         },
         {
@@ -311,10 +259,6 @@
         {
           "slug": "muse",
           "score": 0.7897
-        },
-        {
-          "slug": "reference-careless",
-          "score": 0.6667
         },
         {
           "slug": "hermes",
@@ -327,10 +271,6 @@
         {
           "slug": "instinct",
           "score": 0.5
-        },
-        {
-          "slug": "x",
-          "score": 0.0833
         }
       ]
     },
@@ -346,11 +286,7 @@
       ],
       "rows": [
         {
-          "slug": "reference-correct",
-          "score": 1.0
-        },
-        {
-          "slug": "claude-sonnet-5",
+          "slug": "claude-cowork",
           "score": 1.0
         },
         {
@@ -370,10 +306,6 @@
           "score": 0.5
         },
         {
-          "slug": "reference-careless",
-          "score": 0.375
-        },
-        {
           "slug": "openclaw",
           "score": 0.125
         }
@@ -389,10 +321,6 @@
       ],
       "rows": [
         {
-          "slug": "reference-correct",
-          "score": 1.0
-        },
-        {
           "slug": "hermes",
           "score": 1.0
         },
@@ -405,11 +333,7 @@
           "score": 1.0
         },
         {
-          "slug": "reference-careless",
-          "score": 0.75
-        },
-        {
-          "slug": "claude-sonnet-5",
+          "slug": "claude-cowork",
           "score": 0.7
         },
         {
@@ -432,15 +356,7 @@
       ],
       "rows": [
         {
-          "slug": "reference-correct",
-          "score": 1.0
-        },
-        {
-          "slug": "reference-careless",
-          "score": 1.0
-        },
-        {
-          "slug": "claude-sonnet-5",
+          "slug": "claude-cowork",
           "score": 1.0
         },
         {

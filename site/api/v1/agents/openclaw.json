@@ -124,8 +124,8 @@
     "registered": true
   },
   "record": {
-    "won": 2,
-    "lost": 6,
+    "won": 1,
+    "lost": 4,
     "even": 0
   },
   "capabilities": [
@@ -3274,28 +3274,6 @@
       "outcome": "b"
     },
     {
-      "opponent": "reference-careless",
-      "opponent_name": "Reference (careless)",
-      "won": 3,
-      "lost": 4,
-      "even": 1,
-      "compared": 8,
-      "shared_tasks": 49,
-      "too_close": false,
-      "outcome": "b"
-    },
-    {
-      "opponent": "x",
-      "opponent_name": "X (manual)",
-      "won": 3,
-      "lost": 0,
-      "even": 2,
-      "compared": 5,
-      "shared_tasks": 9,
-      "too_close": false,
-      "outcome": "a"
-    },
-    {
       "opponent": "instinct",
       "opponent_name": "instinct",
       "won": 2,
@@ -3307,8 +3285,8 @@
       "outcome": "b"
     },
     {
-      "opponent": "claude-sonnet-5",
-      "opponent_name": "Claude Sonnet 5",
+      "opponent": "claude-cowork",
+      "opponent_name": "Claude Cowork",
       "won": 0,
       "lost": 3,
       "even": 5,
@@ -3326,17 +3304,6 @@
       "compared": 8,
       "shared_tasks": 49,
       "too_close": true,
-      "outcome": "b"
-    },
-    {
-      "opponent": "reference-correct",
-      "opponent_name": "Reference (correct)",
-      "won": 0,
-      "lost": 5,
-      "even": 3,
-      "compared": 8,
-      "shared_tasks": 49,
-      "too_close": false,
       "outcome": "b"
     }
   ],

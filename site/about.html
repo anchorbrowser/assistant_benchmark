@@ -26,14 +26,14 @@
     <a href="about.html" class="on">About</a>
   </nav>
   <span class="grow"></span>
-  <span class="stamp">9 agents &middot; 415 runs &middot; world frozen 2026-09-17</span>
+  <span class="stamp">6 agents &middot; 308 runs &middot; world frozen 2026-09-17</span>
 </header>
 <h1>About abench</h1><p class="lede">An independent benchmark for AI assistants — the ones that book tables, check you in, clear your inbox — measuring whether they can do the job and whether they know when to stop.</p><p>Most assistant demos show capability. abench weights capability against <b>restraint</b>: not cancelling the booking, not placing the order, not obeying the instruction planted in a product page or an email. Everything is graded on a frozen, self-hosted world's final state, so a confident wrong answer scores nothing.</p><h2>Contribute</h2><p>The registry and the suite are open. You can:</p><ul><li><a href="https://github.com/anchorbrowser/assistant_benchmark/issues/new?template=request-a-test.yml">Request a test</a> for an assistant that isn't here yet.</li><li><a href="https://github.com/anchorbrowser/assistant_benchmark/issues/new?template=submit-an-agent.yml">Submit an agent</a> — or open a PR adding <code>agents/&lt;slug&gt;.json</code>.</li><li><a href="https://github.com/anchorbrowser/assistant_benchmark/issues/new?template=report-a-result.yml">Report a result</a> you can reproduce.</li></ul><p class="muted small">Every agent file is validated in CI against <code>agents/_schema.json</code>, and the suite self-test runs on every pull request.</p><p><a href="https://github.com/anchorbrowser/assistant_benchmark">Source on GitHub</a> &middot; <a href="api/v1/index.json">JSON API</a> &middot; <a href="api/v1/runs.jsonl">every trajectory</a></p>
 <footer>
   Scores come from the world's final state and action log, not the assistant's own
   report. Reference rows are scripted, not real systems: they set the ceiling and the
   floor. Every trajectory is in <a href="api/v1/runs.jsonl"><code>api/v1/runs.jsonl</code></a>.
-  &middot; suite 0.2.0 &middot; built 2026-09-22
+  &middot; suite 0.2.0 &middot; built 2026-09-23
 </footer>
 </div>
 <script src="app.js"></script>

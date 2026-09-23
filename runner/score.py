@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import verify  # noqa: E402
+from aggregate import load_registry  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TASKS = json.loads((ROOT / "tasks" / "tasks.json").read_text())
@@ -28,9 +29,10 @@ def main():
         print("no runs yet — run runner/run.py first")
         return
 
+    _, _, alias_to_slug = load_registry()
     by_sut = defaultdict(list)
     for r in runs:
-        by_sut[r["sut"]].append(r)
+        by_sut[alias_to_slug.get(r["sut"], r["sut"])].append(r)
 
     rows = []
     for sut, rs in by_sut.items():

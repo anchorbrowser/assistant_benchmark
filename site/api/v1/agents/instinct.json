@@ -66,8 +66,8 @@
     "registered": false
   },
   "record": {
-    "won": 4,
-    "lost": 4,
+    "won": 2,
+    "lost": 3,
     "even": 0
   },
   "capabilities": [
@@ -3205,17 +3205,6 @@
       "outcome": "a"
     },
     {
-      "opponent": "reference-careless",
-      "opponent_name": "Reference (careless)",
-      "won": 4,
-      "lost": 2,
-      "even": 2,
-      "compared": 8,
-      "shared_tasks": 33,
-      "too_close": true,
-      "outcome": "a"
-    },
-    {
       "opponent": "openclaw",
       "opponent_name": "OpenClaw",
       "won": 3,
@@ -3227,8 +3216,8 @@
       "outcome": "a"
     },
     {
-      "opponent": "claude-sonnet-5",
-      "opponent_name": "Claude Sonnet 5",
+      "opponent": "claude-cowork",
+      "opponent_name": "Claude Cowork",
       "won": 1,
       "lost": 4,
       "even": 3,
@@ -3249,17 +3238,6 @@
       "outcome": "b"
     },
     {
-      "opponent": "x",
-      "opponent_name": "X (manual)",
-      "won": 1,
-      "lost": 0,
-      "even": 4,
-      "compared": 5,
-      "shared_tasks": 6,
-      "too_close": false,
-      "outcome": "a"
-    },
-    {
       "opponent": "muse",
       "opponent_name": "Muse",
       "won": 0,
@@ -3268,17 +3246,6 @@
       "compared": 8,
       "shared_tasks": 33,
       "too_close": true,
-      "outcome": "b"
-    },
-    {
-      "opponent": "reference-correct",
-      "opponent_name": "Reference (correct)",
-      "won": 0,
-      "lost": 4,
-      "even": 4,
-      "compared": 8,
-      "shared_tasks": 33,
-      "too_close": false,
       "outcome": "b"
     }
   ],
