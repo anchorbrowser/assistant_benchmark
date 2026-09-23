@@ -365,7 +365,7 @@ open site/index.html
 
 ```bash
 export ANTHROPIC_API_KEY=...
-python3 runner/run.py --sut claude-cowork --mode api --model claude-sonnet-5 --all
+python3 runner/run.py --sut claude-cowork --mode api --model claude-cowork --all
 ```
 
 The agent gets one tool, `open_url`. That is enough, because every action in the

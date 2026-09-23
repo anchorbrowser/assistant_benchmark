@@ -48,6 +48,19 @@ RUNS = ROOT / "runs"
 RUNS.mkdir(exist_ok=True)
 
 
+def registry_default_model(sut):
+    """Model id from agents/<slug>.json, so a renamed assistant does not fall
+    back to a name it no longer uses."""
+    for path in (ROOT / "agents").glob("*.json"):
+        if path.name.startswith("_"):
+            continue
+        agent = json.loads(path.read_text())
+        names = {agent.get("slug")} | set(agent.get("aliases") or [])
+        if sut in names:
+            return (agent.get("engine") or {}).get("default_model")
+    return None
+
+
 def _load_dotenv(path):
     """Minimal .env loader. Does not overwrite variables already in the environment."""
     if not path.exists():
@@ -504,7 +517,8 @@ def main():
             provider = "xai"
         else:
             provider = "anthropic"
-    model = a.model or ("grok-4.6" if provider == "xai" else "claude-sonnet-5")
+    model = a.model or registry_default_model(a.sut) or (
+        "grok-4.6" if provider == "xai" else "claude-cowork")
 
     grader = a.grader or ("llm" if os.environ.get("ANTHROPIC_API_KEY") else "human")
 

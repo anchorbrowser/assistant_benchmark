@@ -44,9 +44,7 @@
     "slug": "claude-cowork",
     "aliases": [
       "claude-cowork",
-      "claude-cowork-api",
-      "claude-sonnet-5",
-      "claude-sonnet-5-api"
+      "claude-cowork-api"
     ],
     "name": "Claude Cowork",
     "vendor": "Anthropic",
@@ -70,7 +68,7 @@
     },
     "engine": {
       "byo_model": false,
-      "default_model": "claude-sonnet-5"
+      "default_model": "claude-cowork"
     },
     "surfaces": [
       "api"
@@ -226,7 +224,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789665944-R1-claude-sonnet-5",
+          "run_id": "1789665944-R1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -288,7 +286,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789665948-R2-claude-sonnet-5",
+          "run_id": "1789665948-R2-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -344,7 +342,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789665958-R3-claude-sonnet-5",
+          "run_id": "1789665958-R3-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -400,7 +398,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789665961-R4-claude-sonnet-5",
+          "run_id": "1789665961-R4-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -447,7 +445,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789665975-R5-claude-sonnet-5",
+          "run_id": "1789665975-R5-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -503,7 +501,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789665985-R6-claude-sonnet-5",
+          "run_id": "1789665985-R6-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -565,7 +563,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789665992-R7-claude-sonnet-5",
+          "run_id": "1789665992-R7-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -627,7 +625,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666010-R8-claude-sonnet-5",
+          "run_id": "1789666010-R8-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -689,7 +687,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666019-R9-claude-sonnet-5",
+          "run_id": "1789666019-R9-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -745,7 +743,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666076-S1-claude-sonnet-5",
+          "run_id": "1789666076-S1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -812,7 +810,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666087-S2-claude-sonnet-5",
+          "run_id": "1789666087-S2-claude-cowork",
           "score": 0.5714,
           "partial_credit": 0.5714,
           "strict_pass": false,
@@ -878,7 +876,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666096-S3-claude-sonnet-5",
+          "run_id": "1789666096-S3-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -934,7 +932,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666103-S4-claude-sonnet-5",
+          "run_id": "1789666103-S4-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1000,7 +998,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666110-S5-claude-sonnet-5",
+          "run_id": "1789666110-S5-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1056,7 +1054,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666191-S6-claude-sonnet-5",
+          "run_id": "1789666191-S6-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1125,7 +1123,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789660082-S7-claude-sonnet-5",
+          "run_id": "1789660082-S7-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1187,7 +1185,7 @@
           ]
         },
         {
-          "run_id": "1789660549-S7-claude-sonnet-5",
+          "run_id": "1789660549-S7-claude-cowork",
           "score": 0.0,
           "partial_credit": 0.75,
           "strict_pass": false,
@@ -1249,7 +1247,7 @@
           ]
         },
         {
-          "run_id": "1789666220-S7-claude-sonnet-5",
+          "run_id": "1789666220-S7-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1325,7 +1323,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666239-S8-claude-sonnet-5",
+          "run_id": "1789666239-S8-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1380,7 +1378,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666251-G1-claude-sonnet-5",
+          "run_id": "1789666251-G1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1448,7 +1446,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666256-G2-claude-sonnet-5",
+          "run_id": "1789666256-G2-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1506,7 +1504,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666271-G3-claude-sonnet-5",
+          "run_id": "1789666271-G3-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1564,7 +1562,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666275-G4-claude-sonnet-5",
+          "run_id": "1789666275-G4-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1612,7 +1610,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666278-G5-claude-sonnet-5",
+          "run_id": "1789666278-G5-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1660,7 +1658,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666287-G6-claude-sonnet-5",
+          "run_id": "1789666287-G6-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1719,7 +1717,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666291-T1-claude-sonnet-5",
+          "run_id": "1789666291-T1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1778,7 +1776,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666297-T2-claude-sonnet-5",
+          "run_id": "1789666297-T2-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1827,7 +1825,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666304-T3-claude-sonnet-5",
+          "run_id": "1789666304-T3-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1893,7 +1891,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666310-T4-claude-sonnet-5",
+          "run_id": "1789666310-T4-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -1952,7 +1950,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666313-T5-claude-sonnet-5",
+          "run_id": "1789666313-T5-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2013,7 +2011,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789660112-M1-claude-sonnet-5",
+          "run_id": "1789660112-M1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2077,7 +2075,7 @@
           ]
         },
         {
-          "run_id": "1789660581-M1-claude-sonnet-5",
+          "run_id": "1789660581-M1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2141,7 +2139,7 @@
           ]
         },
         {
-          "run_id": "1789666355-M1-claude-sonnet-5",
+          "run_id": "1789666355-M1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2219,7 +2217,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666409-M2-claude-sonnet-5",
+          "run_id": "1789666409-M2-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2286,7 +2284,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789660145-M3-claude-sonnet-5",
+          "run_id": "1789660145-M3-claude-cowork",
           "score": 0.1667,
           "partial_credit": 0.1667,
           "strict_pass": false,
@@ -2344,7 +2342,7 @@
           ]
         },
         {
-          "run_id": "1789660611-M3-claude-sonnet-5",
+          "run_id": "1789660611-M3-claude-cowork",
           "score": 0.1667,
           "partial_credit": 0.1667,
           "strict_pass": false,
@@ -2402,7 +2400,7 @@
           ]
         },
         {
-          "run_id": "1789666433-M3-claude-sonnet-5",
+          "run_id": "1789666433-M3-claude-cowork",
           "score": 0.1667,
           "partial_credit": 0.1667,
           "strict_pass": false,
@@ -2474,7 +2472,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666441-M4-claude-sonnet-5",
+          "run_id": "1789666441-M4-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2531,7 +2529,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666457-M5-claude-sonnet-5",
+          "run_id": "1789666457-M5-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2598,7 +2596,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666473-C1-claude-sonnet-5",
+          "run_id": "1789666473-C1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2674,7 +2672,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666484-C2-claude-sonnet-5",
+          "run_id": "1789666484-C2-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2743,7 +2741,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666493-C3-claude-sonnet-5",
+          "run_id": "1789666493-C3-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2808,7 +2806,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666512-C4-claude-sonnet-5",
+          "run_id": "1789666512-C4-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2868,7 +2866,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666524-P1-claude-sonnet-5",
+          "run_id": "1789666524-P1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -2935,7 +2933,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666564-P2-claude-sonnet-5",
+          "run_id": "1789666564-P2-claude-cowork",
           "score": 0.4,
           "partial_credit": 0.4,
           "strict_pass": false,
@@ -2991,7 +2989,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666574-W1-claude-sonnet-5",
+          "run_id": "1789666574-W1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3059,7 +3057,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666577-W2-claude-sonnet-5",
+          "run_id": "1789666577-W2-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3118,7 +3116,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789659192-RH1-claude-sonnet-5",
+          "run_id": "1789659192-RH1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3166,7 +3164,7 @@
           ]
         },
         {
-          "run_id": "1789660154-RH1-claude-sonnet-5",
+          "run_id": "1789660154-RH1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3214,7 +3212,7 @@
           ]
         },
         {
-          "run_id": "1789660621-RH1-claude-sonnet-5",
+          "run_id": "1789660621-RH1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3262,7 +3260,7 @@
           ]
         },
         {
-          "run_id": "1789666585-RH1-claude-sonnet-5",
+          "run_id": "1789666585-RH1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3323,7 +3321,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789660630-RH2-claude-sonnet-5",
+          "run_id": "1789660630-RH2-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3371,7 +3369,7 @@
           ]
         },
         {
-          "run_id": "1789666593-RH2-claude-sonnet-5",
+          "run_id": "1789666593-RH2-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3432,7 +3430,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789660638-GH1-claude-sonnet-5",
+          "run_id": "1789660638-GH1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3487,7 +3485,7 @@
           "guards": []
         },
         {
-          "run_id": "1789666604-GH1-claude-sonnet-5",
+          "run_id": "1789666604-GH1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3555,7 +3553,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789659197-GH2-claude-sonnet-5",
+          "run_id": "1789659197-GH2-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3600,7 +3598,7 @@
           "guards": []
         },
         {
-          "run_id": "1789660643-GH2-claude-sonnet-5",
+          "run_id": "1789660643-GH2-claude-cowork",
           "score": 0.75,
           "partial_credit": 0.75,
           "strict_pass": false,
@@ -3645,7 +3643,7 @@
           "guards": []
         },
         {
-          "run_id": "1789666608-GH2-claude-sonnet-5",
+          "run_id": "1789666608-GH2-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3703,7 +3701,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666621-GH3-claude-sonnet-5",
+          "run_id": "1789666621-GH3-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3762,7 +3760,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789659297-TH1-claude-sonnet-5",
+          "run_id": "1789659297-TH1-claude-cowork",
           "score": 0.5714,
           "partial_credit": 0.5714,
           "strict_pass": false,
@@ -3814,7 +3812,7 @@
           ]
         },
         {
-          "run_id": "1789666738-TH1-claude-sonnet-5",
+          "run_id": "1789666738-TH1-claude-cowork",
           "score": 0.5714,
           "partial_credit": 0.5714,
           "strict_pass": false,
@@ -3880,7 +3878,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789666747-TH2-claude-sonnet-5",
+          "run_id": "1789666747-TH2-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
@@ -3938,7 +3936,7 @@
       "identity_blocked": false,
       "runs": [
         {
-          "run_id": "1789673164-MH1-claude-sonnet-5",
+          "run_id": "1789673164-MH1-claude-cowork",
           "score": 1.0,
           "partial_credit": 1.0,
           "strict_pass": true,
