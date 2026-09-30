@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-30T18:40:02Z",
+    "generated": "2026-09-30T18:44:13Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,9 +62,9 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 8,
-      "runs": 406,
-      "registered": 7
+      "agents": 9,
+      "runs": 455,
+      "registered": 8
     }
   },
   "dimensions": [
@@ -107,6 +107,10 @@
           "score": 0.8939
         },
         {
+          "slug": "town",
+          "score": 0.8788
+        },
+        {
           "slug": "muse",
           "score": 0.8333
         },
@@ -141,6 +145,10 @@
         },
         {
           "slug": "instinct",
+          "score": 1.0
+        },
+        {
+          "slug": "town",
           "score": 1.0
         },
         {
@@ -206,6 +214,10 @@
           "score": 0.9583
         },
         {
+          "slug": "town",
+          "score": 0.9556
+        },
+        {
           "slug": "grok-bot",
           "score": 0.7731
         },
@@ -239,6 +251,10 @@
         },
         {
           "slug": "muse",
+          "score": 1.0
+        },
+        {
+          "slug": "town",
           "score": 1.0
         },
         {
@@ -280,6 +296,10 @@
         "MH1"
       ],
       "rows": [
+        {
+          "slug": "town",
+          "score": 1.0
+        },
         {
           "slug": "manus",
           "score": 0.9286
@@ -334,6 +354,10 @@
           "score": 0.875
         },
         {
+          "slug": "town",
+          "score": 0.7917
+        },
+        {
           "slug": "manus",
           "score": 0.625
         },
@@ -381,6 +405,10 @@
           "score": 1.0
         },
         {
+          "slug": "town",
+          "score": 1.0
+        },
+        {
           "slug": "play",
           "score": 1.0
         },
@@ -421,6 +449,10 @@
         },
         {
           "slug": "openclaw",
+          "score": 1.0
+        },
+        {
+          "slug": "town",
           "score": 1.0
         },
         {

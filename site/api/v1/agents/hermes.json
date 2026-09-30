@@ -120,7 +120,7 @@
   },
   "record": {
     "won": 6,
-    "lost": 0,
+    "lost": 1,
     "even": 1
   },
   "capabilities": [
@@ -3322,6 +3322,17 @@
       "shared_tasks": 49,
       "too_close": true,
       "outcome": "even"
+    },
+    {
+      "opponent": "town",
+      "opponent_name": "Town",
+      "won": 1,
+      "lost": 3,
+      "even": 4,
+      "compared": 8,
+      "shared_tasks": 49,
+      "too_close": true,
+      "outcome": "b"
     }
   ],
   "frontier": {

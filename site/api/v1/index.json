@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-30T18:40:02Z",
+    "generated": "2026-09-30T18:44:13Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,12 +62,77 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 8,
-      "runs": 406,
-      "registered": 7
+      "agents": 9,
+      "runs": 455,
+      "registered": 8
     }
   },
   "rows": [
+    {
+      "slug": "town",
+      "mode": "manual",
+      "index": 94.8,
+      "ci_low": 91.2,
+      "ci_high": 97.9,
+      "provisional": false,
+      "axes": {
+        "restraint": 0.8788,
+        "state": 1.0,
+        "grounding": 0.9556,
+        "retrieval": 1.0,
+        "multistep": 1.0,
+        "comms": 0.7917,
+        "memory": 1.0,
+        "proactive": 1.0
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 0.96,
+        "2": 0.9608,
+        "3": 0.8846,
+        "4": 1.0
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "tasks_scored": 49,
+      "coverage": 100,
+      "strict_pass": 88,
+      "guard_breach": 0.0,
+      "false_completion": 6.1,
+      "stalled_asking": 4.1,
+      "identity_blocked": 0.0,
+      "policy_version": [
+        2
+      ],
+      "injection_asr": 0.0,
+      "restraint": 0.8788,
+      "capability": 0.9639,
+      "wall_p50": 70.0,
+      "steps_p50": null,
+      "name": "Town",
+      "vendor": "Town",
+      "status": "ga",
+      "registered": true,
+      "access_tier": "public",
+      "pricing": "unknown",
+      "hosting_tier": "closed-saas",
+      "surfaces": [
+        "chat",
+        "email",
+        "browser"
+      ],
+      "record": {
+        "won": 8,
+        "lost": 0,
+        "even": 0
+      },
+      "frontier": {
+        "cap_restraint": true,
+        "cap_latency": true
+      },
+      "rank": 1
+    },
     {
       "slug": "claude-cowork",
       "mode": "api",
@@ -122,14 +187,14 @@
       ],
       "record": {
         "won": 6,
-        "lost": 0,
+        "lost": 1,
         "even": 1
       },
       "frontier": {
         "cap_restraint": true,
         "cap_latency": true
       },
-      "rank": 1
+      "rank": 2
     },
     {
       "slug": "hermes",
@@ -185,14 +250,14 @@
       ],
       "record": {
         "won": 6,
-        "lost": 0,
+        "lost": 1,
         "even": 1
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 2
+      "rank": 3
     },
     {
       "slug": "muse",
@@ -249,14 +314,14 @@
       ],
       "record": {
         "won": 5,
-        "lost": 2,
+        "lost": 3,
         "even": 0
       },
       "frontier": {
-        "cap_restraint": true,
+        "cap_restraint": false,
         "cap_latency": true
       },
-      "rank": 3
+      "rank": 4
     },
     {
       "slug": "manus",
@@ -313,14 +378,14 @@
       ],
       "record": {
         "won": 3,
-        "lost": 3,
+        "lost": 4,
         "even": 1
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 4
+      "rank": 5
     },
     {
       "slug": "instinct",
@@ -377,14 +442,14 @@
       ],
       "record": {
         "won": 3,
-        "lost": 4,
+        "lost": 5,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 5
+      "rank": 6
     },
     {
       "slug": "openclaw",
@@ -441,14 +506,14 @@
       ],
       "record": {
         "won": 1,
-        "lost": 4,
+        "lost": 5,
         "even": 2
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 6
+      "rank": 7
     },
     {
       "slug": "grok-bot",
@@ -506,14 +571,14 @@
       ],
       "record": {
         "won": 1,
-        "lost": 6,
+        "lost": 7,
         "even": 0
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 7
+      "rank": 8
     },
     {
       "slug": "play",
@@ -570,14 +635,14 @@
       ],
       "record": {
         "won": 0,
-        "lost": 6,
+        "lost": 7,
         "even": 1
       },
       "frontier": {
         "cap_restraint": false,
         "cap_latency": false
       },
-      "rank": 8
+      "rank": 9
     }
   ]
 }

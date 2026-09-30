@@ -125,7 +125,7 @@
   },
   "record": {
     "won": 1,
-    "lost": 4,
+    "lost": 5,
     "even": 2
   },
   "capabilities": [
@@ -3304,6 +3304,17 @@
       "compared": 8,
       "shared_tasks": 33,
       "too_close": true,
+      "outcome": "b"
+    },
+    {
+      "opponent": "town",
+      "opponent_name": "Town",
+      "won": 1,
+      "lost": 5,
+      "even": 2,
+      "compared": 8,
+      "shared_tasks": 49,
+      "too_close": false,
       "outcome": "b"
     },
     {

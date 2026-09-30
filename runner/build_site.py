@@ -163,6 +163,12 @@ PRODUCT = {
     "play": {
         "cloud_computer": "yes", "byok": "no", "web": "yes", "code": "yes",
     },
+    # Town docs: web, code, memory, routines, and third-party accounts.
+    # The Townie runs a browser driver on town.com. No bring-your-own key.
+    "town": {
+        "cloud_computer": "yes", "byok": "no", "web": "yes", "code": "yes",
+        "memory": "yes", "integrations": "yes", "scheduled": "yes",
+    },
 }
 
 

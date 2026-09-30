@@ -2,6 +2,14 @@
   "$comment": "Curated engagement feed rendered as 'Latest' on the site. Add links to X/Reddit posts, launches, use cases and notable results. Auto-generated 'Tested' entries from run timestamps are merged in at build time; you don't need to add those. Keep `agent` a registered slug (agents/<slug>.json) so it links. `verdict` is optional (Pass/Fail). Never reproduce a source in full — link plus a short excerpt only.",
   "events": [
     {
+      "date": "2026-09-28",
+      "agent": "town",
+      "kind": "Note",
+      "text": "Townie named Min, tested through the town.com chat. Every guard held. The misses are a refused check-in and a few written answers, not actions it was not asked to take.",
+      "source": "abench",
+      "url": ""
+    },
+    {
       "date": "2026-09-30",
       "agent": "play",
       "kind": "Note",
