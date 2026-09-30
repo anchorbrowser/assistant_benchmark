@@ -114,6 +114,91 @@ def hosting_pill(tier):
     return f'<span class="pill {HOSTING_CLASS.get(tier, "")}">{esc(HOSTING_LABEL.get(tier, tier))}</span>'
 
 
+# Product surface, not the measured score. "yes" / "no" only where this repo already
+# establishes it (registry, the run, or a spotlight). Anything else stays "unknown"
+# and renders as a dash — a dash is not a no.
+PRODUCT_ROWS = (
+    ("scheduled", "Scheduled routines"),
+    ("cloud_computer", "Cloud computer"),
+    ("voice", "Voice conversation"),
+    ("byok", "Bring-your-own-key"),
+    ("web", "Web browsing"),
+    ("file_uploads", "File uploads"),
+    ("code", "Code execution"),
+    ("memory", "Persistent memory"),
+    ("integrations", "Third-party integrations"),
+    ("multi_agent", "Multi-agent orchestration"),
+)
+PRODUCT = {
+    "claude-cowork": {
+        "cloud_computer": "no", "byok": "yes", "web": "yes", "code": "no",
+        "memory": "no", "integrations": "yes",
+    },
+    "hermes": {
+        "cloud_computer": "no", "byok": "yes", "web": "yes", "memory": "no",
+        "integrations": "yes",
+    },
+    "muse": {
+        "cloud_computer": "yes", "voice": "no", "byok": "no", "web": "yes",
+        "file_uploads": "no", "code": "no", "memory": "yes", "integrations": "yes",
+    },
+    "manus": {
+        "cloud_computer": "yes", "byok": "no", "web": "yes", "file_uploads": "yes",
+        "code": "yes", "memory": "yes", "integrations": "yes", "multi_agent": "yes",
+    },
+    "instinct": {
+        "voice": "yes", "byok": "no", "web": "yes", "memory": "yes",
+        "integrations": "yes",
+    },
+    "openclaw": {
+        "cloud_computer": "no", "byok": "yes", "web": "yes", "code": "yes",
+        "memory": "no", "integrations": "yes",
+    },
+    "grok-bot": {
+        "cloud_computer": "no", "byok": "no", "web": "yes", "code": "no",
+        "memory": "no", "integrations": "no",
+    },
+    # From the work.play.fast runs: it fetches pages and runs commands on
+    # Play's side. No bring-your-own key; the account spends credits.
+    "play": {
+        "cloud_computer": "yes", "byok": "no", "web": "yes", "code": "yes",
+    },
+}
+
+
+def product_cell(slug, key):
+    val = PRODUCT.get(slug, {}).get(key, "unknown")
+    if val == "yes":
+        return '<td class="yes">Yes</td>'
+    if val == "no":
+        return '<td class="no">No</td>'
+    return '<td class="muted">&mdash;</td>'
+
+
+def capability_section(rows, root="", board=False):
+    """One column per assistant. Score is the index; the other rows are product surface."""
+    head = ['<th>Capabilities</th>']
+    for r in rows:
+        head.append(f'<th><a href="{root}agents/{esc(r["slug"])}.html">{esc(r["name"])}</a></th>')
+    body = ['<table class="caps"><thead><tr>' + "".join(head) + '</tr></thead><tbody>']
+    scores = ['<tr><td>Score</td>']
+    for r in rows:
+        scores.append(f'<td class="num idx">{r["index"]:.1f}%</td>')
+    body.append("".join(scores) + "</tr>")
+    for key, label in PRODUCT_ROWS:
+        body.append('<tr><td>' + esc(label) + '</td>'
+                    + "".join(product_cell(r["slug"], key) for r in rows) + '</tr>')
+    body.append('</tbody></table>')
+    note = ('Product surface of the assistant on this board, separate from the measured score. '
+            'Yes and no are only where the registry, the run, or a spotlight already establishes '
+            'them. A dash is not a no.')
+    if board:
+        note += (' Voice, code execution, and file uploads on Muse belong to other Meta products, '
+                 'so they are no here.')
+    body.append(f'<p class="note">{note}</p>')
+    return '<div class="scroll">' + "".join(body) + '</div>'
+
+
 def index_cell(r):
     ci = ""
     if r.get("ci_low") is not None:
@@ -353,6 +438,9 @@ def build_index(meta, index):
                 'breach scores that task zero. <b>Injection ASR</b> is how often a planted '
                 'instruction got obeyed. See <a href="methodology.html">methodology</a>.</p>')
 
+    body.append('<h2>Capabilities</h2>')
+    body.append(capability_section(rows, board=True))
+
     # pareto — fully-tested real assistants only. The scripted reference floor/ceiling and
     # barely-covered provisional entries would otherwise pin the axes and repack everyone.
     real = [r for r in rows if r.get("status") != "reference" and not r.get("provisional")]
@@ -518,6 +606,11 @@ def build_agent(meta, index, slug):
     if host.get("install"):
         cells.append(cell("Install", " ".join(f'<code>{esc(i)}</code>' for i in host["install"])))
     body.append('<h2>Parameters</h2><div class="matrix">' + "".join(cells) + "</div>")
+
+    mine = next((r for r in index["rows"] if r["slug"] == slug), None)
+    if mine:
+        body.append('<h2>Capabilities</h2>')
+        body.append(capability_section([mine], root="../"))
 
     # axes + tiers
     body.append('<h2>Where the score comes from</h2>')

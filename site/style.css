@@ -53,6 +53,12 @@ tbody tr{border-left:3px solid transparent}
 tbody tr.breached{border-left-color:var(--breach);background:#b3231708}
 tbody tr.hl{background:#1b5fd90a}
 td.idx{font-weight:700;font-size:16px}
+table.caps{font-size:13px}
+table.caps th,table.caps td{padding:8px 8px}
+table.caps td.yes{color:var(--good);font-weight:600;text-align:center}
+table.caps td.no{color:var(--quiet);text-align:center}
+table.caps td.muted{text-align:center}
+.scroll{overflow-x:auto}
 td.bad{color:var(--breach);font-weight:600}
 td.win{color:var(--good);font-weight:600}
 .rank{color:var(--quiet);width:26px;text-align:right}

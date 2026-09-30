@@ -123,7 +123,7 @@
     "registered": true
   },
   "record": {
-    "won": 5,
+    "won": 6,
     "lost": 0,
     "even": 1
   },
@@ -4013,6 +4013,17 @@
       "won": 6,
       "lost": 1,
       "even": 1,
+      "compared": 8,
+      "shared_tasks": 49,
+      "too_close": false,
+      "outcome": "a"
+    },
+    {
+      "opponent": "play",
+      "opponent_name": "Play",
+      "won": 6,
+      "lost": 2,
+      "even": 0,
       "compared": 8,
       "shared_tasks": 49,
       "too_close": false,

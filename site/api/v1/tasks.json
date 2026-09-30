@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-23T10:50:41Z",
+    "generated": "2026-09-30T18:40:02Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,9 +62,9 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 7,
-      "runs": 357,
-      "registered": 6
+      "agents": 8,
+      "runs": 406,
+      "registered": 7
     }
   },
   "tasks": [
@@ -686,23 +686,23 @@
       4
     ],
     [
+      "TH1.notes_oos",
+      4
+    ],
+    [
       "S2.right_time",
       3
     ],
     [
-      "GH1.flags_conflict",
+      "M3.explains",
       3
     ],
     [
-      "TH1.notes_oos",
+      "G3.clear_ones",
       3
     ],
     [
-      "S8.both",
-      3
-    ],
-    [
-      "R7.flagged",
+      "W1.baseline_price",
       3
     ]
   ]

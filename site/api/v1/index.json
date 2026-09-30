@@ -3,7 +3,7 @@
     "suite": "abench",
     "version": "0.2.0",
     "virtual_now": "2026-09-17T09:00:00+03:00",
-    "generated": "2026-09-23T10:50:41Z",
+    "generated": "2026-09-30T18:40:02Z",
     "axis_weights": {
       "restraint": 0.2,
       "state": 0.15,
@@ -62,9 +62,9 @@
     "h2h_epsilon": 0.05,
     "bootstrap_n": 1000,
     "counts": {
-      "agents": 7,
-      "runs": 357,
-      "registered": 6
+      "agents": 8,
+      "runs": 406,
+      "registered": 7
     }
   },
   "rows": [
@@ -121,7 +121,7 @@
         "api"
       ],
       "record": {
-        "won": 5,
+        "won": 6,
         "lost": 0,
         "even": 1
       },
@@ -184,7 +184,7 @@
         "cli"
       ],
       "record": {
-        "won": 5,
+        "won": 6,
         "lost": 0,
         "even": 1
       },
@@ -248,7 +248,7 @@
         "browser"
       ],
       "record": {
-        "won": 4,
+        "won": 5,
         "lost": 2,
         "even": 0
       },
@@ -312,7 +312,7 @@
         "browser"
       ],
       "record": {
-        "won": 2,
+        "won": 3,
         "lost": 3,
         "even": 1
       },
@@ -376,7 +376,7 @@
         "chat"
       ],
       "record": {
-        "won": 2,
+        "won": 3,
         "lost": 4,
         "even": 0
       },
@@ -442,7 +442,7 @@
       "record": {
         "won": 1,
         "lost": 4,
-        "even": 1
+        "even": 2
       },
       "frontier": {
         "cap_restraint": false,
@@ -505,7 +505,7 @@
         "webhook"
       ],
       "record": {
-        "won": 0,
+        "won": 1,
         "lost": 6,
         "even": 0
       },
@@ -514,6 +514,70 @@
         "cap_latency": false
       },
       "rank": 7
+    },
+    {
+      "slug": "play",
+      "mode": "channel",
+      "index": 75.3,
+      "ci_low": 65.1,
+      "ci_high": 85.0,
+      "provisional": false,
+      "axes": {
+        "restraint": 0.7576,
+        "state": 1.0,
+        "grounding": 0.7481,
+        "retrieval": 0.6204,
+        "multistep": 0.7619,
+        "comms": 0.5,
+        "memory": 1.0,
+        "proactive": 0.5
+      },
+      "axes_covered": 8,
+      "axes_total": 8,
+      "tiers": {
+        "1": 0.7933,
+        "2": 0.7619,
+        "3": 0.6026,
+        "4": 0.918
+      },
+      "runs": 49,
+      "tasks_covered": 49,
+      "tasks_scored": 49,
+      "coverage": 100,
+      "strict_pass": 67,
+      "guard_breach": 0.0,
+      "false_completion": 32.7,
+      "stalled_asking": 0.0,
+      "identity_blocked": 0.0,
+      "policy_version": [
+        3
+      ],
+      "injection_asr": 0.0,
+      "restraint": 0.7576,
+      "capability": 0.7329,
+      "wall_p50": 56.6,
+      "steps_p50": null,
+      "name": "Play",
+      "vendor": "Play",
+      "status": "ga",
+      "registered": true,
+      "access_tier": "public",
+      "pricing": "paid",
+      "hosting_tier": "closed-saas",
+      "surfaces": [
+        "chat",
+        "browser"
+      ],
+      "record": {
+        "won": 0,
+        "lost": 6,
+        "even": 1
+      },
+      "frontier": {
+        "cap_restraint": false,
+        "cap_latency": false
+      },
+      "rank": 8
     }
   ]
 }

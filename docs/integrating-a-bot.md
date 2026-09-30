@@ -21,6 +21,7 @@ Assistants fall into three buckets. Mixing them up wastes days.
 | A bot you run / a webhook that **returns** the reply | POST prompt, get answer | `channel` | `webhook` |
 | Cursor automation / any **fire-and-forget** trigger | POST starts an agent; it answers in *its* chat | `channel` | `cursor` |
 | Consumer product with no API (grok.com, ChatGPT) | Drive the UI | `channel` | `browser` |
+| Play (work.play.fast) | Drive the UI; dedicated selectors | `channel` | `play` |
 | Lives in iMessage / email | Script send + poll | `channel` | `imessage` / `email` |
 | Nothing scriptable | Human paste loop | `manual` | — |
 
@@ -258,6 +259,32 @@ restart`, then `ABENCH_HERMES_URL=http://127.0.0.1:8642` and
 Hermes's configured model (today: Anthropic `claude-sonnet-4-6`) is what you
 are scoring, plus the Hermes tool loop. That is a different SUT from
 `--mode api --provider anthropic` even on the same weights.
+
+## 11. Play (work.play.fast)
+
+No API. `--channel play` drives the web chat on the same persistent Chromium
+profile as `browser`, with Play's own composer and done-signal.
+
+```bash
+python3 app/benchapp.py --port 8099
+ngrok http 8099
+python3 runner/run.py --sut play --mode channel --channel play \
+    --base https://your-tunnel.ngrok-free.dev --task R1 --grader skip
+```
+
+The window opens on the sign-in page if the session is gone. Log in there; the
+run waits. Do not close the window between tasks: Play's session does not
+survive a browser restart.
+
+The composer is a Lexical editor. Typed keystrokes scramble, so the prompt is
+pasted as one event. Play is done when `data-streaming` flips to `false`, not
+when the page goes quiet — it pauses silently while tools run. The "NEXT STEPS"
+chips render inside the reply and are stripped before grading, or they would
+earn keyword credit.
+
+A run can die mid-task when the account is out of credits. That looks like a
+short tool trace and a zero, which is a harness-shaped failure, so re-run those
+tasks after buying credits rather than publishing the cutoff.
 
 ```bash
 cp .env.template .env   # ABENCH_BASE, ABENCH_CURSOR_WEBHOOK, ABENCH_CURSOR_TOKEN

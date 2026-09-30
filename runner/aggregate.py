@@ -22,7 +22,7 @@ import random
 import re
 import statistics as stats
 import sys
-from collections import defaultdict, OrderedDict
+from collections import Counter, defaultdict, OrderedDict
 from datetime import datetime, timezone
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -195,7 +195,9 @@ def agent_stats(slug, rs):
 
     return {
         "slug": slug,
-        "mode": rs[0].get("mode"),
+        # A suite can mix modes (Play's first tasks were pasted by hand). The
+        # label is the mode that produced most of the runs.
+        "mode": Counter(r.get("mode") for r in rs if r.get("mode")).most_common(1)[0][0],
         "index": index,
         "ci_low": ci_low,
         "ci_high": ci_high,

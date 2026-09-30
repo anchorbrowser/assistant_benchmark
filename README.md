@@ -217,6 +217,7 @@ python3 runner/run.py --sut poke --mode channel --channel imessage \
 | `imessage` | Native Swift bridge calls macOS Accessibility for send/receive; no AI or clicking loop | macOS, Messages signed in, recipient thread open, Accessibility permission |
 | `email` | `smtplib` sends, `imaplib` polls; a token in the Subject correlates the reply | `ABENCH_EMAIL_USER`, `ABENCH_EMAIL_PASS`, `ABENCH_SMTP_HOST`, `ABENCH_IMAP_HOST` |
 | `openclaw` | Local `openclaw agent --local` (no gateway) | Anthropic/OpenAI key in the env; Node 24 on PATH for npx |
+| `play` | Play's web chat at work.play.fast. Same browser profile as `browser`, with Play's composer and its streaming indicator | Playwright, then log in once in the window the run opens |
 
 Pick by where the assistant lives. **Grok Bot, grok.com, ChatGPT and friends
 ship no API at all, so `browser` is the only option** — there is nothing to
@@ -300,6 +301,21 @@ These assistants answer in bursts — "on it", two progress notes, then the real
 answer. So a reply is **everything inbound since the prompt, once it stops
 arriving**: `--settle 25` ends the turn after 25s of quiet, `--reply-timeout 420`
 caps the wait. Raise `--settle` for an assistant that pauses mid-thought.
+
+#### The Play channel
+
+Play is the `browser` idea with selectors that match work.play.fast, so you do
+not set `ABENCH_INPUT_SEL`. Log in when the window opens. The session does not
+survive closing that window, and the run waits on the sign-in page until you do.
+
+```bash
+python3 runner/run.py --sut play --mode channel --channel play \
+    --base https://your-tunnel.ngrok-free.dev --all --resume --grader skip
+```
+
+Play tells the runner when it has stopped (`data-streaming=false`), which is
+more reliable than waiting for quiet, because it pauses while its tools run.
+The suggested "NEXT STEPS" chips are Play's own UI and are stripped before grading.
 
 On `imessage` and `email` there is no fresh chat per task: the assistant keeps
 one thread, so memory leaks between tasks. That is real behaviour, but it is

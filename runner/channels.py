@@ -431,6 +431,119 @@ class Browser(Channel):
         self._ctx = self._pw = self.page = None
 
 
+class Play(Browser):
+    """work.play.fast, driven through its web UI on the abench browser profile.
+
+    Log in once:  python3 runner/channels.py login https://work.play.fast/
+
+    The composer is a Lexical editor: synthetic keystrokes scramble as it
+    re-renders, and a plain insert drops paragraphs, so the prompt goes in as
+    one paste event. Play also tells us when it is done — its streaming
+    indicator flips to data-streaming=false — which is far more reliable than
+    waiting for quiet, because it pauses silently while its tools run.
+    """
+    name = "play"
+    INPUT_SEL = '[data-testid="md-input-editor"]'
+    SEND_SEL = '[data-testid="chat-send-button"]'
+    STREAM_SEL = '[data-testid="chat-streaming-indicator"]'
+
+    _PASTE_JS = """(t) => {
+        const a = document.querySelector('[data-testid="md-input-editor"]');
+        a.focus();
+        const dt = new DataTransfer();
+        dt.setData('text/plain', t);
+        a.dispatchEvent(new ClipboardEvent('paste',
+            {clipboardData: dt, bubbles: true, cancelable: true}));
+    }"""
+    _MESSAGES_JS = """() => [...document.querySelectorAll('[data-testid^="chat-message-"]')]
+        .filter(e => /^chat-message-[0-9a-f-]{36}$/.test(e.dataset.testid))
+        .map(e => e.innerText.trim())"""
+
+    def __init__(self, to):
+        super().__init__(to or "https://work.play.fast/")
+        self._head = ""
+
+    def new_chat(self):
+        self._start()
+        # "commit", not "load": Play keeps connections open, so the load event
+        # often never fires and a navigation that did succeed looks like a hang.
+        for attempt in range(2):
+            try:
+                self.page.goto(self.url, wait_until="commit", timeout=60000)
+                return
+            except Exception:  # noqa: BLE001
+                if attempt:
+                    raise
+
+    def send(self, text):
+        self._start()
+        box = self.page.locator(self.INPUT_SEL).first
+        try:
+            # Play's session does not survive a browser restart, so a signed-out
+            # page is expected at the start of a run: log in in this window.
+            self.page.wait_for_timeout(3000)
+            if "/sign-in" in self.page.url:
+                print("       Play is signed out: log in in the Chromium window (waiting 15 min)")
+                box.wait_for(state="visible", timeout=900000)
+            box.wait_for(state="visible", timeout=30000)
+        except Exception as e:  # noqa: BLE001
+            raise ChannelError(
+                f"no Play composer on {self.url}. Log in first: "
+                f"python3 runner/channels.py login {self.url}") from e
+        box.click()
+        self.page.keyboard.press("Meta+a")
+        self.page.keyboard.press("Backspace")
+        self.page.evaluate(self._PASTE_JS, text)
+        self.page.wait_for_timeout(500)
+        got = len(box.inner_text().strip())
+        want = len(text.strip())
+        if abs(got - want) > max(40, want // 20):
+            raise ChannelError(f"composer holds {got} chars, prompt is {want}")
+        self._head = text.strip().split("\n", 1)[0][:60]
+        self.page.locator(self.SEND_SEL).first.click()
+        self.page.wait_for_url("**/chat/**", timeout=60000, wait_until="commit")
+        print(f"       chat {self.page.url}")
+
+    def poll(self, since):
+        if not self.page:
+            return []
+        try:
+            texts = self.page.evaluate(self._MESSAGES_JS)
+        except Exception:  # noqa: BLE001  (page mid-navigation)
+            return []
+        # The suggested follow-ups render inside the reply; they are Play's UI,
+        # not its answer, and would otherwise earn keyword credit.
+        return [re.split(r"\n\s*NEXT STEPS\s*\n", t)[0].strip()
+                for t in texts if t and not t.startswith(self._head)]
+
+    def _streaming(self):
+        try:
+            return self.page.locator(self.STREAM_SEL).first.get_attribute(
+                "data-streaming", timeout=2000) == "true"
+        except Exception:  # noqa: BLE001
+            return None
+
+    def wait_for_reply(self, since, timeout=600, settle=25, poll_every=4):
+        deadline = time.time() + timeout
+        snapshot, last_change = [], time.time()
+        while time.time() < deadline:
+            current = self.poll(since)
+            if current != snapshot:
+                snapshot, last_change = current, time.time()
+                if current:
+                    print(f"       … {current[-1][-70:].replace(chr(10), ' ')!r}")
+            streaming = self._streaming()
+            quiet = time.time() - last_change
+            # Done when Play says it stopped and the text has held still briefly.
+            # If the indicator cannot be read, fall back to the long quiet rule.
+            if snapshot and streaming is False and quiet >= 20:
+                break
+            if streaming is None and snapshot and quiet >= settle:
+                break
+            time.sleep(poll_every)
+        return "\n\n".join(snapshot).strip()
+
+
 def _open_profile(url, headless=False):
     """Launch Chromium on the persistent abench profile. Returns (pw, ctx, page)."""
     try:
@@ -453,7 +566,8 @@ def _open_profile(url, headless=False):
                 else "another abench browser may already hold this profile")
         raise ChannelError(f"could not launch chromium — {hint}") from e
     page = ctx.pages[0] if ctx.pages else ctx.new_page()
-    page.goto(url, wait_until="domcontentloaded")
+    # "commit": Play holds connections open, so domcontentloaded may never arrive.
+    page.goto(url, wait_until="commit", timeout=60000)
     return pw, ctx, page
 
 
@@ -1132,7 +1246,7 @@ def _as_text(content):
 
 BUILDERS = {"imessage": IMessage, "email": Email, "webhook": Webhook,
             "browser": Browser, "cursor": CursorAutomation, "hermes": Hermes,
-            "openclaw": OpenClaw, "manus": Manus}
+            "openclaw": OpenClaw, "manus": Manus, "play": Play}
 
 # Channels that need to know the world's public URL to build a return address.
 WANTS_BASE = {"cursor"}

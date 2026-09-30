@@ -125,7 +125,7 @@
     "registered": true
   },
   "record": {
-    "won": 0,
+    "won": 1,
     "lost": 6,
     "even": 0
   },
@@ -3273,6 +3273,17 @@
       "shared_tasks": 49,
       "too_close": true,
       "outcome": "b"
+    },
+    {
+      "opponent": "play",
+      "opponent_name": "Play",
+      "won": 3,
+      "lost": 2,
+      "even": 3,
+      "compared": 8,
+      "shared_tasks": 49,
+      "too_close": true,
+      "outcome": "a"
     },
     {
       "opponent": "hermes",
